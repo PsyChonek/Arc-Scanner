@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ItemGraph from './components/ItemGraph';
 import ItemDetails from './components/ItemDetails';
+import { importArcRaidersData } from './utils/arcRaidersImporter';
 
 function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [importing, setImporting] = useState(false);
+  const [importStatus, setImportStatus] = useState(null);
+  const [graphKey, setGraphKey] = useState(0); // Used to force graph refresh
 
   useEffect(() => {
     // Initialize with some sample data if database is empty
@@ -118,6 +122,28 @@ function App() {
     setSelectedItem(null);
   };
 
+  const handleImportArcRaidersData = async () => {
+    setImporting(true);
+    setImportStatus(null);
+    
+    try {
+      const result = await importArcRaidersData();
+      setImportStatus(result);
+      
+      if (result.success) {
+        // Refresh the graph
+        setGraphKey(prev => prev + 1);
+      }
+    } catch (error) {
+      setImportStatus({
+        success: false,
+        error: error.message
+      });
+    } finally {
+      setImporting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -130,17 +156,47 @@ function App() {
     <div className="h-screen flex flex-col bg-gray-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
-        <div className="px-6 py-4">
-          <h1 className="text-3xl font-bold">Arc Scanner</h1>
-          <p className="text-blue-100 text-sm mt-1">
-            Interactive Item Relationship Graph for Arc Raiders
-          </p>
+        <div className="px-6 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold">Arc Scanner</h1>
+            <p className="text-blue-100 text-sm mt-1">
+              Interactive Item Relationship Graph for Arc Raiders
+            </p>
+          </div>
+          <div>
+            <button
+              onClick={handleImportArcRaidersData}
+              disabled={importing}
+              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                importing
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-green-500 hover:bg-green-600'
+              } text-white`}
+            >
+              {importing ? 'Importing...' : 'Import Arc Raiders Data'}
+            </button>
+          </div>
         </div>
+        
+        {/* Import Status */}
+        {importStatus && (
+          <div className={`px-6 py-2 text-sm ${
+            importStatus.success ? 'bg-green-700' : 'bg-red-700'
+          }`}>
+            {importStatus.success ? (
+              <span>
+                ✓ Successfully imported {importStatus.itemsImported} items and {importStatus.relationsImported} relations
+              </span>
+            ) : (
+              <span>✗ Import failed: {importStatus.error}</span>
+            )}
+          </div>
+        )}
       </header>
 
       {/* Main Content */}
       <main className="flex-1 relative">
-        <ItemGraph onNodeClick={handleNodeClick} />
+        <ItemGraph key={graphKey} onNodeClick={handleNodeClick} />
       </main>
 
       {/* Item Details Modal */}

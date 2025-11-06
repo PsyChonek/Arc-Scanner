@@ -10,6 +10,51 @@ import {
   itemRecipeToTrackable
 } from '../utils/arcRaidersLoader';
 
+// Small component to show requirements summary inline
+function RequirementsSummary({ trackedItemId, inventory, allItems }) {
+  const [requirements, setRequirements] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadRequirements();
+  }, [trackedItemId]);
+
+  const loadRequirements = async () => {
+    try {
+      const reqs = await window.electronAPI.getTrackedItemRequirements(trackedItemId);
+      setRequirements(reqs);
+    } catch (error) {
+      console.error('Error loading requirements:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading || requirements.length === 0) return null;
+
+  const fulfilled = requirements.filter(req => req.owned_quantity >= req.quantity_needed).length;
+  const total = requirements.length;
+
+  return (
+    <div className="text-xs text-gray-600 mt-1">
+      Requirements: {fulfilled}/{total} fulfilled
+      {fulfilled < total && (
+        <span className="ml-2 text-red-600">
+          ({requirements.filter(req => req.owned_quantity < req.quantity_needed)
+            .map(req => {
+              const item = allItems.find(i => i.id === req.required_item_id);
+              return item ? `${req.quantity_needed - req.owned_quantity}x ${item.name}` : null;
+            })
+            .filter(Boolean)
+            .slice(0, 2)
+            .join(', ')})
+          {requirements.filter(req => req.owned_quantity < req.quantity_needed).length > 2 && '...'}
+        </span>
+      )}
+    </div>
+  );
+}
+
 function TrackerPage() {
   const [trackedItems, setTrackedItems] = useState([]);
   const [inventory, setInventory] = useState([]);
@@ -208,14 +253,18 @@ function TrackerPage() {
                               {item.name}
                             </h3>
                             <span className={`px-2 py-1 text-xs rounded font-medium ${
-                              item.type === 'quest' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                              item.type === 'quest' ? 'bg-purple-100 text-purple-800' : 
+                              item.type === 'hideout_upgrade' ? 'bg-orange-100 text-orange-800' :
+                              item.type === 'project' ? 'bg-teal-100 text-teal-800' :
+                              'bg-blue-100 text-blue-800'
                             }`}>
-                              {item.type}
+                              {item.type === 'hideout_upgrade' ? 'hideout' : item.type}
                             </span>
                           </div>
                           {item.notes && (
                             <p className="text-sm text-gray-600 mt-1">{item.notes}</p>
                           )}
+                          <RequirementsSummary trackedItemId={item.id} inventory={inventory} allItems={allItems} />
                           {item.completed && item.completed_at && (
                             <p className="text-xs text-green-600 mt-1">
                               Completed: {new Date(item.completed_at).toLocaleDateString()}

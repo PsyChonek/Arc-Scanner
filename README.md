@@ -175,3 +175,63 @@ The project uses three webpack configuration files:
 ### Babel
 
 Babel is configured to use `@babel/preset-react` for JSX transformation.
+
+## Data Attribution
+
+This application uses Arc Raiders game data from the community-maintained repository:
+
+- **Data Source**: Arc Raiders community data
+- **License**: See [assets/arcraiders-data-main/LICENSE](assets/arcraiders-data-main/LICENSE)
+- **Data includes**: Items, hideout modules, quests, skill nodes, and projects
+- **Images**: Item icons stored in `assets/arcraiders-data-main/images/items/`
+
+The Arc Raiders data is maintained by the community and regularly updated to reflect the latest game content.
+
+## Contributing
+
+Contributions are welcome! Here's how you can help:
+
+### Reporting Issues
+
+If you encounter any bugs or have suggestions for improvements:
+
+1. Check if the issue already exists in the GitHub Issues
+2. If not, create a new issue with:
+   - Clear description of the problem
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Screenshots if applicable
+
+### Code Contributions
+
+1. Fork the repository
+2. Create a new branch for your feature (`git checkout -b feature/amazing-feature`)
+3. Make your changes following the existing code style
+4. Test your changes thoroughly
+5. Commit your changes (`git commit -m 'Add some amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Data Updates
+
+To update the Arc Raiders game data:
+
+1. Replace the contents of `assets/arcraiders-data-main/` with the latest data
+2. Ensure `items.json` follows the expected format
+3. Verify images are in `assets/arcraiders-data-main/images/items/`
+4. Test the import functionality
+5. Submit a Pull Request with the updates
+
+### Development Guidelines
+
+- Follow the existing code structure and naming conventions
+- Add comments for complex logic
+- Test on multiple platforms when possible (Windows, macOS, Linux)
+- Keep dependencies up to date
+- Follow Electron security best practices
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+The Arc Raiders game data included in this application is subject to its own license terms (see `assets/arcraiders-data-main/LICENSE`).

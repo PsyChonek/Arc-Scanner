@@ -44,16 +44,35 @@ function transformArcRaidersData(rawData) {
       id: item.id || item.itemId || `item-${index}`,
       name: item.name || item.displayName || 'Unknown Item',
       type: item.type || item.category || item.itemType || 'Unknown',
-      rarity: item.rarity || item.tier || 'common',
+      rarity: item.rarity?.toLowerCase() || 'common', // Normalize rarity to lowercase
       description: item.description || item.desc || '',
-      image_url: item.image || item.imageUrl || item.icon || null,
+      image_url: item.imageFilename || item.image || item.imageUrl || item.icon || null,
       data: {
-        ...item,
+        value: item.value,
+        weightKg: item.weightKg,
+        stackSize: item.stackSize,
+        foundIn: item.foundIn,
+        effects: item.effects,
+        recyclesInto: item.recyclesInto,
+        updatedAt: item.updatedAt,
         // Store original data for reference
+        ...item
       }
     };
     
     items.push(transformedItem);
+    
+    // Extract relations from recyclesInto (materials that this item breaks down into)
+    if (item.recyclesInto && typeof item.recyclesInto === 'object') {
+      Object.entries(item.recyclesInto).forEach(([materialId, quantity]) => {
+        relations.push({
+          source_id: transformedItem.id,
+          target_id: materialId,
+          relation_type: 'recycles_into',
+          weight: quantity || 1.0
+        });
+      });
+    }
     
     // Extract relations from crafting recipes, requirements, etc.
     if (item.craftingRecipe || item.recipe) {

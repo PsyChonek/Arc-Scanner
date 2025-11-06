@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const fs = require('fs');
 const https = require('https');
 const { 
   initDatabase, 
@@ -99,150 +100,44 @@ function httpsGet(url) {
 // IPC handler for fetching Arc Raiders data
 ipcMain.handle('arc:fetchData', async () => {
   try {
-    // Note: The RaidTheory/arcraiders-data repository may not exist or be accessible
-    // This is a placeholder implementation. In production, you would:
-    // 1. Use a verified data source
-    // 2. Include bundled data files
-    // 3. Or prompt user to provide data files
+    // Load Arc Raiders data from bundled assets
+    const dataPath = path.join(__dirname, '../assets/arcraiders-data-main/items.json');
     
-    // For now, return sample data structure to demonstrate functionality
-    const sampleData = [
-      {
-        id: 'arc-weapon-001',
-        name: 'Plasma Rifle',
-        type: 'Weapon',
-        rarity: 'rare',
-        description: 'High-energy plasma weapon for medium to long range combat',
-        image: null,
-        data: {
-          damage: 45,
-          fireRate: 550,
-          magazine: 25,
-          range: 'medium-long'
-        }
-      },
-      {
-        id: 'arc-weapon-002',
-        name: 'Arc Shotgun',
-        type: 'Weapon',
-        rarity: 'uncommon',
-        description: 'Close quarters combat weapon with devastating power',
-        image: null,
-        data: {
-          damage: 90,
-          fireRate: 100,
-          magazine: 6,
-          range: 'close'
-        }
-      },
-      {
-        id: 'arc-resource-001',
-        name: 'Salvaged Parts',
-        type: 'Resource',
-        rarity: 'common',
-        description: 'Basic crafting components salvaged from the battlefield',
-        image: null,
-        data: {
-          stackSize: 100,
-          weight: 1
-        }
-      },
-      {
-        id: 'arc-resource-002',
-        name: 'Energy Cells',
-        type: 'Resource',
-        rarity: 'uncommon',
-        description: 'Power cells used for advanced equipment',
-        image: null,
-        data: {
-          stackSize: 50,
-          weight: 2
-        }
-      },
-      {
-        id: 'arc-armor-001',
-        name: 'Tactical Vest',
-        type: 'Armor',
-        rarity: 'rare',
-        description: 'Lightweight armor providing balanced protection',
-        image: null,
-        data: {
-          armor: 100,
-          durability: 150,
-          weight: 5
-        }
-      },
-      {
-        id: 'arc-armor-002',
-        name: 'Heavy Combat Suit',
-        type: 'Armor',
-        rarity: 'epic',
-        description: 'Heavy armor offering maximum protection',
-        image: null,
-        data: {
-          armor: 200,
-          durability: 300,
-          weight: 15
-        }
-      },
-      {
-        id: 'arc-mod-001',
-        name: 'Scope Attachment',
-        type: 'Modification',
-        rarity: 'uncommon',
-        description: 'Improves weapon accuracy at range',
-        image: null,
-        data: {
-          accuracy: '+15%',
-          range: '+20%'
-        }
-      },
-      {
-        id: 'arc-consumable-001',
-        name: 'Med Kit',
-        type: 'Consumable',
-        rarity: 'common',
-        description: 'Restores health over time',
-        image: null,
-        data: {
-          healAmount: 50,
-          duration: 5
-        }
+    if (!fs.existsSync(dataPath)) {
+      return { 
+        success: false, 
+        error: 'Arc Raiders data file not found. Please ensure assets/arcraiders-data-main/items.json exists.' 
+      };
+    }
+    
+    // Read and parse the items.json file
+    const fileContent = fs.readFileSync(dataPath, 'utf8');
+    const itemsData = JSON.parse(fileContent);
+    
+    // Transform imageFilename from URL to local path
+    const transformedData = itemsData.map(item => {
+      const transformed = { ...item };
+      
+      // Replace image URL with local path to assets
+      if (transformed.imageFilename && transformed.imageFilename.includes('cdn.arctracker.io')) {
+        // Extract filename from URL (e.g., "fabric.png")
+        const filename = transformed.imageFilename.split('/').pop();
+        // Point to local images/items directory
+        transformed.imageFilename = `assets/arcraiders-data-main/images/items/${filename}`;
       }
-    ];
+      
+      return transformed;
+    });
+    
+    console.log(`Loaded ${transformedData.length} items from Arc Raiders data`);
     
     return { 
       success: true, 
-      data: sampleData,
-      note: 'Using sample data. To import real Arc Raiders data, please provide a valid data source or JSON file.'
+      data: transformedData,
+      note: `Loaded ${transformedData.length} items from Arc Raiders community data`
     };
-    
-    /* Original implementation for when valid data source is available:
-    const GITHUB_API_BASE = 'https://api.github.com';
-    const REPO_OWNER = 'RaidTheory';
-    const REPO_NAME = 'arcraiders-data';
-    const DATA_PATH = 'data';
-    
-    // Get the list of files in the data directory
-    const filesUrl = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_PATH}`;
-    const files = await httpsGet(filesUrl);
-    
-    // Look for items.json or similar files
-    const itemsFile = files.find(file => 
-      file.name.toLowerCase().includes('item') && file.name.endsWith('.json')
-    );
-    
-    if (!itemsFile) {
-      return { success: false, error: 'No items file found in repository' };
-    }
-    
-    // Fetch the items file content
-    const itemsData = await httpsGet(itemsFile.download_url);
-    
-    return { success: true, data: itemsData };
-    */
   } catch (error) {
-    console.error('Error fetching Arc Raiders data:', error);
+    console.error('Error loading Arc Raiders data:', error);
     return { success: false, error: error.message };
   }
 });

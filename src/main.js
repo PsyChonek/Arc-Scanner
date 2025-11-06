@@ -154,6 +154,43 @@ function httpsGet(url) {
   });
 }
 
+// IPC handler for loading Arc Raiders JSON files
+ipcMain.handle('arc:loadFile', async (event, filename) => {
+  try {
+    let dataPath;
+    
+    if (app.isPackaged) {
+      // Production: assets are in the resources directory
+      dataPath = path.join(process.resourcesPath, `assets/arcraiders-data-main/${filename}`);
+    } else {
+      // Development: assets are in the project root
+      dataPath = path.join(__dirname, `../assets/arcraiders-data-main/${filename}`);
+    }
+    
+    console.log('Loading Arc Raiders file:', dataPath);
+    
+    if (!fs.existsSync(dataPath)) {
+      console.error('Arc Raiders file not found at:', dataPath);
+      return { 
+        success: false, 
+        error: `File not found: ${filename}` 
+      };
+    }
+    
+    // Read and parse the JSON file
+    const fileContent = fs.readFileSync(dataPath, 'utf8');
+    const data = JSON.parse(fileContent);
+    
+    return { 
+      success: true, 
+      data: data
+    };
+  } catch (error) {
+    console.error('Error loading Arc Raiders file:', error);
+    return { success: false, error: error.message };
+  }
+});
+
 // IPC handler for fetching Arc Raiders data
 ipcMain.handle('arc:fetchData', async () => {
   try {

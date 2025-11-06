@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import {
+  loadHideoutModules,
+  loadProjects,
+  loadQuests,
+  loadItemsWithRecipes,
+  hideoutModuleToTrackable,
+  projectPhaseToTrackable,
+  questToTrackable,
+  itemRecipeToTrackable
+} from '../utils/arcRaidersLoader';
 
 function TrackerPage() {
   const [trackedItems, setTrackedItems] = useState([]);
@@ -6,6 +16,7 @@ function TrackerPage() {
   const [allItems, setAllItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showBrowseModal, setShowBrowseModal] = useState(false);
   const [showRequirementsModal, setShowRequirementsModal] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -151,12 +162,20 @@ function TrackerPage() {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold text-gray-900">Tracked Upgrades & Quests</h2>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
-              >
-                + Add Tracked Item
-              </button>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setShowBrowseModal(true)}
+                  className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors"
+                >
+                  📚 Browse Game Data
+                </button>
+                <button
+                  onClick={() => setShowAddModal(true)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+                >
+                  + Add Custom
+                </button>
+              </div>
             </div>
 
             {trackedItems.length === 0 ? (
@@ -406,6 +425,40 @@ function TrackerPage() {
         </div>
       )}
 
+      {/* Browse Game Data Modal */}
+      {showBrowseModal && (
+        <BrowseGameDataModal
+          onClose={() => setShowBrowseModal(false)}
+          onSelect={async (trackableItem) => {
+            try {
+              // Add the tracked item
+              const trackedId = await window.electronAPI.addTrackedItem(
+                trackableItem.itemId,
+                trackableItem.name,
+                trackableItem.type,
+                trackableItem.notes
+              );
+              
+              // Add all requirements automatically
+              for (const req of trackableItem.requirements) {
+                await window.electronAPI.addTrackedItemRequirement(
+                  trackedId,
+                  req.itemId,
+                  req.quantity
+                );
+              }
+              
+              setShowBrowseModal(false);
+              await loadData();
+            } catch (error) {
+              console.error('Error adding tracked item from game data:', error);
+              setErrorMessage('Failed to add tracked item');
+            }
+          }}
+          allItems={allItems}
+        />
+      )}
+
       {/* Requirements Modal */}
       {showRequirementsModal && (
         <RequirementsModal
@@ -551,6 +604,296 @@ function RequirementsModal({ trackedItem, onClose, onUpdate, allItems, inventory
           <button
             onClick={onClose}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BrowseGameDataModal({ onClose, onSelect, allItems }) {
+  const [activeTab, setActiveTab] = useState('hideout');
+  const [loading, setLoading] = useState(true);
+  const [hideoutModules, setHideoutModules] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [quests, setQuests] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [searchFilter, setSearchFilter] = useState('');
+
+  useEffect(() => {
+    loadGameData();
+  }, []);
+
+  const loadGameData = async () => {
+    try {
+      setLoading(true);
+      const [hideout, proj, quest, rec] = await Promise.all([
+        loadHideoutModules(),
+        loadProjects(),
+        loadQuests(),
+        loadItemsWithRecipes()
+      ]);
+      
+      setHideoutModules(hideout);
+      setProjects(proj);
+      setQuests(quest);
+      setRecipes(rec);
+    } catch (error) {
+      console.error('Error loading game data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSelectHideoutLevel = (module, level) => {
+    const trackable = hideoutModuleToTrackable(module, level);
+    if (trackable) {
+      onSelect(trackable);
+    }
+  };
+
+  const handleSelectProjectPhase = (project, phase) => {
+    const trackable = projectPhaseToTrackable(project, phase);
+    if (trackable) {
+      onSelect(trackable);
+    }
+  };
+
+  const handleSelectQuest = (quest) => {
+    const trackable = questToTrackable(quest);
+    if (trackable) {
+      onSelect(trackable);
+    }
+  };
+
+  const handleSelectRecipe = (item) => {
+    const trackable = itemRecipeToTrackable(item);
+    if (trackable) {
+      onSelect(trackable);
+    }
+  };
+
+  const filteredQuests = quests.filter(q =>
+    q.name.toLowerCase().includes(searchFilter.toLowerCase())
+  );
+
+  const filteredRecipes = recipes.filter(r =>
+    r.name.toLowerCase().includes(searchFilter.toLowerCase())
+  );
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
+      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="text-2xl font-bold text-gray-900">Browse Game Data</h2>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl font-bold">×</button>
+          </div>
+          
+          {/* Tabs */}
+          <div className="flex space-x-1 border-b">
+            <button
+              onClick={() => setActiveTab('hideout')}
+              className={`px-4 py-2 font-semibold transition-colors ${
+                activeTab === 'hideout'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Hideout Modules
+            </button>
+            <button
+              onClick={() => setActiveTab('projects')}
+              className={`px-4 py-2 font-semibold transition-colors ${
+                activeTab === 'projects'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Projects
+            </button>
+            <button
+              onClick={() => setActiveTab('quests')}
+              className={`px-4 py-2 font-semibold transition-colors ${
+                activeTab === 'quests'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Quests
+            </button>
+            <button
+              onClick={() => setActiveTab('recipes')}
+              className={`px-4 py-2 font-semibold transition-colors ${
+                activeTab === 'recipes'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Item Recipes
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-6">
+          {loading ? (
+            <div className="text-center py-12 text-gray-500">Loading game data...</div>
+          ) : (
+            <>
+              {activeTab === 'hideout' && (
+                <div className="space-y-4">
+                  {hideoutModules.map(module => (
+                    <div key={module.id} className="border border-gray-300 rounded-lg p-4">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">{module.name}</h3>
+                      <div className="space-y-2">
+                        {module.levels.filter(l => l.level > 0).map(level => (
+                          <button
+                            key={level.level}
+                            onClick={() => handleSelectHideoutLevel(module, level.level)}
+                            className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded transition-colors"
+                          >
+                            <div className="flex justify-between items-center">
+                              <span className="font-semibold">Level {level.level}</span>
+                              <span className="text-sm text-gray-600">
+                                {level.requirementItemIds?.length || 0} requirements
+                              </span>
+                            </div>
+                            {level.requirementItemIds && level.requirementItemIds.length > 0 && (
+                              <div className="text-xs text-gray-500 mt-1">
+                                {level.requirementItemIds.slice(0, 3).map(req => {
+                                  const item = allItems.find(i => i.id === req.itemId);
+                                  return item ? `${req.quantity}x ${item.name}` : null;
+                                }).filter(Boolean).join(', ')}
+                                {level.requirementItemIds.length > 3 && '...'}
+                              </div>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {activeTab === 'projects' && (
+                <div className="space-y-4">
+                  {projects.map(project => (
+                    <div key={project.id} className="border border-gray-300 rounded-lg p-4">
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">{project.name}</h3>
+                      {project.description && (
+                        <p className="text-sm text-gray-600 mb-3">{project.description}</p>
+                      )}
+                      <div className="space-y-2">
+                        {project.phases.map(phase => (
+                          <button
+                            key={phase.phase}
+                            onClick={() => handleSelectProjectPhase(project, phase.phase)}
+                            className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded transition-colors"
+                          >
+                            <div className="flex justify-between items-center">
+                              <span className="font-semibold">Phase {phase.phase}: {phase.name}</span>
+                              <span className="text-sm text-gray-600">
+                                {phase.requirementItemIds?.length || 0} requirements
+                              </span>
+                            </div>
+                            {phase.description && (
+                              <div className="text-xs text-gray-500 mt-1">{phase.description}</div>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {activeTab === 'quests' && (
+                <div>
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      value={searchFilter}
+                      onChange={(e) => setSearchFilter(e.target.value)}
+                      placeholder="Search quests..."
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    {filteredQuests.map(quest => (
+                      <button
+                        key={quest.id}
+                        onClick={() => handleSelectQuest(quest)}
+                        className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded-lg transition-colors"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900">{quest.name}</div>
+                            {quest.trader && (
+                              <div className="text-xs text-gray-500">Trader: {quest.trader}</div>
+                            )}
+                            {quest.requiredItemIds && quest.requiredItemIds.length > 0 && (
+                              <div className="text-xs text-gray-600 mt-1">
+                                Requires: {quest.requiredItemIds.map(req => {
+                                  const item = allItems.find(i => i.id === req.itemId);
+                                  return item ? `${req.quantity}x ${item.name}` : null;
+                                }).filter(Boolean).join(', ')}
+                              </div>
+                            )}
+                          </div>
+                          <span className="text-sm text-gray-600 ml-2">
+                            {quest.requiredItemIds?.length || 0} items
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'recipes' && (
+                <div>
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      value={searchFilter}
+                      onChange={(e) => setSearchFilter(e.target.value)}
+                      placeholder="Search items..."
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    {filteredRecipes.map(item => (
+                      <button
+                        key={item.id}
+                        onClick={() => handleSelectRecipe(item)}
+                        className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded-lg transition-colors"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900">{item.name}</div>
+                            <div className="text-xs text-gray-600 mt-1">
+                              Recycles into: {Object.entries(item.recyclesInto).map(([id, qty]) => {
+                                const targetItem = allItems.find(i => i.id === id);
+                                return targetItem ? `${qty}x ${targetItem.name}` : null;
+                              }).filter(Boolean).join(', ')}
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4">
+          <button
+            onClick={onClose}
+            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
           >
             Close
           </button>

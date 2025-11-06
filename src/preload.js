@@ -37,5 +37,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
   
   // Arc Raiders data operations
   fetchArcRaidersData: () => ipcRenderer.invoke('arc:fetchData'),
+  loadArcRaidersFile: (filename) => ipcRenderer.invoke('arc:loadFile', filename).then(result => {
+    if (result.success) {
+      return result.data;
+    } else {
+      throw new Error(result.error);
+    }
+  }),
 });
 

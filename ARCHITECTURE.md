@@ -179,7 +179,7 @@ App.jsx (Root Component)
 │              Node.js + Electron APIs                 │
 ├─────────────────────────────────────────────────────┤
 │                  Data Persistence                    │
-│              better-sqlite3 + SQLite                 │
+│              sql.js + SQLite                 │
 ├─────────────────────────────────────────────────────┤
 │                  External Data                       │
 │            GitHub API + Arc Raiders Data             │
@@ -334,7 +334,7 @@ npm run package
    - Smooth 60fps interactions
 
 2. **Database Operations**
-   - better-sqlite3 is synchronous but fast
+   - sql.js is synchronous but fast
    - Prepared statements for repeated queries
    - Indexed foreign keys for quick lookups
 

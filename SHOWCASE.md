@@ -61,14 +61,15 @@
 - Extensible architecture
 
 ### Database Layer
-**Library**: better-sqlite3
-- Synchronous API (faster for Electron)
-- Prepared statements
+**Library**: sql.js
+- Pure JavaScript implementation (no native compilation)
+- Works on all platforms without build tools
 - Full SQL support
-- Transaction safety
+- File-based persistence
+- No dependency on Python or C++ compilers
 
 ### Styling System
-**Library**: Tailwind CSS 4.1.16
+**Library**: Tailwind CSS 3.4.17
 - Utility-first approach
 - PostCSS pipeline
 - Webpack integration
@@ -151,8 +152,8 @@ CREATE TABLE relations (
 | Desktop Framework | Electron 39.1.0 |
 | UI Library | React 19.2.0 |
 | Graph Visualization | React Flow 11.11.4 |
-| Database | better-sqlite3 11.8.1 |
-| CSS Framework | Tailwind CSS 4.1.16 |
+| Database | sql.js 11.8.1 |
+| CSS Framework | Tailwind CSS 3.4.17 |
 | Module Bundler | Webpack 5.x |
 | JavaScript Compiler | Babel 7.x |
 | CSS Processor | PostCSS |
@@ -252,7 +253,7 @@ Based on extensive research, the following libraries were selected:
 - **Strengths**: JSON format, regular updates, images included
 
 ### Database
-**Winner**: better-sqlite3
+**Winner**: sql.js
 - **Why**: Fast, synchronous, perfect for Electron
 - **Alternatives**: sql.js, PostgreSQL, IndexedDB
 - **Strengths**: Native performance, simple API, reliable
@@ -268,7 +269,7 @@ Based on extensive research, the following libraries were selected:
 - [React Flow Documentation](https://reactflow.dev/)
 - [Electron Security Guide](https://www.electronjs.org/docs/latest/tutorial/security)
 - [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [better-sqlite3 API](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md)
+- [sql.js API](https://github.com/WiseLibs/sql.js/blob/master/docs/api.md)
 - [Arc Raiders Data Repository](https://github.com/RaidTheory/arcraiders-data)
 
 ## 📞 Support

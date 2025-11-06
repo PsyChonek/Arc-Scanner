@@ -36,7 +36,7 @@ This project was set up using Electron Forge with React integration following th
 - **Webpack**: Module bundler
 - **Babel**: JavaScript compiler for React JSX
 - **Tailwind CSS**: Utility-first CSS framework
-- **better-sqlite3**: Fast, synchronous SQLite3 for Node.js
+- **sql.js**: Pure JavaScript SQLite implementation (no native compilation required)
 
 ## Getting Started
 
@@ -52,12 +52,7 @@ Dependencies are already installed. If you need to reinstall:
 npm install
 ```
 
-**Note on native dependencies**: This app uses `better-sqlite3` which is a native Node.js module. If you encounter build issues during `npm install` or when running the app, ensure you have:
-- Python 3.x installed
-- A C++ compiler (Visual Studio Build Tools on Windows, Xcode Command Line Tools on macOS, build-essential on Linux)
-- Good internet connectivity for downloading Electron headers
-
-If you experience issues in restricted network environments, the pre-built binaries from npm should work in most cases.
+**No build tools required**: This app now uses `sql.js`, a pure JavaScript SQLite implementation that doesn't require native compilation. You can install and run the app without needing Python, C++ compilers, or other build tools.
 
 ### Development
 

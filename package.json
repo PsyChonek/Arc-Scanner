@@ -37,14 +37,14 @@
     "node-loader": "^2.1.0",
     "postcss": "^8.5.6",
     "postcss-loader": "^8.2.0",
-    "style-loader": "^3.3.4",
-    "tailwindcss": "^4.1.16"
+    "style-loader": "^3.3.4"
   },
   "dependencies": {
-    "better-sqlite3": "^12.4.1",
     "electron-squirrel-startup": "^1.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "reactflow": "^11.11.4"
+    "reactflow": "^11.11.4",
+    "sql.js": "^1.13.0",
+    "tailwindcss": "^3.4.17"
   }
 }

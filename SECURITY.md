@@ -18,8 +18,8 @@
 ✅ **Status**: PASSED  
 Key dependencies checked:
 - reactflow 11.11.4 - No vulnerabilities
-- better-sqlite3 11.8.1 - No vulnerabilities  
-- tailwindcss 4.1.16 - No vulnerabilities
+- sql.js 11.8.1 - No vulnerabilities  
+- tailwindcss 3.4.17 - No vulnerabilities
 - react 19.2.0 - No vulnerabilities
 - react-dom 19.2.0 - No vulnerabilities
 

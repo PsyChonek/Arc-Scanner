@@ -16,7 +16,7 @@ This implementation addresses all requirements from the problem statement:
   - Controls panel for zoom/fit operations
 
 ### 2. ✅ Tailwind CSS Installation
-- Installed tailwindcss v4.1.16
+- Installed tailwindcss v3.4.17
 - Configured with PostCSS and Autoprefixer
 - Added tailwind.config.js with content paths
 - Created postcss.config.js
@@ -24,13 +24,15 @@ This implementation addresses all requirements from the problem statement:
 - Applied Tailwind directives in index.css
 
 ### 3. ✅ SQLite Database
-- **Library Used**: better-sqlite3
+- **Library Used**: sql.js (Pure JavaScript SQLite - no native compilation required)
+- **Why sql.js**: Replaced better-sqlite3 to eliminate native module compilation issues across different platforms
 - **Database Schema**:
   - `items` table: Stores item data (id, name, type, rarity, description, image_url, data)
   - `relations` table: Stores relationships between items (source_id, target_id, relation_type, weight)
   - `user_data` table: Key-value store for user preferences and app settings
 - **API**: Full CRUD operations exposed via Electron IPC
 - **Location**: User data directory (platform-specific)
+- **Persistence**: Automatic saving to disk after each write operation
 
 ### 4. ✅ Arc Raiders Data Integration
 - **Data Source**: RaidTheory/arcraiders-data GitHub repository
@@ -162,8 +164,8 @@ Potential improvements for future development:
 | Electron | 39.1.0 | Desktop application framework |
 | React | 19.2.0 | UI library |
 | React Flow | latest | Graph visualization |
-| Tailwind CSS | 4.1.16 | CSS framework |
-| better-sqlite3 | latest | SQLite database |
+| Tailwind CSS | 3.4.17 | CSS framework |
+| sql.js | latest | SQLite database |
 | Webpack | 5.x | Module bundler |
 | Babel | 7.x | JavaScript compiler |
 | PostCSS | latest | CSS processing |
@@ -172,7 +174,7 @@ Potential improvements for future development:
 
 - [React Flow Documentation](https://reactflow.dev/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [better-sqlite3 API](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md)
+- [sql.js API](https://github.com/WiseLibs/sql.js/blob/master/docs/api.md)
 - [Arc Raiders Data Repository](https://github.com/RaidTheory/arcraiders-data)
 - [MetaForge API](https://metaforge.app/arc-raiders/api)
 - [Electron IPC Documentation](https://www.electronjs.org/docs/latest/api/ipc-main)

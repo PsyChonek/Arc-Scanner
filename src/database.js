@@ -1,18 +1,31 @@
-const Database = require('better-sqlite3');
+const initSqlJs = require('sql.js');
 const path = require('path');
+const fs = require('fs');
 const { app } = require('electron');
 
 let db = null;
+let SQL = null;
+let dbPath = null;
 
-function initDatabase() {
+async function initDatabase() {
+  // Initialize sql.js
+  SQL = await initSqlJs();
+  
   // Get the user data path for the app
   const userDataPath = app.getPath('userData');
-  const dbPath = path.join(userDataPath, 'arc-scanner.db');
+  dbPath = path.join(userDataPath, 'arc-scanner.db');
   
-  db = new Database(dbPath);
+  // Load existing database or create new one
+  let buffer;
+  if (fs.existsSync(dbPath)) {
+    buffer = fs.readFileSync(dbPath);
+    db = new SQL.Database(buffer);
+  } else {
+    db = new SQL.Database();
+  }
   
   // Create tables for items, relations, and user data
-  db.exec(`
+  db.run(`
     CREATE TABLE IF NOT EXISTS items (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -20,34 +33,49 @@ function initDatabase() {
       rarity TEXT,
       description TEXT,
       image_url TEXT,
-      data JSON,
+      data TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-    
+    )
+  `);
+  
+  db.run(`
     CREATE TABLE IF NOT EXISTS relations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       source_id TEXT NOT NULL,
       target_id TEXT NOT NULL,
       relation_type TEXT NOT NULL,
       weight REAL DEFAULT 1.0,
-      data JSON,
+      data TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (source_id) REFERENCES items(id),
       FOREIGN KEY (target_id) REFERENCES items(id),
       UNIQUE(source_id, target_id, relation_type)
-    );
-    
+    )
+  `);
+  
+  db.run(`
     CREATE TABLE IF NOT EXISTS user_data (
       key TEXT PRIMARY KEY,
       value TEXT,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-    
-    CREATE INDEX IF NOT EXISTS idx_relations_source ON relations(source_id);
-    CREATE INDEX IF NOT EXISTS idx_relations_target ON relations(target_id);
+    )
   `);
   
+  db.run('CREATE INDEX IF NOT EXISTS idx_relations_source ON relations(source_id)');
+  db.run('CREATE INDEX IF NOT EXISTS idx_relations_target ON relations(target_id)');
+  
+  // Save the database to disk
+  saveDatabase();
+  
   return db;
+}
+
+function saveDatabase() {
+  if (db && dbPath) {
+    const data = db.export();
+    const buffer = Buffer.from(data);
+    fs.writeFileSync(dbPath, buffer);
+  }
 }
 
 function getDatabase() {
@@ -59,6 +87,7 @@ function getDatabase() {
 
 function closeDatabase() {
   if (db) {
+    saveDatabase();
     db.close();
     db = null;
   }
@@ -66,94 +95,147 @@ function closeDatabase() {
 
 // Item CRUD operations
 function addItem(item) {
-  const stmt = db.prepare(`
-    INSERT OR REPLACE INTO items (id, name, type, rarity, description, image_url, data)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-  `);
-  return stmt.run(
-    item.id,
-    item.name,
-    item.type || null,
-    item.rarity || null,
-    item.description || null,
-    item.image_url || null,
-    JSON.stringify(item.data || {})
+  db.run(
+    `INSERT OR REPLACE INTO items (id, name, type, rarity, description, image_url, data)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [
+      item.id,
+      item.name,
+      item.type || null,
+      item.rarity || null,
+      item.description || null,
+      item.image_url || null,
+      JSON.stringify(item.data || {})
+    ]
   );
+  saveDatabase();
+  return { changes: 1 };
 }
 
 function getItem(id) {
-  const stmt = db.prepare('SELECT * FROM items WHERE id = ?');
-  const item = stmt.get(id);
-  if (item && item.data) {
+  const result = db.exec('SELECT * FROM items WHERE id = ?', [id]);
+  if (result.length === 0 || result[0].values.length === 0) {
+    return null;
+  }
+  
+  const columns = result[0].columns;
+  const values = result[0].values[0];
+  const item = {};
+  
+  columns.forEach((col, idx) => {
+    item[col] = values[idx];
+  });
+  
+  if (item.data) {
     item.data = JSON.parse(item.data);
   }
+  
   return item;
 }
 
 function getAllItems() {
-  const stmt = db.prepare('SELECT * FROM items ORDER BY name');
-  const items = stmt.all();
-  return items.map(item => {
+  const result = db.exec('SELECT * FROM items ORDER BY name');
+  if (result.length === 0) {
+    return [];
+  }
+  
+  const columns = result[0].columns;
+  const items = result[0].values.map(values => {
+    const item = {};
+    columns.forEach((col, idx) => {
+      item[col] = values[idx];
+    });
     if (item.data) {
       item.data = JSON.parse(item.data);
     }
     return item;
   });
+  
+  return items;
 }
 
 // Relation CRUD operations
 function addRelation(relation) {
-  const stmt = db.prepare(`
-    INSERT OR REPLACE INTO relations (source_id, target_id, relation_type, weight, data)
-    VALUES (?, ?, ?, ?, ?)
-  `);
-  return stmt.run(
-    relation.source_id,
-    relation.target_id,
-    relation.relation_type,
-    relation.weight || 1.0,
-    JSON.stringify(relation.data || {})
+  db.run(
+    `INSERT OR REPLACE INTO relations (source_id, target_id, relation_type, weight, data)
+     VALUES (?, ?, ?, ?, ?)`,
+    [
+      relation.source_id,
+      relation.target_id,
+      relation.relation_type,
+      relation.weight || 1.0,
+      JSON.stringify(relation.data || {})
+    ]
   );
+  saveDatabase();
+  return { changes: 1 };
 }
 
 function getRelationsForItem(itemId) {
-  const stmt = db.prepare(`
-    SELECT * FROM relations 
-    WHERE source_id = ? OR target_id = ?
-  `);
-  const relations = stmt.all(itemId, itemId);
-  return relations.map(rel => {
+  const result = db.exec(
+    'SELECT * FROM relations WHERE source_id = ? OR target_id = ?',
+    [itemId, itemId]
+  );
+  
+  if (result.length === 0) {
+    return [];
+  }
+  
+  const columns = result[0].columns;
+  const relations = result[0].values.map(values => {
+    const rel = {};
+    columns.forEach((col, idx) => {
+      rel[col] = values[idx];
+    });
     if (rel.data) {
       rel.data = JSON.parse(rel.data);
     }
     return rel;
   });
+  
+  return relations;
 }
 
 function getAllRelations() {
-  const stmt = db.prepare('SELECT * FROM relations');
-  const relations = stmt.all();
-  return relations.map(rel => {
+  const result = db.exec('SELECT * FROM relations');
+  if (result.length === 0) {
+    return [];
+  }
+  
+  const columns = result[0].columns;
+  const relations = result[0].values.map(values => {
+    const rel = {};
+    columns.forEach((col, idx) => {
+      rel[col] = values[idx];
+    });
     if (rel.data) {
       rel.data = JSON.parse(rel.data);
     }
     return rel;
   });
+  
+  return relations;
 }
 
 // User data operations
 function setUserData(key, value) {
-  const stmt = db.prepare(`
-    INSERT OR REPLACE INTO user_data (key, value, updated_at)
-    VALUES (?, ?, CURRENT_TIMESTAMP)
-  `);
-  return stmt.run(key, JSON.stringify(value));
+  db.run(
+    `INSERT OR REPLACE INTO user_data (key, value, updated_at)
+     VALUES (?, ?, CURRENT_TIMESTAMP)`,
+    [key, JSON.stringify(value)]
+  );
+  saveDatabase();
+  return { changes: 1 };
 }
 
 function getUserData(key) {
-  const stmt = db.prepare('SELECT value FROM user_data WHERE key = ?');
-  const row = stmt.get(key);
-  return row ? JSON.parse(row.value) : null;
+  const result = db.exec('SELECT value FROM user_data WHERE key = ?', [key]);
+  if (result.length === 0 || result[0].values.length === 0) {
+    return null;
+  }
+  
+  const value = result[0].values[0][0];
+  return value ? JSON.parse(value) : null;
 }
 
 module.exports = {

@@ -182,13 +182,13 @@ function App() {
           </div>
           
           {/* Navigation Tabs */}
-          <nav className="flex space-x-1 border-t border-blue-500 pt-3">
+          <nav className="flex space-x-1 border-t border-blue-500 pt-3 -mb-px">
             <button
               onClick={() => setCurrentView('graph')}
               className={`px-6 py-2 rounded-t-lg font-semibold transition-colors ${
                 currentView === 'graph'
                   ? 'bg-white text-blue-800'
-                  : 'bg-blue-700 text-blue-100 hover:bg-blue-600'
+                  : 'bg-blue-500 text-white hover:bg-blue-400'
               }`}
             >
               Graph View
@@ -198,7 +198,7 @@ function App() {
               className={`px-6 py-2 rounded-t-lg font-semibold transition-colors ${
                 currentView === 'tracker'
                   ? 'bg-white text-blue-800'
-                  : 'bg-blue-700 text-blue-100 hover:bg-blue-600'
+                  : 'bg-blue-500 text-white hover:bg-blue-400'
               }`}
             >
               Item Tracker

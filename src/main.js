@@ -225,15 +225,31 @@ ipcMain.handle('arc:fetchData', async () => {
     const transformedData = itemsData.map(item => {
       const transformed = { ...item };
       
-      // Replace image URL with local path to assets
-      if (transformed.imageFilename && transformed.imageFilename.includes('cdn.arctracker.io')) {
-        // Extract filename from URL (e.g., "fabric.png")
-        const filename = transformed.imageFilename.split('/').pop();
-        // Point to local images/items directory
-        if (app.isPackaged) {
-          transformed.imageFilename = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
-        } else {
-          transformed.imageFilename = `assets/arcraiders-data-main/images/items/${filename}`;
+      // Handle image paths - convert to absolute file:// URLs
+      if (transformed.imageFilename) {
+        let imagePath;
+        
+        // If it's a CDN URL, extract filename
+        if (transformed.imageFilename.includes('cdn.arctracker.io')) {
+          const filename = transformed.imageFilename.split('/').pop();
+          if (app.isPackaged) {
+            imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
+          } else {
+            imagePath = path.join(__dirname, `../assets/arcraiders-data-main/images/items/${filename}`);
+          }
+        } 
+        // If it's a relative path like "images/items/rattler.png"
+        else if (transformed.imageFilename.startsWith('images/')) {
+          if (app.isPackaged) {
+            imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/${transformed.imageFilename}`);
+          } else {
+            imagePath = path.join(__dirname, `../assets/arcraiders-data-main/${transformed.imageFilename}`);
+          }
+        }
+        
+        // Convert to file:// URL for Electron
+        if (imagePath) {
+          transformed.imageFilename = `file://${imagePath}`;
         }
       }
       

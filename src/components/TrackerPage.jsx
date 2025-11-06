@@ -676,7 +676,8 @@ function BrowseGameDataModal({ onClose, onSelect, allItems }) {
   };
 
   const filteredQuests = quests.filter(q =>
-    q.name.toLowerCase().includes(searchFilter.toLowerCase())
+    q.name.toLowerCase().includes(searchFilter.toLowerCase()) &&
+    q.requiredItemIds && q.requiredItemIds.length > 0
   );
 
   const filteredRecipes = recipes.filter(r =>
@@ -744,23 +745,31 @@ function BrowseGameDataModal({ onClose, onSelect, allItems }) {
             <>
               {activeTab === 'hideout' && (
                 <div className="space-y-4">
-                  {hideoutModules.map(module => (
-                    <div key={module.id} className="border border-gray-300 rounded-lg p-4">
-                      <h3 className="text-lg font-bold text-gray-900 mb-2">{module.name}</h3>
-                      <div className="space-y-2">
-                        {module.levels.filter(l => l.level > 0).map(level => (
-                          <button
-                            key={level.level}
-                            onClick={() => handleSelectHideoutLevel(module, level.level)}
-                            className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded transition-colors"
-                          >
-                            <div className="flex justify-between items-center">
-                              <span className="font-semibold">Level {level.level}</span>
-                              <span className="text-sm text-gray-600">
-                                {level.requirementItemIds?.length || 0} requirements
-                              </span>
-                            </div>
-                            {level.requirementItemIds && level.requirementItemIds.length > 0 && (
+                  {hideoutModules.map(module => {
+                    // Filter levels with requirements
+                    const levelsWithReqs = module.levels.filter(l => 
+                      l.level > 0 && l.requirementItemIds && l.requirementItemIds.length > 0
+                    );
+                    
+                    // Skip module if no levels have requirements
+                    if (levelsWithReqs.length === 0) return null;
+                    
+                    return (
+                      <div key={module.id} className="border border-gray-300 rounded-lg p-4">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">{module.name}</h3>
+                        <div className="space-y-2">
+                          {levelsWithReqs.map(level => (
+                            <button
+                              key={level.level}
+                              onClick={() => handleSelectHideoutLevel(module, level.level)}
+                              className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded transition-colors"
+                            >
+                              <div className="flex justify-between items-center">
+                                <span className="font-semibold">Level {level.level}</span>
+                                <span className="text-sm text-gray-600">
+                                  {level.requirementItemIds?.length || 0} requirements
+                                </span>
+                              </div>
                               <div className="text-xs text-gray-500 mt-1">
                                 {level.requirementItemIds.slice(0, 3).map(req => {
                                   const item = allItems.find(i => i.id === req.itemId);
@@ -768,44 +777,54 @@ function BrowseGameDataModal({ onClose, onSelect, allItems }) {
                                 }).filter(Boolean).join(', ')}
                                 {level.requirementItemIds.length > 3 && '...'}
                               </div>
-                            )}
-                          </button>
-                        ))}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  }).filter(Boolean)}
                 </div>
               )}
 
               {activeTab === 'projects' && (
                 <div className="space-y-4">
-                  {projects.map(project => (
-                    <div key={project.id} className="border border-gray-300 rounded-lg p-4">
-                      <h3 className="text-lg font-bold text-gray-900 mb-1">{project.name}</h3>
-                      {project.description && (
-                        <p className="text-sm text-gray-600 mb-3">{project.description}</p>
-                      )}
-                      <div className="space-y-2">
-                        {project.phases.map(phase => (
-                          <button
-                            key={phase.phase}
-                            onClick={() => handleSelectProjectPhase(project, phase.phase)}
-                            className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded transition-colors"
-                          >
-                            <div className="flex justify-between items-center">
-                              <span className="font-semibold">Phase {phase.phase}: {phase.name}</span>
-                              <span className="text-sm text-gray-600">
-                                {phase.requirementItemIds?.length || 0} requirements
-                              </span>
-                            </div>
-                            {phase.description && (
-                              <div className="text-xs text-gray-500 mt-1">{phase.description}</div>
-                            )}
-                          </button>
-                        ))}
+                  {projects.map(project => {
+                    // Filter phases with requirements
+                    const phasesWithReqs = project.phases.filter(phase =>
+                      phase.requirementItemIds && phase.requirementItemIds.length > 0
+                    );
+                    
+                    // Skip project if no phases have requirements
+                    if (phasesWithReqs.length === 0) return null;
+                    
+                    return (
+                      <div key={project.id} className="border border-gray-300 rounded-lg p-4">
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">{project.name}</h3>
+                        {project.description && (
+                          <p className="text-sm text-gray-600 mb-3">{project.description}</p>
+                        )}
+                        <div className="space-y-2">
+                          {phasesWithReqs.map(phase => (
+                            <button
+                              key={phase.phase}
+                              onClick={() => handleSelectProjectPhase(project, phase.phase)}
+                              className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-blue-50 border border-gray-200 rounded transition-colors"
+                            >
+                              <div className="flex justify-between items-center">
+                                <span className="font-semibold">Phase {phase.phase}: {phase.name}</span>
+                                <span className="text-sm text-gray-600">
+                                  {phase.requirementItemIds?.length || 0} requirements
+                                </span>
+                              </div>
+                              {phase.description && (
+                                <div className="text-xs text-gray-500 mt-1">{phase.description}</div>
+                              )}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  }).filter(Boolean)}
                 </div>
               )}
 

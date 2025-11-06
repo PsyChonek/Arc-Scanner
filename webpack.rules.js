@@ -16,6 +16,11 @@ module.exports = [
       },
     },
   },
+  // Handle WASM files for sql.js
+  {
+    test: /\.wasm$/,
+    type: 'asset/resource',
+  },
   // Put your webpack loader rules in this array.  This is where you would put
   // your ts-loader configuration for instance:
   /**

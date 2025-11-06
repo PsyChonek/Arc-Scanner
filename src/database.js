@@ -427,6 +427,69 @@ function removeTrackedItemRequirement(requirementId) {
   return { changes: 1 };
 }
 
+/**
+ * Clear all items and relations from the database
+ * Useful for re-importing data with corrected paths
+ */
+function clearItemsAndRelations() {
+  if (!db) throw new Error('Database not initialized');
+
+  db.run('DELETE FROM relations');
+  db.run('DELETE FROM items');
+  saveDatabase();
+
+  return { success: true, message: 'All items and relations cleared' };
+}
+
+/**
+ * Auto-track game progression items (hideout modules, projects, quests)
+ * This checks if items are already tracked before adding them
+ */
+function autoTrackGameProgressionItems(items) {
+  if (!db) throw new Error('Database not initialized');
+
+  let added = 0;
+  let skipped = 0;
+
+  for (const item of items) {
+    // Check if this item is already tracked
+    const existing = db.exec(
+      'SELECT id FROM tracked_items WHERE item_id = ? AND name = ?',
+      [item.itemId, item.name]
+    );
+
+    if (existing.length > 0 && existing[0].values.length > 0) {
+      skipped++;
+      continue;
+    }
+
+    // Add the tracked item
+    db.run(
+      'INSERT INTO tracked_items (item_id, name, type, notes) VALUES (?, ?, ?, ?)',
+      [item.itemId, item.name, item.type, item.notes || '']
+    );
+
+    // Get the ID of the inserted row
+    const result = db.exec('SELECT last_insert_rowid()');
+    const trackedId = result[0].values[0][0];
+
+    // Add all requirements
+    if (item.requirements && item.requirements.length > 0) {
+      for (const req of item.requirements) {
+        db.run(
+          'INSERT INTO tracked_item_requirements (tracked_item_id, required_item_id, quantity_needed) VALUES (?, ?, ?)',
+          [trackedId, req.itemId, req.quantity]
+        );
+      }
+    }
+
+    added++;
+  }
+
+  saveDatabase();
+  return { added, skipped, total: items.length };
+}
+
 module.exports = {
   initDatabase,
   getDatabase,
@@ -439,6 +502,7 @@ module.exports = {
   getAllRelations,
   setUserData,
   getUserData,
+  clearItemsAndRelations,
   // Inventory
   addToInventory,
   removeFromInventory,
@@ -452,4 +516,5 @@ module.exports = {
   addTrackedItemRequirement,
   getTrackedItemRequirements,
   removeTrackedItemRequirement,
+  autoTrackGameProgressionItems,
 };

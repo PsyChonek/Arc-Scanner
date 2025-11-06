@@ -19,7 +19,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // User data operations
   setUserData: (key, value) => ipcRenderer.invoke('db:setUserData', key, value),
   getUserData: (key) => ipcRenderer.invoke('db:getUserData', key),
-  
+
+  // Database maintenance
+  clearItemsAndRelations: () => ipcRenderer.invoke('db:clearItemsAndRelations'),
+
   // Inventory operations
   addToInventory: (itemId, quantity) => ipcRenderer.invoke('db:addToInventory', itemId, quantity),
   removeFromInventory: (itemId) => ipcRenderer.invoke('db:removeFromInventory', itemId),
@@ -34,7 +37,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   addTrackedItemRequirement: (trackedItemId, requiredItemId, quantityNeeded) => ipcRenderer.invoke('db:addTrackedItemRequirement', trackedItemId, requiredItemId, quantityNeeded),
   getTrackedItemRequirements: (trackedItemId) => ipcRenderer.invoke('db:getTrackedItemRequirements', trackedItemId),
   removeTrackedItemRequirement: (requirementId) => ipcRenderer.invoke('db:removeTrackedItemRequirement', requirementId),
-  
+  autoTrackGameProgressionItems: (items) => ipcRenderer.invoke('db:autoTrackGameProgressionItems', items),
+
   // Arc Raiders data operations
   fetchArcRaidersData: () => ipcRenderer.invoke('arc:fetchData'),
   loadArcRaidersFile: (filename) => ipcRenderer.invoke('arc:loadFile', filename).then(result => {
@@ -44,5 +48,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
       throw new Error(result.error);
     }
   }),
+
+  // Image loading
+  loadImage: (imagePath) => ipcRenderer.invoke('loadImage', imagePath),
 });
 

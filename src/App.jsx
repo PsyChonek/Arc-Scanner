@@ -3,6 +3,7 @@ import ItemGraph from './components/ItemGraph';
 import ItemDetails from './components/ItemDetails';
 import TrackerPage from './components/TrackerPage';
 import { importArcRaidersData } from './utils/arcRaidersImporter';
+import { suppressResizeObserverError } from './utils/suppressResizeObserverError';
 
 function App() {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -11,6 +12,12 @@ function App() {
   const [importStatus, setImportStatus] = useState(null);
   const [graphKey, setGraphKey] = useState(0); // Used to force graph refresh
   const [currentView, setCurrentView] = useState('graph'); // 'graph' or 'tracker'
+
+  useEffect(() => {
+    // Suppress ResizeObserver errors
+    const cleanup = suppressResizeObserverError();
+    return cleanup;
+  }, []);
 
   useEffect(() => {
     // Initialize with some sample data if database is empty
@@ -127,11 +134,15 @@ function App() {
   const handleImportArcRaidersData = async () => {
     setImporting(true);
     setImportStatus(null);
-    
+
     try {
+      // Clear existing items and relations first to ensure fresh import with correct paths
+      console.log('Clearing existing items and relations...');
+      await window.electronAPI.clearItemsAndRelations();
+
       const result = await importArcRaidersData();
       setImportStatus(result);
-      
+
       if (result.success) {
         // Refresh the graph
         setGraphKey(prev => prev + 1);
@@ -158,7 +169,7 @@ function App() {
     <div className="h-screen flex flex-col bg-gray-50">
       {/* Header with Navigation */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
-        <div className="px-6 py-4">
+        <div className="px-6 py-0">
           <div className="flex justify-between items-center mb-3">
             <div>
               <h1 className="text-3xl font-bold">Arc Scanner</h1>

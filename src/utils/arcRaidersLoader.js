@@ -67,6 +67,12 @@ export function hideoutModuleToTrackable(module, level) {
   const levelData = module.levels.find(l => l.level === level);
   if (!levelData) return null;
 
+  console.log('Hideout module conversion:', {
+    module: module.name,
+    level,
+    requirementItemIds: levelData.requirementItemIds
+  });
+
   return {
     name: `${module.name} - Level ${level}`,
     type: 'hideout_upgrade',
@@ -140,4 +146,69 @@ export function itemRecipeToTrackable(item) {
     sourceType: 'recipe',
     sourceId: item.id
   };
+}
+
+/**
+ * Prepare all game progression items for auto-tracking
+ * @returns {Promise<Array>} Array of trackable items (hideout modules, projects, quests)
+ */
+export async function prepareAutoTrackingItems() {
+  try {
+    const trackableItems = [];
+
+    // Load all game data
+    const [hideoutModules, projects, quests] = await Promise.all([
+      loadHideoutModules(),
+      loadProjects(),
+      loadQuests()
+    ]);
+
+    // Convert all hideout module levels with requirements
+    for (const module of hideoutModules) {
+      for (const level of module.levels) {
+        // Only add levels with requirements and level > 0
+        if (level.level > 0 && level.requirementItemIds && level.requirementItemIds.length > 0) {
+          const trackable = hideoutModuleToTrackable(module, level.level);
+          if (trackable) {
+            trackableItems.push(trackable);
+          }
+        }
+      }
+    }
+
+    // Convert all project phases with requirements
+    for (const project of projects) {
+      for (const phase of project.phases) {
+        // Only add phases with requirements
+        if (phase.requirementItemIds && phase.requirementItemIds.length > 0) {
+          const trackable = projectPhaseToTrackable(project, phase.phase);
+          if (trackable) {
+            trackableItems.push(trackable);
+          }
+        }
+      }
+    }
+
+    // Convert all quests with requirements
+    for (const quest of quests) {
+      // Only add quests with required items
+      if (quest.requiredItemIds && quest.requiredItemIds.length > 0) {
+        const trackable = questToTrackable(quest);
+        if (trackable) {
+          trackableItems.push(trackable);
+        }
+      }
+    }
+
+    console.log(`Prepared ${trackableItems.length} items for auto-tracking:`, {
+      hideout: trackableItems.filter(i => i.type === 'hideout_upgrade').length,
+      projects: trackableItems.filter(i => i.type === 'project').length,
+      quests: trackableItems.filter(i => i.type === 'quest').length
+    });
+
+    return trackableItems;
+  } catch (error) {
+    console.error('Error preparing auto-tracking items:', error);
+    return [];
+  }
 }

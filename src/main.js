@@ -2,17 +2,18 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 const fs = require('fs');
 const https = require('https');
-const { 
-  initDatabase, 
-  closeDatabase, 
-  addItem, 
-  getItem, 
-  getAllItems, 
-  addRelation, 
-  getRelationsForItem, 
+const {
+  initDatabase,
+  closeDatabase,
+  addItem,
+  getItem,
+  getAllItems,
+  addRelation,
+  getRelationsForItem,
   getAllRelations,
   setUserData,
   getUserData,
+  clearItemsAndRelations,
   addToInventory,
   removeFromInventory,
   getInventory,
@@ -23,7 +24,8 @@ const {
   getAllTrackedItems,
   addTrackedItemRequirement,
   getTrackedItemRequirements,
-  removeTrackedItemRequirement
+  removeTrackedItemRequirement,
+  autoTrackGameProgressionItems
 } = require('./database');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -40,6 +42,7 @@ const createWindow = () => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       contextIsolation: true,
       nodeIntegration: false,
+      webSecurity: false, // Disable to allow loading local file:// images
     },
   });
 
@@ -81,6 +84,10 @@ ipcMain.handle('db:setUserData', async (event, key, value) => {
 
 ipcMain.handle('db:getUserData', async (event, key) => {
   return getUserData(key);
+});
+
+ipcMain.handle('db:clearItemsAndRelations', async () => {
+  return clearItemsAndRelations();
 });
 
 // Inventory IPC handlers
@@ -129,6 +136,38 @@ ipcMain.handle('db:removeTrackedItemRequirement', async (event, requirementId) =
   return removeTrackedItemRequirement(requirementId);
 });
 
+ipcMain.handle('db:autoTrackGameProgressionItems', async (event, items) => {
+  return autoTrackGameProgressionItems(items);
+});
+
+// IPC handler for loading images as base64 data URLs
+ipcMain.handle('loadImage', async (event, imagePath) => {
+  try {
+    // Remove file:// prefix if present
+    const cleanPath = imagePath.replace('file://', '');
+
+    if (!fs.existsSync(cleanPath)) {
+      return null;
+    }
+
+    const imageData = fs.readFileSync(cleanPath);
+    const ext = path.extname(cleanPath).toLowerCase();
+
+    // Determine MIME type
+    let mimeType = 'image/png';
+    if (ext === '.jpg' || ext === '.jpeg') mimeType = 'image/jpeg';
+    else if (ext === '.gif') mimeType = 'image/gif';
+    else if (ext === '.webp') mimeType = 'image/webp';
+    else if (ext === '.svg') mimeType = 'image/svg+xml';
+
+    // Convert to base64 data URL
+    const base64 = imageData.toString('base64');
+    return `data:${mimeType};base64,${base64}`;
+  } catch (error) {
+    return null;
+  }
+});
+
 // Helper function to make HTTPS requests
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
@@ -157,69 +196,55 @@ function httpsGet(url) {
 // IPC handler for loading Arc Raiders JSON files
 ipcMain.handle('arc:loadFile', async (event, filename) => {
   try {
-    let dataPath;
-    
-    if (app.isPackaged) {
-      // Production: assets are in the resources directory
-      dataPath = path.join(process.resourcesPath, `assets/arcraiders-data-main/${filename}`);
-    } else {
-      // Development: assets are in the project root
-      dataPath = path.join(__dirname, `../assets/arcraiders-data-main/${filename}`);
-    }
-    
+    // In webpack builds, __dirname points to .webpack/main
+    // Assets are copied to .webpack/assets (sibling directory)
+    const dataPath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/${filename}`);
+
     console.log('Loading Arc Raiders file:', dataPath);
-    
+
     if (!fs.existsSync(dataPath)) {
       console.error('Arc Raiders file not found at:', dataPath);
-      return { 
-        success: false, 
-        error: `File not found: ${filename}` 
+      return {
+        success: false,
+        error: `File not found: ${filename}`
       };
     }
-    
+
     // Read and parse the JSON file
     const fileContent = fs.readFileSync(dataPath, 'utf8');
     let data = JSON.parse(fileContent);
-    
+
     // Transform image paths for items.json
     if (filename === 'items.json' && Array.isArray(data)) {
       data = data.map(item => {
         const transformed = { ...item };
-        
+
         // Handle image paths - convert to absolute file:// URLs
         if (transformed.imageFilename) {
           let imagePath;
-          
+
           // If it's a CDN URL, extract filename
           if (transformed.imageFilename.includes('cdn.arctracker.io')) {
-            const filename = transformed.imageFilename.split('/').pop();
-            if (app.isPackaged) {
-              imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
-            } else {
-              imagePath = path.join(__dirname, `../assets/arcraiders-data-main/images/items/${filename}`);
-            }
-          } 
+            const imageFilename = transformed.imageFilename.split('/').pop();
+            imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/images/items/${imageFilename}`);
+          }
           // If it's a relative path like "images/items/rattler.png"
           else if (transformed.imageFilename.startsWith('images/')) {
-            if (app.isPackaged) {
-              imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/${transformed.imageFilename}`);
-            } else {
-              imagePath = path.join(__dirname, `../assets/arcraiders-data-main/${transformed.imageFilename}`);
-            }
+            imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/${transformed.imageFilename}`);
           }
-          
-          // Convert to file:// URL for Electron
+
+          // Convert to file:// URL
           if (imagePath) {
             transformed.imageFilename = `file://${imagePath}`;
           }
         }
-        
+
         return transformed;
       });
     }
-    
-    return { 
-      success: true, 
+
+    return {
+      success: true,
       data: data
     };
   } catch (error) {
@@ -231,72 +256,57 @@ ipcMain.handle('arc:loadFile', async (event, filename) => {
 // IPC handler for fetching Arc Raiders data
 ipcMain.handle('arc:fetchData', async () => {
   try {
-    // Load Arc Raiders data from bundled assets
-    // In development: assets/ is in the project root
-    // In production: assets/ is copied to app.getAppPath()/assets or process.resourcesPath/assets
-    let dataPath;
-    
-    if (app.isPackaged) {
-      // Production: assets are in the resources directory
-      dataPath = path.join(process.resourcesPath, 'assets/arcraiders-data-main/items.json');
-    } else {
-      // Development: assets are in the project root
-      dataPath = path.join(__dirname, '../assets/arcraiders-data-main/items.json');
-    }
-    
+    // In webpack builds, __dirname points to .webpack/main
+    // Assets are copied to .webpack/assets (sibling directory)
+    const dataPath = path.join(__dirname, '..', 'assets', 'arcraiders-data-main/items.json');
+
     console.log('Looking for Arc Raiders data at:', dataPath);
-    
+
     if (!fs.existsSync(dataPath)) {
       console.error('Arc Raiders data file not found at:', dataPath);
-      return { 
-        success: false, 
-        error: `Arc Raiders data file not found at: ${dataPath}. Please ensure assets/arcraiders-data-main/items.json exists.` 
+      return {
+        success: false,
+        error: `Arc Raiders data file not found at: ${dataPath}. Please ensure assets/arcraiders-data-main/items.json exists.`
       };
     }
-    
+
     // Read and parse the items.json file
     const fileContent = fs.readFileSync(dataPath, 'utf8');
     const itemsData = JSON.parse(fileContent);
-    
+
     // Transform imageFilename from URL to local path
+    let itemCount = 0;
     const transformedData = itemsData.map(item => {
       const transformed = { ...item };
-      
+
       // Handle image paths - convert to absolute file:// URLs
       if (transformed.imageFilename) {
         let imagePath;
-        
+
         // If it's a CDN URL, extract filename
         if (transformed.imageFilename.includes('cdn.arctracker.io')) {
           const filename = transformed.imageFilename.split('/').pop();
-          if (app.isPackaged) {
-            imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
-          } else {
-            imagePath = path.join(__dirname, `../assets/arcraiders-data-main/images/items/${filename}`);
-          }
-        } 
+          imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/images/items/${filename}`);
+        }
         // If it's a relative path like "images/items/rattler.png"
         else if (transformed.imageFilename.startsWith('images/')) {
-          if (app.isPackaged) {
-            imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/${transformed.imageFilename}`);
-          } else {
-            imagePath = path.join(__dirname, `../assets/arcraiders-data-main/${transformed.imageFilename}`);
-          }
+          imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/${transformed.imageFilename}`);
         }
-        
-        // Convert to file:// URL for Electron
+
+        // Convert to file:// URL
         if (imagePath) {
           transformed.imageFilename = `file://${imagePath}`;
         }
       }
-      
+
+      itemCount++;
       return transformed;
     });
-    
+
     console.log(`Loaded ${transformedData.length} items from Arc Raiders data`);
-    
-    return { 
-      success: true, 
+
+    return {
+      success: true,
       data: transformedData,
       note: `Loaded ${transformedData.length} items from Arc Raiders community data`
     };
@@ -312,7 +322,7 @@ ipcMain.handle('arc:fetchData', async () => {
 app.whenReady().then(async () => {
   // Initialize database (now async)
   await initDatabase();
-  
+
   createWindow();
 
   // On OS X it's common to re-create a window in the app when the

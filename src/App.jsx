@@ -186,6 +186,7 @@ function App() {
             {importStatus.success ? (
               <span>
                 ✓ Successfully imported {importStatus.itemsImported} items and {importStatus.relationsImported} relations
+                {importStatus.note && <span className="ml-2 text-xs opacity-90">({importStatus.note})</span>}
               </span>
             ) : (
               <span>✗ Import failed: {importStatus.error}</span>

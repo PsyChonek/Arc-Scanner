@@ -14,13 +14,13 @@ async function fetchArcRaidersItems() {
     
     if (!result.success) {
       console.error('Failed to fetch Arc Raiders data:', result.error);
-      return null;
+      return { data: null, note: null };
     }
     
-    return result.data;
+    return { data: result.data, note: result.note || null };
   } catch (error) {
     console.error('Error fetching Arc Raiders data:', error);
-    return null;
+    return { data: null, note: null };
   }
 }
 
@@ -106,7 +106,7 @@ function transformArcRaidersData(rawData) {
 async function importArcRaidersData() {
   try {
     console.log('Fetching Arc Raiders data from GitHub...');
-    const rawData = await fetchArcRaidersItems();
+    const { data: rawData, note } = await fetchArcRaidersItems();
     
     if (!rawData) {
       console.error('Failed to fetch Arc Raiders data');
@@ -147,7 +147,8 @@ async function importArcRaidersData() {
       itemsImported: importedItems,
       relationsImported: importedRelations,
       totalItems: items.length,
-      totalRelations: relations.length
+      totalRelations: relations.length,
+      note: note
     };
   } catch (error) {
     console.error('Error importing Arc Raiders data:', error);

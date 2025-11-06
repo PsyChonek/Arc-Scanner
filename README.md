@@ -4,7 +4,13 @@ An Electron application built with React and Webpack for visualizing Arc Raiders
 
 ## Features
 
-- **Interactive Graph Visualization**: View and explore item relationships with an interactive node graph
+### Navigation
+- **Dual-View Interface**: Switch between Graph View and Item Tracker with tabbed navigation
+  - Graph View: Original interactive visualization
+  - Item Tracker: New progress tracking system
+
+### Interactive Graph Visualization
+- **Explore Relationships**: View and navigate item relationships with an interactive node graph
   - Drag nodes to reposition them
   - Zoom and pan to navigate the graph
   - Click on nodes to view detailed item information
@@ -12,17 +18,45 @@ An Electron application built with React and Webpack for visualizing Arc Raiders
   - Color-coded nodes by rarity (common, uncommon, rare, epic, legendary)
   - Color-coded edges by relationship type (crafts_to, requires, combines_with, upgrades_to)
 
-- **SQLite Database**: Persistent storage for items, relationships, and user data
+### Item Tracker (New!)
+- **Track Upgrades & Quests**: Manage your progression through the game
+  - Create tracked items for upgrades and quests
+  - Add custom names, types, and notes
+  - Mark items as completed with visual indicators
+  - View completion timestamps
+
+- **Requirements Management**: 
+  - Define required items/materials for each tracked upgrade
+  - Specify quantities needed
+  - Real-time comparison of owned vs. needed quantities
+  - Visual indicators (✓/✗) showing requirement fulfillment
+
+- **Inventory System**:
+  - Track items you own with quantities
+  - Search and add items from the complete database
+  - Update quantities as you collect materials
+  - Remove items you no longer need to track
+
+### SQLite Database
+- **Persistent Storage**: All data stored locally in SQLite
   - Items table with id, name, type, rarity, description, and custom data
   - Relations table for tracking item relationships
   - User data table for app settings
+  - **Inventory table**: Track owned items and quantities
+  - **Tracked items table**: Store upgrade/quest goals
+  - **Requirements table**: Link materials to tracked items
 
-- **Arc Raiders Data Integration**: Import real game data from the community repository
+### Arc Raiders Data Integration
+- **Import Real Game Data**: One-click import from community repository
   - Fetch data from [RaidTheory/arcraiders-data](https://github.com/RaidTheory/arcraiders-data)
-  - One-click import button in the UI
   - Automatic transformation to graph format
+  - Includes items, hideout modules, quests, and skill nodes
 
-- **Modern UI with Tailwind CSS**: Fast, responsive styling with utility classes
+### Modern UI
+- **Tailwind CSS**: Fast, responsive styling with utility classes
+- **Modal Dialogs**: Clean interfaces for adding items and managing requirements
+- **Error Handling**: User-friendly error messages with auto-dismiss
+- **Confirmation Modals**: Safe deletion with confirmation dialogs
 
 ## Setup
 
@@ -118,16 +152,45 @@ npm run make
 
 ## Usage
 
+### Getting Started
 1. **Start the application**: Run `npm start` to launch Arc Scanner
-2. **View the graph**: The app starts with sample data showing weapons, resources, and their relationships
-3. **Import real data**: Click "Import Arc Raiders Data" button to fetch real game data from GitHub
-4. **Interact with the graph**:
+2. **Import real data**: Click "Import Arc Raiders Data" button to fetch real game data from GitHub
+3. **Choose your view**: Use the navigation tabs to switch between Graph View and Item Tracker
+
+### Using Graph View
+1. **Interact with the graph**:
    - **Drag** nodes to reposition them
    - **Scroll** to zoom in/out
    - **Click** nodes to view detailed information
    - Use **minimap** in bottom-right for navigation
    - Use **controls** in bottom-left for zoom/fit controls
-5. **View details**: Click any node to open a modal with complete item information
+2. **View details**: Click any node to open a modal with complete item information
+
+### Using Item Tracker
+1. **Track an upgrade or quest**:
+   - Click "Add Tracked Item" button
+   - Enter a name (e.g., "Upgrade Hideout Module")
+   - Choose type (Upgrade or Quest)
+   - Add optional notes
+   - Click "Add" to save
+
+2. **Add requirements**:
+   - Click "Requirements" button on any tracked item
+   - Search for required items/materials
+   - Click items to add them to requirements list
+   - System automatically compares owned vs needed quantities
+
+3. **Manage inventory**:
+   - Use the search box in the Inventory section
+   - Search for items you own
+   - Click to add them to your inventory
+   - Adjust quantities as needed
+   - Remove items when no longer needed
+
+4. **Mark progress**:
+   - Check the checkbox on tracked items when completed
+   - Completed items show with green background and timestamp
+   - Requirements with ✓ indicate you have enough materials
 
 ## Database
 
@@ -161,6 +224,27 @@ The app stores data in a SQLite database located in your user data directory:
 - `key` (TEXT, PRIMARY KEY)
 - `value` (TEXT) - JSON-encoded value
 - `updated_at` (DATETIME)
+
+**Inventory Table** (New!):
+- `item_id` (TEXT, PRIMARY KEY, FOREIGN KEY)
+- `quantity` (INTEGER) - Amount owned
+- `added_at` (DATETIME)
+
+**Tracked Items Table** (New!):
+- `id` (INTEGER, PRIMARY KEY)
+- `item_id` (TEXT, FOREIGN KEY)
+- `name` (TEXT) - Display name for the tracked item
+- `type` (TEXT) - "upgrade" or "quest"
+- `completed` (BOOLEAN) - Completion status
+- `notes` (TEXT) - User notes
+- `created_at` (DATETIME)
+- `completed_at` (DATETIME) - When marked complete
+
+**Tracked Item Requirements Table** (New!):
+- `id` (INTEGER, PRIMARY KEY)
+- `tracked_item_id` (INTEGER, FOREIGN KEY)
+- `required_item_id` (TEXT, FOREIGN KEY)
+- `quantity_needed` (INTEGER) - How many are needed
 
 ## Configuration
 

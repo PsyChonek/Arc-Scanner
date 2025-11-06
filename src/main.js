@@ -101,12 +101,25 @@ function httpsGet(url) {
 ipcMain.handle('arc:fetchData', async () => {
   try {
     // Load Arc Raiders data from bundled assets
-    const dataPath = path.join(__dirname, '../assets/arcraiders-data-main/items.json');
+    // In development: assets/ is in the project root
+    // In production: assets/ is copied to app.getAppPath()/assets or process.resourcesPath/assets
+    let dataPath;
+    
+    if (app.isPackaged) {
+      // Production: assets are in the resources directory
+      dataPath = path.join(process.resourcesPath, 'assets/arcraiders-data-main/items.json');
+    } else {
+      // Development: assets are in the project root
+      dataPath = path.join(__dirname, '../assets/arcraiders-data-main/items.json');
+    }
+    
+    console.log('Looking for Arc Raiders data at:', dataPath);
     
     if (!fs.existsSync(dataPath)) {
+      console.error('Arc Raiders data file not found at:', dataPath);
       return { 
         success: false, 
-        error: 'Arc Raiders data file not found. Please ensure assets/arcraiders-data-main/items.json exists.' 
+        error: `Arc Raiders data file not found at: ${dataPath}. Please ensure assets/arcraiders-data-main/items.json exists.` 
       };
     }
     
@@ -123,7 +136,11 @@ ipcMain.handle('arc:fetchData', async () => {
         // Extract filename from URL (e.g., "fabric.png")
         const filename = transformed.imageFilename.split('/').pop();
         // Point to local images/items directory
-        transformed.imageFilename = `assets/arcraiders-data-main/images/items/${filename}`;
+        if (app.isPackaged) {
+          transformed.imageFilename = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
+        } else {
+          transformed.imageFilename = `assets/arcraiders-data-main/images/items/${filename}`;
+        }
       }
       
       return transformed;

@@ -8,4 +8,10 @@ module.exports = {
   module: {
     rules: require('./webpack.rules'),
   },
+  externals: {
+    'sql.js': 'commonjs sql.js'
+  },
+  resolve: {
+    extensions: ['.js', '.json', '.node'],
+  },
 };

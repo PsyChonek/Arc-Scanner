@@ -8,7 +8,7 @@ let SQL = null;
 let dbPath = null;
 
 async function initDatabase() {
-  // Initialize sql.js
+  // Initialize sql.js - it will handle locating the WASM file
   SQL = await initSqlJs();
   
   // Get the user data path for the app

@@ -7,7 +7,7 @@
     "rarity": "Common",
     "value": 50,
     "recyclesInto": {},
-    "imageFilename": "https://cdn.arctracker.io/items/fabric.png",
+    "imageFilename": "images/items/fabric.png",
     "weightKg": 0.1,
     "stackSize": 50,
     "foundIn": "Commercial, Medical, Residential",
@@ -25,7 +25,7 @@
     "value": 640,
     "type": "Recyclable",
     "rarity": "Uncommon",
-    "imageFilename": "https://cdn.arctracker.io/items/tick_pod.png",
+    "imageFilename": "images/items/tick_pod.png",
     "recyclesInto": {
       "arc_alloy": 1,
       "metal_parts": 1
@@ -40,7 +40,7 @@
     "name": "Explosive Mixture",
     "description": "A volatile crafting component.",
     "type": "Material",
-    "imageFilename": "https://cdn.arctracker.io/items/explosive_mixture.png",
+    "imageFilename": "images/items/explosive_mixture.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -57,7 +57,7 @@
     "salvagesInto": {
       "fabric": 5
     },
-    "imageFilename": "https://cdn.arctracker.io/items/dog_collar.png",
+    "imageFilename": "images/items/dog_collar.png",
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Residential",
@@ -76,7 +76,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Residential, Medical",
-    "imageFilename": "https://cdn.arctracker.io/items/torn_blanket.png",
+    "imageFilename": "images/items/torn_blanket.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -94,7 +94,7 @@
       "Stamina": 20,
       "Use Time": "1s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/lemon.png",
+    "imageFilename": "images/items/lemon.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -112,7 +112,7 @@
       "Stamina": 20,
       "Use Time": "1s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/apricot.png",
+    "imageFilename": "images/items/apricot.png",
     "updatedAt": "10/31/2025"
   },
   {
@@ -126,7 +126,7 @@
     "weightKg": 0.15,
     "stackSize": 50,
     "foundIn": "Mechanical, Industrial, Electrical, Technological",
-    "imageFilename": "https://cdn.arctracker.io/items/metal_parts.png",
+    "imageFilename": "images/items/metal_parts.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -140,7 +140,7 @@
     "weightKg": 0.1,
     "stackSize": 50,
     "foundIn": "Mechanical, Industrial, Electrical",
-    "imageFilename": "https://cdn.arctracker.io/items/rubber_parts.png",
+    "imageFilename": "images/items/rubber_parts.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -154,7 +154,7 @@
     "weightKg": 0.1,
     "stackSize": 50,
     "foundIn": "Commercial, Residential, Technological",
-    "imageFilename": "https://cdn.arctracker.io/items/plastic_parts.png",
+    "imageFilename": "images/items/plastic_parts.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -164,7 +164,7 @@
     "type": "Topside Material",
     "rarity": "Rare",
     "value": 500,
-    "imageFilename": "https://cdn.arctracker.io/items/voltage_converter.png",
+    "imageFilename": "images/items/voltage_converter.png",
     "updatedAt": "11/01/2025",
     "weightKg": 0.3,
     "stackSize": 5,
@@ -187,7 +187,7 @@
     "weightKg": 0.3,
     "stackSize": 5,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/arc_motion_core.png",
+    "imageFilename": "images/items/arc_motion_core.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "arc_alloy": 6
@@ -211,7 +211,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/toaster.png",
+    "imageFilename": "images/items/toaster.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -224,7 +224,7 @@
     "recyclesInto": {
       "arc_alloy": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/arc_circuitry.png",
+    "imageFilename": "images/items/arc_circuitry.png",
     "weightKg": 0.3,
     "stackSize": 5,
     "foundIn": "ARC",
@@ -245,7 +245,7 @@
       "oil": 2,
       "mechanical_components": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/motor.png",
+    "imageFilename": "images/items/motor.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -260,7 +260,7 @@
       "power_rod": 1,
       "magnetic_accelerator": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/queen_part.png",
+    "imageFilename": "images/items/queen_part.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -277,7 +277,7 @@
     "salvagesInto": {
       "rubber_parts": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/wires.png",
+    "imageFilename": "images/items/wires.png",
     "weightKg": 0.25,
     "stackSize": 15,
     "foundIn": "Electrical, Technological",
@@ -298,7 +298,7 @@
     "salvagesInto": {
       "electrical_components": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/hornet_driver.png",
+    "imageFilename": "images/items/hornet_driver.png",
     "effects": {
       "ARC Stun Duration": "10s",
       "Raider Stun Duration": "0.5s",
@@ -323,7 +323,7 @@
     "salvagesInto": {
       "wires": 5
     },
-    "imageFilename": "https://cdn.arctracker.io/items/fried_motherboard.png",
+    "imageFilename": "images/items/fried_motherboard.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -340,7 +340,7 @@
     "salvagesInto": {
       "metal_parts": 7
     },
-    "imageFilename": "https://cdn.arctracker.io/items/rusted_tools.png",
+    "imageFilename": "images/items/rusted_tools.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -358,7 +358,7 @@
     "salvagesInto": {
       "electrical_components": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/wasp_driver.png",
+    "imageFilename": "images/items/wasp_driver.png",
     "weightKg": 0.6,
     "stackSize": 3,
     "foundIn": "ARC",
@@ -383,7 +383,7 @@
     "updatedAt": "11/04/2025",
     "weightKg": 3.0,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/rusted_gear.png"
+    "imageFilename": "images/items/rusted_gear.png"
   },
   {
     "id": "sentinel_part",
@@ -391,7 +391,7 @@
     "description": "A salvaged component from a Sentinel unit.",
     "type": "Material",
     "_note": "not_in_serverslam",
-    "imageFilename": "https://cdn.arctracker.io/items/sentinel_part.png",
+    "imageFilename": "images/items/sentinel_part.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -405,7 +405,7 @@
       "oil": 1,
       "plastic_parts": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/synthesized_fuel.png",
+    "imageFilename": "images/items/synthesized_fuel.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -419,7 +419,7 @@
       "arc_alloy": 1,
       "crude_explosives": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/fireball_burner.png",
+    "imageFilename": "images/items/fireball_burner.png",
     "weightKg": 0.5,
     "stackSize": 3,
     "foundIn": "ARC",
@@ -441,7 +441,7 @@
       "chemicals": 2,
       "crude_explosives": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/laboratory_reagents.png",
+    "imageFilename": "images/items/laboratory_reagents.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -458,7 +458,7 @@
     "weightKg": 0.3,
     "stackSize": 5,
     "foundIn": "Medical",
-    "imageFilename": "https://cdn.arctracker.io/items/syringe.png",
+    "imageFilename": "images/items/syringe.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -470,7 +470,7 @@
     "recyclesInto": {
       "chemicals": 10
     },
-    "imageFilename": "https://cdn.arctracker.io/items/antiseptic.png",
+    "imageFilename": "images/items/antiseptic.png",
     "foundIn": "Medical",
     "weightKg": 1.0,
     "stackSize": 5,
@@ -492,7 +492,7 @@
     "recyclesInto": {
       "arc_alloy": 4
     },
-    "imageFilename": "https://cdn.arctracker.io/items/snitch_scanner.png",
+    "imageFilename": "images/items/snitch_scanner.png",
     "updatedAt": "10/31/2025",
     "weightKg": 0.75,
     "stackSize": 3,
@@ -509,7 +509,7 @@
       "syringe": 2,
       "antiseptic": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/rusted_shut_medical_kit.png",
+    "imageFilename": "images/items/rusted_shut_medical_kit.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -518,7 +518,7 @@
     "description": "A tightly wound coil of metal, useful for crafting mechanisms.",
     "type": "Material",
     "_note": "not_in_serverslam",
-    "imageFilename": "https://cdn.arctracker.io/items/spring.png",
+    "imageFilename": "images/items/spring.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -531,7 +531,7 @@
     "recyclesInto": {
       "simple_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/heavy_gun_parts.png",
+    "imageFilename": "images/items/heavy_gun_parts.png",
     "weightKg": 0.5,
     "stackSize": 5,
     "foundIn": "Security, Raider",
@@ -551,7 +551,7 @@
     "recyclesInto": {
       "metal_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/arc_alloy.png",
+    "imageFilename": "images/items/arc_alloy.png",
     "weightKg": 0.25,
     "stackSize": 15,
     "foundIn": "ARC",
@@ -579,7 +579,7 @@
     "salvagesInto": {
       "metal_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/ferro.png",
+    "imageFilename": "images/items/ferro.png",
     "updatedAt": "11/03/2025",
     "weightKg": 8.0,
     "effects": {
@@ -603,7 +603,7 @@
     "name": "Light Ammo",
     "description": "Light bullets used mainly with SMGs and light handguns. Compatible with: Burletta, Stitcher, Kettle, Hairpin, Bobcat",
     "type": "Ammunition",
-    "imageFilename": "https://cdn.arctracker.io/items/light_ammo.png",
+    "imageFilename": "images/items/light_ammo.png",
     "compatibleWith": [
       "Kettle",
       "Burletta",
@@ -635,7 +635,7 @@
     "value": 12,
     "weightKg": 0.05,
     "stackSize": 40,
-    "imageFilename": "https://cdn.arctracker.io/items/heavy_ammo.png",
+    "imageFilename": "images/items/heavy_ammo.png",
     "rarity": "Common",
     "recipe": {
       "metal_parts": 3,
@@ -655,7 +655,7 @@
       "Renegade",
       "Torrente"
     ],
-    "imageFilename": "https://cdn.arctracker.io/items/medium_ammo.png",
+    "imageFilename": "images/items/medium_ammo.png",
     "crafting": {
       "metal_parts": 4,
       "chemicals": 2
@@ -676,7 +676,7 @@
     "name": "Sterilized Bandage",
     "description": "A medical item that gradually restores a large amount of health over time.",
     "type": "Quick Use",
-    "imageFilename": "https://cdn.arctracker.io/items/sterilized_bandage.png",
+    "imageFilename": "images/items/sterilized_bandage.png",
     "value": 2000,
     "rarity": "Rare",
     "weightKg": 0.2,
@@ -700,7 +700,7 @@
     "type": "Quick Use",
     "rarity": "Uncommon",
     "value": 1000,
-    "imageFilename": "https://cdn.arctracker.io/items/lure_grenade.png",
+    "imageFilename": "images/items/lure_grenade.png",
     "updatedAt": "10/30/2025",
     "recipe": {
       "speaker_component": 1,
@@ -740,7 +740,7 @@
     "salvagesInto": {
       "metal_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/ferro.png",
+    "imageFilename": "images/items/ferro.png",
     "updatedAt": "11/03/2025",
     "weightKg": 8.0,
     "effects": {
@@ -759,7 +759,7 @@
     "type": "Quick Use",
     "rarity": "Rare",
     "value": 1600,
-    "imageFilename": "https://cdn.arctracker.io/items/blaze_grenade.png",
+    "imageFilename": "images/items/blaze_grenade.png",
     "recyclesInto": {
       "oil": 2,
       "metal_parts": 4
@@ -781,7 +781,7 @@
     "description": "A 3-round burst assault rifle with decent damage output and accuracy.",
     "type": "Assault Rifle",
     "rarity": "Uncommon",
-    "imageFilename": "https://cdn.arctracker.io/items/arpeggio.png",
+    "imageFilename": "images/items/arpeggio.png",
     "tags": [
       "Assault Rifle",
       "Burst"
@@ -818,7 +818,7 @@
     "recyclesInto": {},
     "weightKg": 0.3,
     "stackSize": 15,
-    "imageFilename": "https://cdn.arctracker.io/items/rubber_duck.png",
+    "imageFilename": "images/items/rubber_duck.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -829,7 +829,7 @@
     "rarity": "Common",
     "value": 640,
     "recyclesInto": {},
-    "imageFilename": "https://cdn.arctracker.io/items/arc_powercell.png",
+    "imageFilename": "images/items/arc_powercell.png",
     "weightKg": 0.5,
     "stackSize": 5,
     "foundIn": "ARC",
@@ -857,7 +857,7 @@
     "salvagesInto": {
       "canister": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/water_filter.png",
+    "imageFilename": "images/items/water_filter.png",
     "updatedAt": "11/1/2025"
   },
   {
@@ -877,7 +877,7 @@
       "oil": 2
     },
     "foundIn": "Mechanical, Industrial",
-    "imageFilename": "https://cdn.arctracker.io/items/water_pump.png",
+    "imageFilename": "images/items/water_pump.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -891,7 +891,7 @@
       "electrical_components": 1,
       "wires": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/advanced_electrical_components.png",
+    "imageFilename": "images/items/advanced_electrical_components.png",
     "salvagesInto": {
       "electrical_components": 1
     },
@@ -916,7 +916,7 @@
     "salvagesInto": {
       "rubber_parts": 9
     },
-    "imageFilename": "https://cdn.arctracker.io/items/deflated_football.png",
+    "imageFilename": "images/items/deflated_football.png",
     "rarity": "Uncommon",
     "weightKg": 0.8,
     "stackSize": 3,
@@ -926,7 +926,7 @@
   {
     "id": "duct_tape",
     "name": "Duct Tape",
-    "imageFilename": "https://cdn.arctracker.io/items/duct_tape.png",
+    "imageFilename": "images/items/duct_tape.png",
     "value": 300,
     "recyclesInto": {
       "fabric": 3
@@ -948,7 +948,7 @@
     "weightKg": 0.2,
     "stackSize": 5,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/empty_wine_bottle.png",
+    "imageFilename": "images/items/empty_wine_bottle.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   },
@@ -959,7 +959,7 @@
     "type": "Quick Use",
     "rarity": "Common",
     "value": 270,
-    "imageFilename": "https://cdn.arctracker.io/items/light_impact_grenade.png",
+    "imageFilename": "images/items/light_impact_grenade.png",
     "recyclesInto": {
       "chemicals": 1,
       "plastic_parts": 1
@@ -1006,13 +1006,13 @@
       "steel_spring": 2
     },
     "craftBench": "explosives_bench",
-    "imageFilename": "https://cdn.arctracker.io/items/shrapnel_grenade.png"
+    "imageFilename": "images/items/shrapnel_grenade.png"
   },
   {
     "id": "oil",
     "name": "Oil",
     "description": "Used to craft weapons and explosives. Can be recycled into chemicals. Used to craft: Renegade, Explosive Compound, Blaze Grenade",
-    "imageFilename": "https://cdn.arctracker.io/items/oil.png",
+    "imageFilename": "images/items/oil.png",
     "type": "Topside Material",
     "rarity": "Uncommon",
     "value": 300,
@@ -1031,7 +1031,7 @@
     "type": "Quick Use",
     "rarity": "Legendary",
     "value": 14000,
-    "imageFilename": "https://cdn.arctracker.io/items/snap_hook.png",
+    "imageFilename": "images/items/snap_hook.png",
     "weightKg": 5.0,
     "effects": {
       "Durability": "100/100",
@@ -1057,7 +1057,7 @@
       "Damage": "166 x12",
       "Homing Range": "100m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/wolfpack.png",
+    "imageFilename": "images/items/wolfpack.png",
     "updatedAt": "10/30/2025",
     "recyclesInto": {
       "crude_explosives": 2,
@@ -1077,7 +1077,7 @@
     "weightKg": 0.8,
     "stackSize": 5,
     "foundIn": "Security",
-    "imageFilename": "https://cdn.arctracker.io/items/camera_lens.png",
+    "imageFilename": "images/items/camera_lens.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1092,7 +1092,7 @@
     "stackSize": 3,
     "foundIn": "Old World, Residential",
     "updatedAt": "11/03/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/film_reel.png"
+    "imageFilename": "images/items/film_reel.png"
   },
   {
     "id": "electrical_components",
@@ -1107,7 +1107,7 @@
     "salvagesInto": {
       "plastic_parts": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/electrical_components.png",
+    "imageFilename": "images/items/electrical_components.png",
     "rarity": "Uncommon",
     "weightKg": 0.5,
     "stackSize": 10,
@@ -1129,7 +1129,7 @@
     "recyclesInto": {
       "plastic_parts": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/canister.png",
+    "imageFilename": "images/items/canister.png",
     "weightKg": 0.25,
     "stackSize": 15,
     "foundIn": "Commercial",
@@ -1147,7 +1147,7 @@
       "wires": 1
     },
     "weightKg": 1.0,
-    "imageFilename": "https://cdn.arctracker.io/items/advanced_mechanical_components.png",
+    "imageFilename": "images/items/advanced_mechanical_components.png",
     "foundIn": "Mechanical",
     "updatedAt": "11/03/2025",
     "stackSize": 5,
@@ -1171,7 +1171,7 @@
     "weightKg": 0.3,
     "stackSize": 10,
     "foundIn": "Raider, Security",
-    "imageFilename": "https://cdn.arctracker.io/items/simple_gun_parts.png"
+    "imageFilename": "images/items/simple_gun_parts.png"
   },
   {
     "id": "mechanical_components",
@@ -1184,7 +1184,7 @@
       "metal_parts": 8,
       "steel_spring": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/mechanical_components.png",
+    "imageFilename": "images/items/mechanical_components.png",
     "updatedAt": "11/03/2025",
     "weightKg": 0.5,
     "stackSize": 10,
@@ -1211,7 +1211,7 @@
       "mechanical_components": 1,
       "magnet": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/arpeggio.png",
+    "imageFilename": "images/items/arpeggio.png",
     "updatedAt": "11/03/2025",
     "value": 5500,
     "weightKg": 6.0,
@@ -1252,7 +1252,7 @@
     },
     "craftBench": "weapon_bench",
     "stationLevelRequired": 2,
-    "imageFilename": "https://cdn.arctracker.io/items/venator.png",
+    "imageFilename": "images/items/venator.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1276,7 +1276,7 @@
       "canister": 4
     },
     "stationLevelRequired": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/vulcano.png",
+    "imageFilename": "images/items/vulcano.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1299,7 +1299,7 @@
       "mechanical_components": 1,
       "simple_gun_parts": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/vulcano.png",
+    "imageFilename": "images/items/vulcano.png",
     "updatedAt": "11/01/2025",
     "value": 16800,
     "weightKg": 9.25,
@@ -1332,7 +1332,7 @@
       "mechanical_components": 1,
       "simple_gun_parts": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/venator.png",
+    "imageFilename": "images/items/venator.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1351,7 +1351,7 @@
     "increasedFireRate": 40,
     "reducedReloadTime": 25,
     "reducedDurabilityBurnRate": 46,
-    "imageFilename": "https://cdn.arctracker.io/items/arpeggio.png",
+    "imageFilename": "images/items/arpeggio.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1374,7 +1374,7 @@
       "mechanical_components": 1,
       "medium_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/arpeggio.png",
+    "imageFilename": "images/items/arpeggio.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1393,7 +1393,7 @@
     "reducedDispersionRecoveryTime": 30,
     "increasedFireRate": 30,
     "reducedDurabilityBurnRate": 46,
-    "imageFilename": "https://cdn.arctracker.io/items/anvil.png",
+    "imageFilename": "images/items/anvil.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1416,7 +1416,7 @@
       "mechanical_components": 1,
       "heavy_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/anvil.png",
+    "imageFilename": "images/items/anvil.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1429,7 +1429,7 @@
     "recyclesInto": {
       "simple_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/medium_gun_parts.png",
+    "imageFilename": "images/items/medium_gun_parts.png",
     "foundIn": "Raider, Security",
     "stackSize": 5,
     "weightKg": 0.4,
@@ -1449,7 +1449,7 @@
     "weightKg": 0.15,
     "stackSize": 50,
     "foundIn": "Medical, Residential, Mechanical",
-    "imageFilename": "https://cdn.arctracker.io/items/power_rod.png",
+    "imageFilename": "images/items/power_rod.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1464,7 +1464,7 @@
       "advanced_electrical_components": 1,
       "arc_circuitry": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/power_rod.png",
+    "imageFilename": "images/items/power_rod.png",
     "updatedAt": "11/03/2025",
     "foundIn": "Exodus",
     "recipe": {
@@ -1490,7 +1490,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Industrial",
-    "imageFilename": "https://cdn.arctracker.io/items/industrial_battery.png",
+    "imageFilename": "images/items/industrial_battery.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1506,7 +1506,7 @@
     "stackSize": 3,
     "weightKg": 2.0,
     "foundIn": "Electrical, Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/power_cable.png",
+    "imageFilename": "images/items/power_cable.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1523,7 +1523,7 @@
     "weightKg": 0.2,
     "stackSize": 5,
     "foundIn": "Technological",
-    "imageFilename": "https://cdn.arctracker.io/items/processor.png",
+    "imageFilename": "images/items/processor.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1532,7 +1532,7 @@
     "description": "Used to craft a wide range of items. Can be recycled into scrap metal. Used to craft: Energy Clip, Medium Shield, Jolt Mine",
     "type": "Topside Material",
     "rarity": "Uncommon",
-    "imageFilename": "https://cdn.arctracker.io/items/battery.png",
+    "imageFilename": "images/items/battery.png",
     "value": 250,
     "recyclesInto": {
       "metal_parts": 2
@@ -1559,14 +1559,14 @@
     "weightKg": 0.3,
     "stackSize": 5,
     "foundIn": "Security, Technological",
-    "imageFilename": "https://cdn.arctracker.io/items/sensors.png",
+    "imageFilename": "images/items/sensors.png",
     "updatedAt": "11/03/2025"
   },
   {
     "id": "steel_spring",
     "name": "Steel Spring",
     "description": "Used to craft a wide range of items. Can be recycled into crafting materials. Used to craft: Extended Shotgun Mag I, Extended Medium Mag I, Extended Light Mag I, Torrente, Extended Medium Mag II",
-    "imageFilename": "https://cdn.arctracker.io/items/steel_spring.png",
+    "imageFilename": "images/items/steel_spring.png",
     "type": "Topside Material",
     "rarity": "Uncommon",
     "value": 300,
@@ -1595,7 +1595,7 @@
     "weightKg": 0.3,
     "stackSize": 5,
     "foundIn": "Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/speaker_component.png",
+    "imageFilename": "images/items/speaker_component.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1612,7 +1612,7 @@
     "weightKg": 0.25,
     "stackSize": 15,
     "foundIn": "Exodus",
-    "imageFilename": "https://cdn.arctracker.io/items/magnet.png"
+    "imageFilename": "images/items/magnet.png"
   },
   {
     "id": "advanced_arc_powercell",
@@ -1620,7 +1620,7 @@
     "description": "Very valuable resource that drops from certain ARC enemies.",
     "type": "Topside Material",
     "rarity": "Rare",
-    "imageFilename": "https://cdn.arctracker.io/items/advanced_arc_powercell.png",
+    "imageFilename": "images/items/advanced_arc_powercell.png",
     "value": 640,
     "weightKg": 0.5,
     "stackSize": 5,
@@ -1640,7 +1640,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/arc_coolant.png",
+    "imageFilename": "images/items/arc_coolant.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1655,7 +1655,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 1.0,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/arc_performance_steel.png",
+    "imageFilename": "images/items/arc_performance_steel.png",
     "updatedAt": "11/01/2025",
     "stackSize": 3
   },
@@ -1670,7 +1670,7 @@
     },
     "description": "Obtained from ARC enemies or activities. Can be recycled into plastic.",
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/arc_synthetic_resin.png",
+    "imageFilename": "images/items/arc_synthetic_resin.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1686,7 +1686,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/arc_thermo_lining.png",
+    "imageFilename": "images/items/arc_thermo_lining.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1703,7 +1703,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/bastion_cell.png",
+    "imageFilename": "images/items/bastion_cell.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -1722,7 +1722,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 3.0,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/bicycle_pump.png",
+    "imageFilename": "images/items/bicycle_pump.png",
     "updatedAt": "11/01/2025",
     "stackSize": 3
   },
@@ -1743,7 +1743,7 @@
     "foundIn": "Security",
     "weightKg": 2.0,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/broken_flashlight.png",
+    "imageFilename": "images/items/broken_flashlight.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -1761,7 +1761,7 @@
     "weightKg": 3.0,
     "stackSize": 3,
     "foundIn": "Security",
-    "imageFilename": "https://cdn.arctracker.io/items/broken_handheld_radio.png"
+    "imageFilename": "images/items/broken_handheld_radio.png"
   },
   {
     "id": "broken_riot_shield",
@@ -1802,7 +1802,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 2.0,
     "foundIn": "Industrial",
-    "imageFilename": "https://cdn.arctracker.io/items/cooling_coil.png",
+    "imageFilename": "images/items/cooling_coil.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1818,7 +1818,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 1.0,
     "foundIn": "Technological",
-    "imageFilename": "https://cdn.arctracker.io/items/cooling_fan.png",
+    "imageFilename": "images/items/cooling_fan.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1833,7 +1833,7 @@
     },
     "description": "Can be recycled into crafting materials.",
     "foundIn": "Medical",
-    "imageFilename": "https://cdn.arctracker.io/items/cracked_bioscanner.png",
+    "imageFilename": "images/items/cracked_bioscanner.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1849,7 +1849,7 @@
     "salvagesInto": {
       "chemicals": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/crude_explosives.png",
+    "imageFilename": "images/items/crude_explosives.png",
     "effects": {
       "Damage": 15,
       "Radius": "1.5m"
@@ -1870,7 +1870,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/crumpled_plastic_bottle.png",
+    "imageFilename": "images/items/crumpled_plastic_bottle.png",
     "description": "Can be recycled into crafting materials.",
     "type": "Recyclable",
     "value": 270,
@@ -1914,7 +1914,7 @@
     "weightKg": 0.25,
     "foundIn": "Nature",
     "stackSize": 15,
-    "imageFilename": "https://cdn.arctracker.io/items/great_mullein.png"
+    "imageFilename": "images/items/great_mullein.png"
   },
   {
     "id": "headphones",
@@ -1930,7 +1930,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/headphones.png",
+    "imageFilename": "images/items/headphones.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -1946,7 +1946,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/household_cleaner.png",
+    "imageFilename": "images/items/household_cleaner.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -1963,7 +1963,7 @@
     "foundIn": "Residential",
     "weightKg": 2.0,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/humidifier.png",
+    "imageFilename": "images/items/humidifier.png",
     "updatedAt": "11/02/2025"
   },
   {
@@ -1982,7 +1982,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/ice_cream_scooper.png",
+    "imageFilename": "images/items/ice_cream_scooper.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -1998,7 +1998,7 @@
     "foundIn": "ARC",
     "weightKg": 0.33,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/impure_arc_coolant.png",
+    "imageFilename": "images/items/impure_arc_coolant.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -2018,7 +2018,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Industrial",
-    "imageFilename": "https://cdn.arctracker.io/items/industrial_charger.png",
+    "imageFilename": "images/items/industrial_charger.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -2034,7 +2034,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 0.67,
     "foundIn": "Industrial",
-    "imageFilename": "https://cdn.arctracker.io/items/industrial_magnet.png",
+    "imageFilename": "images/items/industrial_magnet.png",
     "stackSize": 3,
     "updatedAt": "10/30/2025"
   },
@@ -2051,7 +2051,7 @@
     "foundIn": "Raider, Security",
     "weightKg": 0.3,
     "stackSize": 5,
-    "imageFilename": "https://cdn.arctracker.io/items/light_gun_parts.png",
+    "imageFilename": "images/items/light_gun_parts.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "simple_gun_parts": 4
@@ -2072,7 +2072,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "Exodus",
-    "imageFilename": "https://cdn.arctracker.io/items/magnetic_accelerator.png",
+    "imageFilename": "images/items/magnetic_accelerator.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "advanced_mechanical_components": 2,
@@ -2097,7 +2097,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Mechanical",
-    "imageFilename": "https://cdn.arctracker.io/items/number_plate.png"
+    "imageFilename": "images/items/number_plate.png"
   },
   {
     "id": "power_bank",
@@ -2116,7 +2116,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Electrical, Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/power_bank.png",
+    "imageFilename": "images/items/power_bank.png",
     "updatedAt": "11/02/2025"
   },
   {
@@ -2133,7 +2133,7 @@
     "weightKg": 2,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/projector.png",
+    "imageFilename": "images/items/projector.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -2154,7 +2154,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Commercial, Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/radio.png"
+    "imageFilename": "images/items/radio.png"
   },
   {
     "id": "recorder",
@@ -2184,7 +2184,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/remote_control.png",
+    "imageFilename": "images/items/remote_control.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -2201,7 +2201,7 @@
     "foundIn": "Residential, Commercial",
     "weightKg": 0.3,
     "stackSize": 5,
-    "imageFilename": "https://cdn.arctracker.io/items/rope.png"
+    "imageFilename": "images/items/rope.png"
   },
   {
     "id": "rubber_pad",
@@ -2219,7 +2219,7 @@
     "foundIn": "Electrical",
     "weightKg": 2.0,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/rubber_pad.png",
+    "imageFilename": "images/items/rubber_pad.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -2236,7 +2236,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Industrial, Mechanical",
-    "imageFilename": "https://cdn.arctracker.io/items/rusted_bolts.png"
+    "imageFilename": "images/items/rusted_bolts.png"
   },
   {
     "id": "spring_cushion",
@@ -2255,7 +2255,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/spring_cushion.png",
+    "imageFilename": "images/items/spring_cushion.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -2273,7 +2273,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/spotter_relay.png"
+    "imageFilename": "images/items/spotter_relay.png"
   },
   {
     "id": "surveyor_vault",
@@ -2289,7 +2289,7 @@
     "foundIn": "ARC",
     "weightKg": 0.33,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/surveyor_vault.png",
+    "imageFilename": "images/items/surveyor_vault.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -2318,7 +2318,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/thermostat.png"
+    "imageFilename": "images/items/thermostat.png"
   },
   {
     "id": "rocketeer_driver",
@@ -2335,7 +2335,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/rocketeer_driver.png"
+    "imageFilename": "images/items/rocketeer_driver.png"
   },
   {
     "id": "leaper_pulse_unit",
@@ -2352,7 +2352,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/leaper_pulse_unit.png"
+    "imageFilename": "images/items/leaper_pulse_unit.png"
   },
   {
     "id": "sentinel_firing_core",
@@ -2366,7 +2366,7 @@
     },
     "description": "Can be recycled into crafting materials.",
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/sentinel_firing_core.png",
+    "imageFilename": "images/items/sentinel_firing_core.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -2383,7 +2383,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/bombardier_cell.png",
+    "imageFilename": "images/items/bombardier_cell.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -2395,14 +2395,14 @@
     "weightKg": 0.4,
     "foundIn": "Nature",
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/agave.png",
+    "imageFilename": "images/items/agave.png",
     "updatedAt": "10/30/2025"
   },
   {
     "id": "assorted_seeds",
     "name": "Assorted Seeds",
     "description": "A handful of seeds. Celeste might be looking for these.",
-    "imageFilename": "https://cdn.arctracker.io/items/assorted_seeds.png",
+    "imageFilename": "images/items/assorted_seeds.png",
     "rarity": "Common",
     "type": "Nature",
     "value": 100,
@@ -2417,7 +2417,7 @@
     "name": "Prickly Pear",
     "rarity": "Common",
     "description": "Can be consumed for a small amount of stamina.",
-    "imageFilename": "https://cdn.arctracker.io/items/prickly_pear.png",
+    "imageFilename": "images/items/prickly_pear.png",
     "type": "Nature",
     "value": 640,
     "recyclesInto": {},
@@ -2440,14 +2440,14 @@
     },
     "foundIn": "Nature",
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/resin.png"
+    "imageFilename": "images/items/resin.png"
   },
   {
     "id": "roots",
     "name": "Roots",
     "rarity": "Uncommon",
     "description": "May be worth a few coins.",
-    "imageFilename": "https://cdn.arctracker.io/items/roots.png",
+    "imageFilename": "images/items/roots.png",
     "type": "Nature",
     "value": 640,
     "recyclesInto": {
@@ -2474,7 +2474,7 @@
       "Stamina": 20,
       "Use Time": "1s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/olives.png"
+    "imageFilename": "images/items/olives.png"
   },
   {
     "id": "mushroom",
@@ -2491,7 +2491,7 @@
       "Healing": 15,
       "Use Time": "1s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/mushroom.png"
+    "imageFilename": "images/items/mushroom.png"
   },
   {
     "id": "polluted_air_filter",
@@ -2520,7 +2520,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 2,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/frying_pan.png",
+    "imageFilename": "images/items/frying_pan.png",
     "stackSize": 3,
     "updatedAt": "11/04/2025"
   },
@@ -2539,7 +2539,7 @@
     "weightKg": 0.5,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/pop_trigger.png"
+    "imageFilename": "images/items/pop_trigger.png"
   },
   {
     "id": "portable_tv",
@@ -2554,7 +2554,7 @@
     "description": "Can be recycled into crafting materials.",
     "foundIn": "Residential",
     "weightKg": 3.0,
-    "imageFilename": "https://cdn.arctracker.io/items/portable_tv.png",
+    "imageFilename": "images/items/portable_tv.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -2571,7 +2571,7 @@
     "effects": {
       "Damage": 10
     },
-    "imageFilename": "https://cdn.arctracker.io/items/volcanic_rock.png",
+    "imageFilename": "images/items/volcanic_rock.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -2586,7 +2586,7 @@
     "stackSize": 15,
     "foundIn": "Residential",
     "updatedAt": "11/03/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/faded_photograph.png"
+    "imageFilename": "images/items/faded_photograph.png"
   },
   {
     "id": "portable_television",
@@ -2606,7 +2606,7 @@
     "weightKg": 0.5,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/cat_bed.png",
+    "imageFilename": "images/items/cat_bed.png",
     "rarity": "Uncommon",
     "updatedAt": "10/30/2025"
   },
@@ -2623,7 +2623,7 @@
     "foundIn": "Residential, Commercial",
     "stackSize": 15,
     "weightKg": 0.2,
-    "imageFilename": "https://cdn.arctracker.io/items/bloated_tuna_can.png",
+    "imageFilename": "images/items/bloated_tuna_can.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -2638,7 +2638,7 @@
     "stackSize": 3,
     "foundIn": "Residential",
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/coffee_pot.png",
+    "imageFilename": "images/items/coffee_pot.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -2650,7 +2650,7 @@
     "weightKg": 0.3,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/very_comfortable_pillow.png",
+    "imageFilename": "images/items/very_comfortable_pillow.png",
     "rarity": "Uncommon",
     "updatedAt": "10/30/2025"
   },
@@ -2666,7 +2666,7 @@
     "stackSize": 3,
     "foundIn": "Old World, Residential",
     "updatedAt": "11/03/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/pottery.png"
+    "imageFilename": "images/items/pottery.png"
   },
   {
     "id": "air_freshener",
@@ -2674,7 +2674,7 @@
     "description": "May be worth a few coins.",
     "type": "Trinket",
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/air_freshener.png",
+    "imageFilename": "images/items/air_freshener.png",
     "foundIn": "Mechanical",
     "rarity": "Uncommon",
     "weightKg": 0.3,
@@ -2692,7 +2692,7 @@
     "weightKg": 0.2,
     "stackSize": 3,
     "foundIn": "Electrical",
-    "imageFilename": "https://cdn.arctracker.io/items/light_bulb.png"
+    "imageFilename": "images/items/light_bulb.png"
   },
   {
     "id": "statuette",
@@ -2705,7 +2705,7 @@
     "foundIn": "Old World, Residential",
     "stackSize": 3,
     "weightKg": 0.3,
-    "imageFilename": "https://cdn.arctracker.io/items/statuette.png",
+    "imageFilename": "images/items/statuette.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -2720,7 +2720,7 @@
     "weightKg": 0.3,
     "stackSize": 3,
     "foundIn": "Residential, Old World, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/silver_teaspoon_set.png"
+    "imageFilename": "images/items/silver_teaspoon_set.png"
   },
   {
     "id": "music_album",
@@ -2734,7 +2734,7 @@
     "foundIn": "Residential, Commercial",
     "weightKg": 0.3,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/music_album.png"
+    "imageFilename": "images/items/music_album.png"
   },
   {
     "id": "watch",
@@ -2756,7 +2756,7 @@
     "weightKg": 0.3,
     "stackSize": 3,
     "foundIn": "Old World, Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/vase.png"
+    "imageFilename": "images/items/vase.png"
   },
   {
     "id": "music_box",
@@ -2770,7 +2770,7 @@
     "weightKg": 0.4,
     "stackSize": 3,
     "foundIn": "Old World, Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/music_box.png"
+    "imageFilename": "images/items/music_box.png"
   },
   {
     "id": "red_coral_jewelry",
@@ -2784,7 +2784,7 @@
     "weightKg": 0.3,
     "stackSize": 3,
     "foundIn": "Residential, Old World, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/red_coral_jewelry.png"
+    "imageFilename": "images/items/red_coral_jewelry.png"
   },
   {
     "id": "playing_cards",
@@ -2798,7 +2798,7 @@
     "weightKg": 0.2,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/playing_cards.png"
+    "imageFilename": "images/items/playing_cards.png"
   },
   {
     "id": "snow_globe",
@@ -2819,7 +2819,7 @@
     "weightKg": 0.2,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/lances_mixtape_5th_edition.png"
+    "imageFilename": "images/items/lances_mixtape_5th_edition.png"
   },
   {
     "id": "raider_hatch_key",
@@ -2830,7 +2830,7 @@
     "value": 1000,
     "recyclesInto": {},
     "weightKg": 0.01,
-    "imageFilename": "https://cdn.arctracker.io/items/raider_hatch_key.png",
+    "imageFilename": "images/items/raider_hatch_key.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "advanced_electrical_components": 1,
@@ -2850,7 +2850,7 @@
     "movementSpeedModifier": -5,
     "weightKg": 7.0,
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/medium_shield.png",
+    "imageFilename": "images/items/medium_shield.png",
     "effects": {
       "Durability": "100/100",
       "Charge": 70,
@@ -2883,7 +2883,7 @@
       "Charge": 40,
       "Damage Reduction": "40%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/light_shield.png",
+    "imageFilename": "images/items/light_shield.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "arc_alloy": 2,
@@ -2912,7 +2912,7 @@
       "Damage Reduction": "52.5%",
       "15% Reduced Movement Speed": ""
     },
-    "imageFilename": "https://cdn.arctracker.io/items/heavy_shield.png",
+    "imageFilename": "images/items/heavy_shield.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "power_rod": 1,
@@ -2929,7 +2929,7 @@
     "rangeMeters": 60,
     "weight": 0.8,
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/zipline.png",
+    "imageFilename": "images/items/zipline.png",
     "updatedAt": "10/30/2025",
     "recyclesInto": {
       "rope": 1,
@@ -2952,7 +2952,7 @@
     "recyclesInto": {
       "rubber_parts": 16
     },
-    "imageFilename": "https://cdn.arctracker.io/items/arc_flex_rubber.png",
+    "imageFilename": "images/items/arc_flex_rubber.png",
     "stackSize": 3,
     "foundIn": "ARC",
     "updatedAt": "11/01/2025"
@@ -2965,7 +2965,7 @@
     "description": "Can be recycled into crafting materials.",
     "weightKg": 0.67,
     "value": 333.33,
-    "imageFilename": "https://cdn.arctracker.io/items/damaged_heat_sink.png",
+    "imageFilename": "images/items/damaged_heat_sink.png",
     "foundIn": "Technological",
     "stackSize": 3,
     "updatedAt": "10/30/2025"
@@ -2984,7 +2984,7 @@
       "Raider Stun Duration": "2s",
       "Radius": "6m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/showstopper.png",
+    "imageFilename": "images/items/showstopper.png",
     "updatedAt": "10/30/2025",
     "recyclesInto": {
       "electrical_components": 1,
@@ -3002,7 +3002,7 @@
     "effects": {
       "Durability": "100/100"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/photoelectric_cloak.png",
+    "imageFilename": "images/items/photoelectric_cloak.png",
     "updatedAt": "11/01/2025",
     "recipe": {
       "advanced_electrical_components": 2,
@@ -3016,7 +3016,7 @@
     "description": "A blueprint to craft the Burletta weapon.",
     "type": "Blueprint",
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/burletta.png"
+    "imageFilename": "images/items/burletta.png"
   },
   {
     "id": "binoculars",
@@ -3034,7 +3034,7 @@
     "effects": {
       "Durability": "100/100"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/binoculars.png",
+    "imageFilename": "images/items/binoculars.png",
     "recipe": {
       "plastic_parts": 8,
       "rubber_parts": 4
@@ -3053,7 +3053,7 @@
     },
     "value": 2000,
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/silencer_i.png"
+    "imageFilename": "images/items/silencer_i.png"
   },
   {
     "id": "extended_light_mag_i",
@@ -3062,7 +3062,7 @@
     "type": "Modification",
     "rarity": "Common",
     "value": 640,
-    "imageFilename": "https://cdn.arctracker.io/items/extended_light_mag_i.png",
+    "imageFilename": "images/items/extended_light_mag_i.png",
     "compatibleWith": [
       "Hairpin",
       "Kettle",
@@ -3098,7 +3098,7 @@
     "type": "Modification",
     "rarity": "Common",
     "value": 640,
-    "imageFilename": "https://cdn.arctracker.io/items/compensator_i.png",
+    "imageFilename": "images/items/compensator_i.png",
     "compatibleWith": [
       "Ferro",
       "Kettle",
@@ -3143,7 +3143,7 @@
     "type": "Modification",
     "rarity": "Common",
     "value": 640,
-    "imageFilename": "https://cdn.arctracker.io/items/stable_stock_i.png",
+    "imageFilename": "images/items/stable_stock_i.png",
     "compatibleWith": [
       "Rattler",
       "Ferro",
@@ -3179,7 +3179,7 @@
     "description": "A blueprint to craft the Silencer I.",
     "type": "Blueprint",
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/silencer_i.png"
+    "imageFilename": "images/items/silencer_i.png"
   },
   {
     "id": "vita_shot",
@@ -3194,7 +3194,7 @@
       "Healing": 50,
       "Use Time": "4s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/vita_shot.png",
+    "imageFilename": "images/items/vita_shot.png",
     "recyclesInto": {
       "chemicals": 4,
       "syringe": 1
@@ -3215,7 +3215,7 @@
       "Healing": "10/s",
       "Heal Capacity": 150
     },
-    "imageFilename": "https://cdn.arctracker.io/items/vita_spray.png",
+    "imageFilename": "images/items/vita_spray.png",
     "updatedAt": "10/30/2025",
     "recyclesInto": {
       "antiseptic": 1,
@@ -3243,7 +3243,7 @@
       "Raider Stun Duration": "4s",
       "Radius": "5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/jolt_mine.png",
+    "imageFilename": "images/items/jolt_mine.png",
     "updatedAt": "11/03/2025",
     "recyclesInto": {
       "battery": 1,
@@ -3287,7 +3287,7 @@
     "effects": {
       "Health": 500
     },
-    "imageFilename": "https://cdn.arctracker.io/items/barricade_kit.png",
+    "imageFilename": "images/items/barricade_kit.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -3312,7 +3312,7 @@
       "Healing": 50,
       "Use Time": "1.5s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/defibrillator.png",
+    "imageFilename": "images/items/defibrillator.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -3324,7 +3324,7 @@
     "value": 5000,
     "weightKg": 0.75,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/defibrillator.png",
+    "imageFilename": "images/items/defibrillator.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -3336,7 +3336,7 @@
     "value": 100,
     "recyclesInto": {},
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/buried_city_town_hall_key.png",
+    "imageFilename": "images/items/buried_city_town_hall_key.png",
     "updatedAt": "10/31/2025"
   },
   {
@@ -3352,7 +3352,7 @@
       "Damage": 90,
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/trigger_nade.png",
+    "imageFilename": "images/items/trigger_nade.png",
     "updatedAt": "11/03/2025",
     "recyclesInto": {
       "chemicals": 1,
@@ -3384,7 +3384,7 @@
       "mechanical_components": 1,
       "simple_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/burletta.png",
+    "imageFilename": "images/items/burletta.png",
     "updatedAt": "11/03/2025",
     "weightKg": 4.0,
     "effects": {
@@ -3425,7 +3425,7 @@
       "ARC Armor Penetration": "Moderate",
       "Special Trait": "Scoped"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/osprey.png",
+    "imageFilename": "images/items/osprey.png",
     "recipe": {
       "advanced_mechanical_components": 2,
       "medium_gun_parts": 3,
@@ -3461,7 +3461,7 @@
       "Duration": "10s",
       "Use Time": "1s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/adrenaline_shot.png",
+    "imageFilename": "images/items/adrenaline_shot.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "chemicals": 3,
@@ -3487,7 +3487,7 @@
       "Duration": "20s",
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/gas_grenade.png",
+    "imageFilename": "images/items/gas_grenade.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "chemicals": 4,
@@ -3540,7 +3540,7 @@
       "Max Loadout Weight": 40.0,
       "Shield Compatibility": "Light, Medium"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/tactical_i.png",
+    "imageFilename": "images/items/tactical_i.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "plastic_parts": 6,
@@ -3555,7 +3555,7 @@
     "type": "Augment",
     "rarity": "Rare",
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/tactical_i.png",
+    "imageFilename": "images/items/tactical_i.png",
     "updatedAt": "11/03/2025",
     "effects": {
       "Durability": "100/100",
@@ -3580,7 +3580,7 @@
       "plastic_parts": 3,
       "rubber_parts": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/combat_i.png",
+    "imageFilename": "images/items/combat_i.png",
     "updatedAt": "11/03/2025",
     "weightKg": 2.0,
     "effects": {
@@ -3601,7 +3601,7 @@
     "type": "Augment",
     "rarity": "Rare",
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/combat_i.png",
+    "imageFilename": "images/items/combat_i.png",
     "updatedAt": "11/03/2025",
     "weightKg": 3.0,
     "effects": {
@@ -3627,7 +3627,7 @@
       "plastic_parts": 3,
       "rubber_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/kettle.png",
+    "imageFilename": "images/items/kettle.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "metal_parts": 6,
@@ -3657,7 +3657,7 @@
       "plastic_parts": 6,
       "rubber_parts": 6
     },
-    "imageFilename": "https://cdn.arctracker.io/items/kettle.png",
+    "imageFilename": "images/items/kettle.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3671,7 +3671,7 @@
       "metal_parts": 3,
       "rubber_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/stitcher.png",
+    "imageFilename": "images/items/stitcher.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "metal_parts": 8,
@@ -3701,7 +3701,7 @@
       "metal_parts": 6,
       "rubber_parts": 6
     },
-    "imageFilename": "https://cdn.arctracker.io/items/stitcher.png",
+    "imageFilename": "images/items/stitcher.png",
     "updatedAt": "10/31/2025",
     "weightKg": 5.0,
     "effects": {
@@ -3724,7 +3724,7 @@
     "rarity": "Uncommon",
     "value": 840,
     "recyclesInto": {},
-    "imageFilename": "https://cdn.arctracker.io/items/stitcher.png",
+    "imageFilename": "images/items/stitcher.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3738,7 +3738,7 @@
       "mechanical_components": 2,
       "simple_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/stitcher.png",
+    "imageFilename": "images/items/stitcher.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3752,7 +3752,7 @@
       "mechanical_components": 1,
       "simple_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/burletta.png",
+    "imageFilename": "images/items/burletta.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3766,7 +3766,7 @@
       "mechanical_components": 2,
       "simple_gun_parts": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/burletta.png",
+    "imageFilename": "images/items/burletta.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3780,7 +3780,7 @@
       "mechanical_components": 3,
       "simple_gun_parts": 3
     },
-    "imageFilename": "https://cdn.arctracker.io/items/burletta.png",
+    "imageFilename": "images/items/burletta.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3794,7 +3794,7 @@
       "mechanical_components": 4,
       "simple_gun_parts": 4
     },
-    "imageFilename": "https://cdn.arctracker.io/items/burletta.png",
+    "imageFilename": "images/items/burletta.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3808,7 +3808,7 @@
       "chemicals": 1,
       "rubber_parts": 1
     },
-    "imageFilename": "https://cdn.arctracker.io/items/remote_raider_flare.png",
+    "imageFilename": "images/items/remote_raider_flare.png",
     "weightKg": 0.2,
     "stackSize": 3,
     "updatedAt": "11/03/2025",
@@ -3846,7 +3846,7 @@
     "type": "Recyclable",
     "rarity": "Uncommon",
     "recyclesInto": {},
-    "imageFilename": "https://cdn.arctracker.io/items/ruined_baton.png",
+    "imageFilename": "images/items/ruined_baton.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3856,7 +3856,7 @@
     "type": "Trinket",
     "value": 7000,
     "foundIn": "Residential, Old World, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/breathtaking_snow_globe.png",
+    "imageFilename": "images/items/breathtaking_snow_globe.png",
     "rarity": "Epic",
     "weightKg": 0.2,
     "stackSize": 1,
@@ -3875,7 +3875,7 @@
       "Healing": 15,
       "Use Time": "1s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/expired_pasta.png",
+    "imageFilename": "images/items/expired_pasta.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -3888,7 +3888,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "Exodus",
-    "imageFilename": "https://cdn.arctracker.io/items/exodus_modules.png",
+    "imageFilename": "images/items/exodus_modules.png",
     "value": 2750,
     "updatedAt": "10/30/2025"
   },
@@ -3901,7 +3901,7 @@
     "foundIn": "Medical, Commercial",
     "stackSize": 10,
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/durable_cloth.png",
+    "imageFilename": "images/items/durable_cloth.png",
     "updatedAt": "11/03/2025",
     "value": 640,
     "recyclesInto": {
@@ -3921,7 +3921,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/diving_goggles.png",
+    "imageFilename": "images/items/diving_goggles.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3933,7 +3933,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/dried_out_arc_resin.png",
+    "imageFilename": "images/items/dried_out_arc_resin.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3952,7 +3952,7 @@
     "salvagesInto": {
       "rubber_parts": 5
     },
-    "imageFilename": "https://cdn.arctracker.io/items/degraded_arc_rubber.png",
+    "imageFilename": "images/items/degraded_arc_rubber.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3964,7 +3964,7 @@
     "foundIn": "Exodus",
     "weightKg": 3.0,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/broken_guidance_system.png",
+    "imageFilename": "images/items/broken_guidance_system.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -3983,7 +3983,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/burned_arc_circuitry.png",
+    "imageFilename": "images/items/burned_arc_circuitry.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -3994,7 +3994,7 @@
     "rarity": "Uncommon",
     "weightKg": 2.0,
     "foundIn": "Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/candle_holder.png",
+    "imageFilename": "images/items/candle_holder.png",
     "value": 640,
     "stackSize": 3,
     "updatedAt": "11/04/2025",
@@ -4018,7 +4018,7 @@
     "weightKg": 1.0,
     "stackSize": 3,
     "foundIn": "Security",
-    "imageFilename": "https://cdn.arctracker.io/items/complex_gun_parts.png",
+    "imageFilename": "images/items/complex_gun_parts.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "light_gun_parts": 2,
@@ -4044,7 +4044,7 @@
     "foundIn": "Residential",
     "stackSize": 3,
     "weightKg": 2.0,
-    "imageFilename": "https://cdn.arctracker.io/items/alarm_clock.png",
+    "imageFilename": "images/items/alarm_clock.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -4055,7 +4055,7 @@
     "weightKg": 0.2,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/fine_wristwatch.png",
+    "imageFilename": "images/items/fine_wristwatch.png",
     "rarity": "Rare",
     "updatedAt": "11/01/2025",
     "value": 3000
@@ -4076,7 +4076,7 @@
       "ARC Armor Penetration": "Very Strong"
     },
     "weightKg": 7.0,
-    "imageFilename": "https://cdn.arctracker.io/items/hullcracker.png",
+    "imageFilename": "images/items/hullcracker.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "magnetic_accelerator": 1,
@@ -4100,7 +4100,7 @@
       "Upgrade Modifiers": "+8 Magazine Size"
     },
     "weightKg": 6.0,
-    "imageFilename": "https://cdn.arctracker.io/items/rattler.png",
+    "imageFilename": "images/items/rattler.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4120,7 +4120,7 @@
       "Damage": 70,
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/snap_blast_grenade.png",
+    "imageFilename": "images/items/snap_blast_grenade.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "crude_explosives": 2,
@@ -4142,7 +4142,7 @@
       "Duration": "10s",
       "Use Time": "2s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/shield_recharger.png",
+    "imageFilename": "images/items/shield_recharger.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "rubber_parts": 5,
@@ -4170,7 +4170,7 @@
       "Duration": "6s",
       "Radius": "2.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/lil_smoke_grenade.png",
+    "imageFilename": "images/items/lil_smoke_grenade.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "chemicals": 5,
@@ -4194,7 +4194,7 @@
       "Illumination Radius": "7m",
       "Duration": "40s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/red_light_stick.png",
+    "imageFilename": "images/items/red_light_stick.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -4202,7 +4202,7 @@
     "name": "Cans",
     "description": "A new cosmetic will be added to your collection.",
     "type": "Backpack Attachment",
-    "imageFilename": "https://cdn.arctracker.io/items/cans.png",
+    "imageFilename": "images/items/cans.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -4219,7 +4219,7 @@
       "Trigger Radius": "8m",
       "Duration": "4s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/noisemaker.png",
+    "imageFilename": "images/items/noisemaker.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4230,7 +4230,7 @@
     "rarity": "Epic",
     "weightKg": 0.25,
     "value": 100,
-    "imageFilename": "https://cdn.arctracker.io/items/dam_control_tower_key.png",
+    "imageFilename": "images/items/dam_control_tower_key.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4247,7 +4247,7 @@
     "weightKg": 2.0,
     "stackSize": 3,
     "foundIn": "Medical",
-    "imageFilename": "https://cdn.arctracker.io/items/expired_respirator.png",
+    "imageFilename": "images/items/expired_respirator.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -4259,7 +4259,7 @@
     "weightKg": 0.33,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/dart_board.png",
+    "imageFilename": "images/items/dart_board.png",
     "value": 666.67,
     "updatedAt": "10/30/2025"
   },
@@ -4284,7 +4284,7 @@
       "Reduced Vertical Recoil": "20%",
       "Reduced Horizontal Recoil": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/muzzle_brake_ii.png",
+    "imageFilename": "images/items/muzzle_brake_ii.png",
     "updatedAt": "11/03/2025"
   },
     {
@@ -4300,7 +4300,7 @@
       "explosive_compound": 2,
       "sensors": 2
     },
-    "imageFilename": "https://cdn.arctracker.io/items/wolfpack_blueprint.png",
+    "imageFilename": "images/items/wolfpack_blueprint.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4311,7 +4311,7 @@
     "value": 5000,
     "weightKg": 0.0,
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/trigger_nade_blueprint.png",
+    "imageFilename": "images/items/trigger_nade_blueprint.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4320,7 +4320,7 @@
     "description": "A noisy device that sticks to surfaces, distracting nearby ARC machines and drawing their fire.",
     "type": "Blueprint",
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/lure_grenade_blueprint.png",
+    "imageFilename": "images/items/lure_grenade_blueprint.png",
     "rarity": "Common",
     "recyclesInto": {
       "utility_station_ii": 9,
@@ -4337,7 +4337,7 @@
     "value": 100,
     "rarity": "Uncommon",
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/dam_surveillance_key.png",
+    "imageFilename": "images/items/dam_surveillance_key.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -4347,7 +4347,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0.0,
-    "imageFilename": "https://cdn.arctracker.io/items/bettina_blueprint.png",
+    "imageFilename": "images/items/bettina_blueprint.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -4358,7 +4358,7 @@
     "type": "Key",
     "rarity": "Epic",
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/blue_gate_confiscation_room_key.png",
+    "imageFilename": "images/items/blue_gate_confiscation_room_key.png",
     "value": 100,
     "updatedAt": "10/30/2025"
   },
@@ -4375,7 +4375,7 @@
       "Damage": 80,
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/heavy_fuze_grenade.png",
+    "imageFilename": "images/items/heavy_fuze_grenade.png",
     "updatedAt": "11/03/2025",
     "recyclesInto": {
       "oil": 3
@@ -4399,7 +4399,7 @@
       "Illumination Radius": "7m",
       "Duration": "40s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/blue_light_stick.png",
+    "imageFilename": "images/items/blue_light_stick.png",
     "updatedAt": "11/01/2025",
     "recyclesInto": {
       "chemicals": 1
@@ -4418,7 +4418,7 @@
       "Illumination Radius": "7m",
       "Duration": "40s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/green_light_stick.png",
+    "imageFilename": "images/items/green_light_stick.png",
     "updatedAt": "10/30/2025",
     "recipe": {
       "chemicals": 3
@@ -4438,7 +4438,7 @@
       "Recharge": 50,
       "Use Time": "5s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/surge_shield_recharger.png",
+    "imageFilename": "images/items/surge_shield_recharger.png",
     "updatedAt": "11/03/2025",
     "recyclesInto": {
       "electrical_components": 1
@@ -4460,7 +4460,7 @@
     "effects": {
       "Reduced Vertical Recoil": "30%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/vertical_grip_ii.png",
+    "imageFilename": "images/items/vertical_grip_ii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4476,7 +4476,7 @@
       "Reduced Recoil Recovery Time": "35%",
       "Reduced Dispersion Recovery Time": "35%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/stable_stock_ii.png",
+    "imageFilename": "images/items/stable_stock_ii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4492,7 +4492,7 @@
     },
     "weightKg": 1.0,
     "value": 1000,
-    "imageFilename": "https://cdn.arctracker.io/items/looting_mk_2.png",
+    "imageFilename": "images/items/looting_mk_2.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4500,7 +4500,7 @@
     "name": "Banana",
     "description": "A new cosmetic will be added to your collection.",
     "type": "Backpack Charm",
-    "imageFilename": "https://cdn.arctracker.io/items/banana.png",
+    "imageFilename": "images/items/banana.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -4516,7 +4516,7 @@
       "Durability": "100/100",
       "Damage": "10/s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/flame_spray.png",
+    "imageFilename": "images/items/flame_spray.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -4532,7 +4532,7 @@
       "Damage": "5/s",
       "Duration": "10s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/blaze_grenade_trap.png",
+    "imageFilename": "images/items/blaze_grenade_trap.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4548,7 +4548,7 @@
       "Duration": "20s",
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/gas_grenade_trap.png",
+    "imageFilename": "images/items/gas_grenade_trap.png",
     "stackSize": 3,
     "updatedAt": "10/30/2025"
   },
@@ -4561,7 +4561,7 @@
     "foundIn": "Residential",
     "weightKg": 3.0,
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/ruined_accordion.png",
+    "imageFilename": "images/items/ruined_accordion.png",
     "updatedAt": "11/02/2025",
     "stackSize": 3,
     "recyclesInto": {
@@ -4579,7 +4579,7 @@
     "weightKg": 0.083,
     "stackSize": 3,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/damaged_tick_pod.png",
+    "imageFilename": "images/items/damaged_tick_pod.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4595,7 +4595,7 @@
     },
     "weightKg": 4.0,
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/tactical_mk_3_healing.png",
+    "imageFilename": "images/items/tactical_mk_3_healing.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -4605,7 +4605,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0.0,
-    "imageFilename": "https://cdn.arctracker.io/items/jolt_mine_blueprint.png",
+    "imageFilename": "images/items/jolt_mine_blueprint.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -4618,7 +4618,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Security",
-    "imageFilename": "https://cdn.arctracker.io/items/ruined_handcuffs.png",
+    "imageFilename": "images/items/ruined_handcuffs.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4632,7 +4632,7 @@
     "effects": {
       "Reduced Base Dispersion": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/shotgun_choke_ii.png",
+    "imageFilename": "images/items/shotgun_choke_ii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4646,7 +4646,7 @@
     "effects": {
       "Reduced Horizontal Recoil": "30%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/angled_grip_ii.png",
+    "imageFilename": "images/items/angled_grip_ii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4661,7 +4661,7 @@
       "20% Increased Vertical Recoil": null,
       "20% Increased Horizontal Recoil": null
     },
-    "imageFilename": "https://cdn.arctracker.io/items/kinetic_converter.png",
+    "imageFilename": "images/items/kinetic_converter.png",
     "value": 7000,
     "recyclesInto": {
       "mod_components": 1,
@@ -4677,7 +4677,7 @@
     "rarity": "Rare",
     "value": 100,
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/dam_testing_annex_key.png",
+    "imageFilename": "images/items/dam_testing_annex_key.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4690,7 +4690,7 @@
     "effects": {
       "Magazine Size": "+15"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/extended_light_mag_iii.png",
+    "imageFilename": "images/items/extended_light_mag_iii.png",
     "value": 5000,
     "updatedAt": "10/30/2025"
   },
@@ -4713,7 +4713,7 @@
         "25% Increased Fire Rate"
       ]
     },
-    "imageFilename": "https://cdn.arctracker.io/items/anvil.png",
+    "imageFilename": "images/items/anvil.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4723,7 +4723,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0.0,
-    "imageFilename": "https://cdn.arctracker.io/items/launcher_ammo_blueprint.png",
+    "imageFilename": "images/items/launcher_ammo_blueprint.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -4734,7 +4734,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0,
-    "imageFilename": "https://cdn.arctracker.io/items/medium_gun_parts_blueprint.png",
+    "imageFilename": "images/items/medium_gun_parts_blueprint.png",
     "rarity": "Common",
     "updatedAt": "10/30/2025"
   },
@@ -4755,7 +4755,7 @@
       "processor": 1
     },
     "updatedAt": "11/01/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/anvil_splitter.png"
+    "imageFilename": "images/items/anvil_splitter.png"
   },
   {
     "id": "door_blocker",
@@ -4766,7 +4766,7 @@
     "value": 270,
     "weightKg": 0.2,
     "stackSize": 3,
-    "imageFilename": "https://cdn.arctracker.io/items/door_blocker.png",
+    "imageFilename": "images/items/door_blocker.png",
     "updatedAt": "10/30/2025",
     "recyclesInto": {
       "metal_parts": 2
@@ -4792,7 +4792,7 @@
     },
     "value": 7000,
     "weightKg": 10.0,
-    "imageFilename": "https://cdn.arctracker.io/items/renegade.png",
+    "imageFilename": "images/items/renegade.png",
     "updatedAt": "10/30/2025",
     "recipe": {
       "advanced_mechanical_components": 2,
@@ -4815,7 +4815,7 @@
       "20% Increased Equip Time": "",
       "20% Increased Unequip Time": ""
     },
-    "imageFilename": "https://cdn.arctracker.io/items/stable_stock_iii.png",
+    "imageFilename": "images/items/stable_stock_iii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4829,7 +4829,7 @@
     "effects": {
       "Magazine Size": "+12"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/extended_medium_mag_iii.png",
+    "imageFilename": "images/items/extended_medium_mag_iii.png",
     "updatedAt": "10/30/2025",
     "recyclesInto": {
       "mod_components": 1,
@@ -4854,7 +4854,7 @@
       "Reduced Horizontal Recoil": "25%",
       "Increased Durability Burn Rate": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/muzzle_brake_iii.png",
+    "imageFilename": "images/items/muzzle_brake_iii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4870,7 +4870,7 @@
       "Reduced Base Dispersion": "30%",
       "Increased Durability Burn Rate": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/shotgun_choke_iii.png",
+    "imageFilename": "images/items/shotgun_choke_iii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4884,7 +4884,7 @@
     "effects": {
       "Reduced Noise": "40%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/silencer_ii.png",
+    "imageFilename": "images/items/silencer_ii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4899,7 +4899,7 @@
       "Reduced Horizontal Recoil": "40%",
       "Reduced ADS Speed": "30%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/angled_grip_iii.png",
+    "imageFilename": "images/items/angled_grip_iii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4914,7 +4914,7 @@
       "Reduced Per-Shot Dispersion": "40%",
       "Reduced Max Shot Dispersion": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/compensator_ii.png",
+    "imageFilename": "images/items/compensator_ii.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "mechanical_components": 2,
@@ -4933,7 +4933,7 @@
     "effects": {
       "Magazine Size": "+10"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/extended_light_mag_ii.png",
+    "imageFilename": "images/items/extended_light_mag_ii.png",
     "updatedAt": "10/30/2025"
   },
   {
@@ -4947,7 +4947,7 @@
     "effects": {
       "Magazine Size": "+8"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/extended_medium_mag_ii.png",
+    "imageFilename": "images/items/extended_medium_mag_ii.png",
     "updatedAt": "10/30/2025",
     "recipe": {
       "mechanical_components": 2,
@@ -4966,7 +4966,7 @@
     "effects": {
       "Magazine Size": "+4"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/extended_shotgun_mag_ii.png",
+    "imageFilename": "images/items/extended_shotgun_mag_ii.png",
     "updatedAt": "11/02/2025"
   },
   {
@@ -4984,7 +4984,7 @@
       "Firing Mode": "Pump-Action",
       "ARC Armor Penetration": "Weak"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/il_toro.png",
+    "imageFilename": "images/items/il_toro.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "mechanical_components": 5,
@@ -5007,7 +5007,7 @@
       "Firing Mode": "Break-Action",
       "ARC Armor Penetration": "Strong"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/ferro.png",
+    "imageFilename": "images/items/ferro.png",
     "updatedAt": "10/31/2025"
   },
   {
@@ -5026,7 +5026,7 @@
       "ARC Armor Penetration": "Strong",
       "Upgrade Modifiers": "26% Reduced Reload Time"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/ferro.png",
+    "imageFilename": "images/items/ferro.png",
     "updatedAt": "10/31/2025"
   },
   {
@@ -5036,7 +5036,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0,
-    "imageFilename": "https://cdn.arctracker.io/items/heavy_gun_parts_blueprint.png",
+    "imageFilename": "images/items/heavy_gun_parts_blueprint.png",
     "rarity": "Common",
     "updatedAt": "10/31/2025"
   },
@@ -5054,7 +5054,7 @@
       "Duration": "10s",
       "Use Time": "1.5s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/herbal_bandage.png",
+    "imageFilename": "images/items/herbal_bandage.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "durable_cloth": 1,
@@ -5077,7 +5077,7 @@
       "Firing Mode": "Semi-Automatic",
       "ARC Armor Penetration": "Very Weak"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/kettle.png",
+    "imageFilename": "images/items/kettle.png",
     "updatedAt": "10/31/2025"
   },
   {
@@ -5099,7 +5099,7 @@
         "26% Reduced Reload Time"
       ]
     },
-    "imageFilename": "https://cdn.arctracker.io/items/kettle.png",
+    "imageFilename": "images/items/kettle.png",
     "updatedAt": "10/31/2025"
   },
   {
@@ -5117,7 +5117,7 @@
       "ARC Armor Penetration": "Moderate",
       "Upgrade Modifiers": "+10 Magazine Size, 15% Reduced Reload Time"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/torrente.png",
+    "imageFilename": "images/items/torrente.png",
     "updatedAt": "10/31/2025",
     "weightKg": 12.0
   },
@@ -5137,7 +5137,7 @@
       "Illumination Radius": "7m",
       "Duration": "40s"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/yellow_light_stick.png",
+    "imageFilename": "images/items/yellow_light_stick.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -5150,7 +5150,7 @@
     "weightKg": 1.0,
     "stackSize": 5,
     "foundIn": "Security",
-    "imageFilename": "https://cdn.arctracker.io/items/mod_components.png",
+    "imageFilename": "images/items/mod_components.png",
     "updatedAt": "11/03/2025",
     "recyclesInto": {
       "mechanical_components": 1,
@@ -5171,7 +5171,7 @@
     "value": 333,
     "weightKg": 0.67,
     "foundIn": "Security",
-    "imageFilename": "https://cdn.arctracker.io/items/ruined_riot_shield.png",
+    "imageFilename": "images/items/ruined_riot_shield.png",
     "updatedAt": "11/01/2025",
     "recyclesInto": {
       "plastic_parts": 10,
@@ -5195,7 +5195,7 @@
       "Duration": "20s",
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/smoke_grenade.png",
+    "imageFilename": "images/items/smoke_grenade.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -5211,7 +5211,7 @@
       "Duration": "15s",
       "Radius": "50m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/lure_grenade_trap.png",
+    "imageFilename": "images/items/lure_grenade_trap.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -5219,7 +5219,7 @@
     "name": "Radio Renegade",
     "description": "A new cosmetic will be added to your collection.",
     "type": "Outfit",
-    "imageFilename": "https://cdn.arctracker.io/items/radio_renegade.png",
+    "imageFilename": "images/items/radio_renegade.png",
     "rarity": "Common",
     "updatedAt": "11/01/2025"
   },
@@ -5228,7 +5228,7 @@
     "name": "Burgerboy",
     "description": "A new cosmetic will be added to your collection.",
     "type": "Backpack Charm",
-    "imageFilename": "https://cdn.arctracker.io/items/burgerboy.png",
+    "imageFilename": "images/items/burgerboy.png",
     "rarity": "Common",
     "updatedAt": "11/01/2025"
   },
@@ -5249,7 +5249,7 @@
       "20% Increased Fire Rate": true,
       "26% Reduced Reload Time": true
     },
-    "imageFilename": "https://cdn.arctracker.io/items/vulcano.png",
+    "imageFilename": "images/items/vulcano.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -5262,7 +5262,7 @@
     "weightKg": 3.0,
     "stackSize": 3,
     "foundIn": "Exodus",
-    "imageFilename": "https://cdn.arctracker.io/items/rocket_thruster.png",
+    "imageFilename": "images/items/rocket_thruster.png",
     "updatedAt": "11/01/2025",
     "recyclesInto": {
       "synthesized_fuel": 2,
@@ -5279,7 +5279,7 @@
     "weightKg": 0.3,
     "stackSize": 3,
     "foundIn": "Residential, Commercial",
-    "imageFilename": "https://cdn.arctracker.io/items/poster_of_natural_wonders.png",
+    "imageFilename": "images/items/poster_of_natural_wonders.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -5288,7 +5288,7 @@
     "description": "Has a large bullet spread, sharp falloff, and high damage output.",
     "type": "Blueprint",
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/il_toro_blueprint.png",
+    "imageFilename": "images/items/il_toro_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/01/2025"
   },
@@ -5304,7 +5304,7 @@
       "wires": 15
     },
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/compensator_ii_blueprint.png",
+    "imageFilename": "images/items/compensator_ii_blueprint.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -5318,7 +5318,7 @@
       "refiner_ii": 1,
       "simple_gun_parts": 4
     },
-    "imageFilename": "https://cdn.arctracker.io/items/light_gun_parts_blueprint.png",
+    "imageFilename": "images/items/light_gun_parts_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/01/2025"
   },
@@ -5334,7 +5334,7 @@
       "Duration": "20s",
       "Radius": "7.5m"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/smoke_grenade_trap.png",
+    "imageFilename": "images/items/smoke_grenade_trap.png",
     "updatedAt": "11/01/2025"
   },
   {
@@ -5344,7 +5344,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0,
-    "imageFilename": "https://cdn.arctracker.io/items/complex_gun_parts_blueprint.png",
+    "imageFilename": "images/items/complex_gun_parts_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/01/2025"
   },
@@ -5355,7 +5355,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0.0,
-    "imageFilename": "https://cdn.arctracker.io/items/lightweight_stock_blueprint.png",
+    "imageFilename": "images/items/lightweight_stock_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/01/2025"
   },
@@ -5369,7 +5369,7 @@
     "weightKg": 0.3,
     "stackSize": 5,
     "foundIn": "Industrial, Security",
-    "imageFilename": "https://cdn.arctracker.io/items/explosive_compound.png",
+    "imageFilename": "images/items/explosive_compound.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "crude_explosives": 2,
@@ -5388,7 +5388,7 @@
     "effects": {
       "Reduced Noise": "50%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/shotgun_silencer.png",
+    "imageFilename": "images/items/shotgun_silencer.png",
     "updatedAt": "11/02/2025"
   },
   {
@@ -5406,7 +5406,7 @@
     },
     "weightKg": 8.0,
     "value": 7000,
-    "imageFilename": "https://cdn.arctracker.io/items/il_toro.png",
+    "imageFilename": "images/items/il_toro.png",
     "updatedAt": "11/02/2025"
   },
   {
@@ -5416,7 +5416,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0.0,
-    "imageFilename": "https://cdn.arctracker.io/items/green_light_stick_blueprint.png",
+    "imageFilename": "images/items/green_light_stick_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/02/2025"
   },
@@ -5432,7 +5432,7 @@
     "stackSize": 5,
     "foundIn": "Residential, Old World",
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/torn_book.png"
+    "imageFilename": "images/items/torn_book.png"
   },
   {
     "id": "fertilizer",
@@ -5448,7 +5448,7 @@
     "stackSize": 5,
     "foundIn": "Nature",
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/fertilizer.png"
+    "imageFilename": "images/items/fertilizer.png"
   },
   {
     "id": "damaged_rocketeer_driver",
@@ -5464,7 +5464,7 @@
     "stackSize": 3,
     "foundIn": "ARC",
     "updatedAt": "11/03/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/damaged_rocketeer_driver.png"
+    "imageFilename": "images/items/damaged_rocketeer_driver.png"
   },
   {
     "id": "turbo_pump",
@@ -5481,7 +5481,7 @@
     "stackSize": 3,
     "foundIn": "Exodus",
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/turbo_pump.png"
+    "imageFilename": "images/items/turbo_pump.png"
   },
   {
     "id": "moss",
@@ -5505,7 +5505,7 @@
       "Use Time": "1s"
     },
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/moss.png"
+    "imageFilename": "images/items/moss.png"
   },
   {
     "id": "bandage",
@@ -5525,7 +5525,7 @@
       "Use Time": "1.5s"
     },
     "updatedAt": "11/03/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/bandage.png",
+    "imageFilename": "images/items/bandage.png",
     "recipe": {
       "fabric": 5
     },
@@ -5575,7 +5575,7 @@
       "plastic_parts": 6,
       "rubber_parts": 6
     },
-    "imageFilename": "https://cdn.arctracker.io/items/looting_mk1.png",
+    "imageFilename": "images/items/looting_mk1.png",
     "craftBench": [
       "equipment_bench",
       "workbench"
@@ -5622,7 +5622,7 @@
       "ARC Armor Penetration": "Moderate"
     },
     "updatedAt": "11/04/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/rattler_i.png",
+    "imageFilename": "images/items/rattler_i.png",
     "recipe": {
       "metal_parts": 16,
       "rubber_parts": 12
@@ -5641,7 +5641,7 @@
     "stackSize": 3,
     "foundIn": "Old World",
     "updatedAt": "11/03/2025",
-    "imageFilename": "https://cdn.arctracker.io/items/painted_box.png"
+    "imageFilename": "images/items/painted_box.png"
   },
   {
     "id": "music_box",
@@ -5672,7 +5672,7 @@
     },
     "weightKg": 3.0,
     "value": 450,
-    "imageFilename": "https://cdn.arctracker.io/items/hairpin_i.png",
+    "imageFilename": "images/items/hairpin_i.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "metal_parts": 2,
@@ -5696,7 +5696,7 @@
     },
     "weightKg": 2.0,
     "value": 2000,
-    "imageFilename": "https://cdn.arctracker.io/items/looting_mk2.png",
+    "imageFilename": "images/items/looting_mk2.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "electrical_components": 2,
@@ -5717,7 +5717,7 @@
       "Max Loadout Weight": 70.0,
       "Shield Compatibility": "Light"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/looting_mk3_cautious.png",
+    "imageFilename": "images/items/looting_mk3_cautious.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "advanced_electrical_components": 2,
@@ -5736,7 +5736,7 @@
     "effects": {
       "Reduced Horizontal Recoil": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/angled_grip_i.png",
+    "imageFilename": "images/items/angled_grip_i.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "plastic_parts": 6,
@@ -5755,7 +5755,7 @@
     "effects": {
       "Magazine Size": "+2"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/extended_shotgun_mag_i.png",
+    "imageFilename": "images/items/extended_shotgun_mag_i.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "plastic_parts": 6,
@@ -5774,7 +5774,7 @@
     "effects": {
       "Reduced Base Dispersion": "10%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/shotgun_choke_i.png",
+    "imageFilename": "images/items/shotgun_choke_i.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "metal_parts": 6,
@@ -5793,7 +5793,7 @@
     "effects": {
       "Reduced Vertical Recoil": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/vertical_grip_i.png",
+    "imageFilename": "images/items/vertical_grip_i.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "plastic_parts": 6,
@@ -5816,7 +5816,7 @@
       "Increased Vertical Recoil": "50%",
       "Increased Recoil Recovery Time": "50%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/lightweight_stock.png",
+    "imageFilename": "images/items/lightweight_stock.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "mod_components": 2,
@@ -5839,7 +5839,7 @@
       "Firing Mode": "Fully-Automatic",
       "ARC Armor Penetration": "Strong"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/bettina.png",
+    "imageFilename": "images/items/bettina.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "advanced_mechanical_components": 3,
@@ -5857,7 +5857,7 @@
     "rarity": "Rare",
     "weightKg": 0.1,
     "stackSize": 24,
-    "imageFilename": "https://cdn.arctracker.io/items/launcher_ammo.png",
+    "imageFilename": "images/items/launcher_ammo.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "metal_parts": 5,
@@ -5873,7 +5873,7 @@
     "value": 20,
     "weightKg": 0.085,
     "stackSize": 20,
-    "imageFilename": "https://cdn.arctracker.io/items/shotgun_ammo.png",
+    "imageFilename": "images/items/shotgun_ammo.png",
     "rarity": "Common",
     "updatedAt": "11/03/2025",
     "recipe": {
@@ -5889,7 +5889,7 @@
     "type": "Blueprint",
     "weightKg": 0.0,
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/torrente_blueprint.png",
+    "imageFilename": "images/items/torrente_blueprint.png",
     "updatedAt": "11/03/2025",
     "value": 5000
   },
@@ -5901,7 +5901,7 @@
     "value": 5000,
     "weightKg": 0.0,
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/anvil_blueprint.png",
+    "imageFilename": "images/items/anvil_blueprint.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -5919,7 +5919,7 @@
     },
     "weightKg": 5.0,
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/anvil.png",
+    "imageFilename": "images/items/anvil.png",
     "updatedAt": "11/03/2025",
     "recipe": {
       "mechanical_components": 5,
@@ -5935,7 +5935,7 @@
     "value": 5000,
     "weightKg": 0.0,
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/osprey_blueprint.png",
+    "imageFilename": "images/items/osprey_blueprint.png",
     "updatedAt": "11/03/2025"
   },
   {
@@ -5944,7 +5944,7 @@
     "description": "Fires two shots at a time.  ",
     "type": "Blueprint",
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/venator.png",
+    "imageFilename": "images/items/venator.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   },
@@ -5957,7 +5957,7 @@
       "Magazine Size": "+12"
     },
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/extended_medium_mag_iii.png",
+    "imageFilename": "images/items/extended_medium_mag_iii.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   },
@@ -5971,7 +5971,7 @@
     },
     "type": "Blueprint",
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/muzzle_brake_ii.png",
+    "imageFilename": "images/items/muzzle_brake_ii.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   },
@@ -5981,7 +5981,7 @@
     "description": "A medical item that continuously restores health during use. Can be used on yourself or your allies.",
     "type": "Blueprint",
     "value": 5000,
-    "imageFilename": "https://cdn.arctracker.io/items/vita_spray.png",
+    "imageFilename": "images/items/vita_spray.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   },
@@ -5995,7 +5995,7 @@
     "weightKg": 0.3,
     "stackSize": 3,
     "foundIn": "Old World, Residential",
-    "imageFilename": "https://cdn.arctracker.io/items/rosary.png",
+    "imageFilename": "images/items/rosary.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -6007,7 +6007,7 @@
     "weightKg": 0.25,
     "value": 270,
     "foundIn": "ARC",
-    "imageFilename": "https://cdn.arctracker.io/items/damaged_wasp_driver.png",
+    "imageFilename": "images/items/damaged_wasp_driver.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -6020,7 +6020,7 @@
     "weightKg": 0.8,
     "stackSize": 3,
     "foundIn": "Exodus",
-    "imageFilename": "https://cdn.arctracker.io/items/ruined_parachute.png",
+    "imageFilename": "images/items/ruined_parachute.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -6034,7 +6034,7 @@
       "steel_spring": 28
     },
     "rarity": "Common",
-    "imageFilename": "https://cdn.arctracker.io/items/extended_shotgun_mag_ii_blueprint.png",
+    "imageFilename": "images/items/extended_shotgun_mag_ii_blueprint.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -6049,7 +6049,7 @@
       "Reduced Noise": "60%",
       "Increased Durability Burn Rate": "20%"
     },
-    "imageFilename": "https://cdn.arctracker.io/items/silencer_iii.png",
+    "imageFilename": "images/items/silencer_iii.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -6060,7 +6060,7 @@
     "value": 5000,
     "weightKg": 0,
     "foundIn": "",
-    "imageFilename": "https://cdn.arctracker.io/items/blue_light_stick_blueprint.png",
+    "imageFilename": "images/items/blue_light_stick_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   },
@@ -6072,7 +6072,7 @@
     "value": 100,
     "rarity": "Rare",
     "weightKg": 0.25,
-    "imageFilename": "https://cdn.arctracker.io/items/spaceport_control_tower_key.png",
+    "imageFilename": "images/items/spaceport_control_tower_key.png",
     "updatedAt": "11/04/2025"
   },
   {
@@ -6082,7 +6082,7 @@
     "type": "Blueprint",
     "value": 5000,
     "weightKg": 0.0,
-    "imageFilename": "https://cdn.arctracker.io/items/extended_medium_mag_ii_blueprint.png",
+    "imageFilename": "images/items/extended_medium_mag_ii_blueprint.png",
     "rarity": "Common",
     "updatedAt": "11/04/2025"
   }

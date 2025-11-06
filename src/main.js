@@ -12,7 +12,18 @@ const {
   getRelationsForItem, 
   getAllRelations,
   setUserData,
-  getUserData 
+  getUserData,
+  addToInventory,
+  removeFromInventory,
+  getInventory,
+  updateInventoryQuantity,
+  addTrackedItem,
+  removeTrackedItem,
+  markTrackedItemCompleted,
+  getAllTrackedItems,
+  addTrackedItemRequirement,
+  getTrackedItemRequirements,
+  removeTrackedItemRequirement
 } = require('./database');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -70,6 +81,52 @@ ipcMain.handle('db:setUserData', async (event, key, value) => {
 
 ipcMain.handle('db:getUserData', async (event, key) => {
   return getUserData(key);
+});
+
+// Inventory IPC handlers
+ipcMain.handle('db:addToInventory', async (event, itemId, quantity) => {
+  return addToInventory(itemId, quantity);
+});
+
+ipcMain.handle('db:removeFromInventory', async (event, itemId) => {
+  return removeFromInventory(itemId);
+});
+
+ipcMain.handle('db:getInventory', async () => {
+  return getInventory();
+});
+
+ipcMain.handle('db:updateInventoryQuantity', async (event, itemId, quantity) => {
+  return updateInventoryQuantity(itemId, quantity);
+});
+
+// Tracked items IPC handlers
+ipcMain.handle('db:addTrackedItem', async (event, itemId, name, type, notes) => {
+  return addTrackedItem(itemId, name, type, notes);
+});
+
+ipcMain.handle('db:removeTrackedItem', async (event, trackedItemId) => {
+  return removeTrackedItem(trackedItemId);
+});
+
+ipcMain.handle('db:markTrackedItemCompleted', async (event, trackedItemId, completed) => {
+  return markTrackedItemCompleted(trackedItemId, completed);
+});
+
+ipcMain.handle('db:getAllTrackedItems', async () => {
+  return getAllTrackedItems();
+});
+
+ipcMain.handle('db:addTrackedItemRequirement', async (event, trackedItemId, requiredItemId, quantityNeeded) => {
+  return addTrackedItemRequirement(trackedItemId, requiredItemId, quantityNeeded);
+});
+
+ipcMain.handle('db:getTrackedItemRequirements', async (event, trackedItemId) => {
+  return getTrackedItemRequirements(trackedItemId);
+});
+
+ipcMain.handle('db:removeTrackedItemRequirement', async (event, requirementId) => {
+  return removeTrackedItemRequirement(requirementId);
 });
 
 // Helper function to make HTTPS requests

@@ -7,6 +7,8 @@ function TrackerPage() {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRequirementsModal, setShowRequirementsModal] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [newTrackedItem, setNewTrackedItem] = useState({
     itemId: '',
@@ -18,6 +20,13 @@ function TrackerPage() {
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
 
   const loadData = async () => {
     try {
@@ -40,7 +49,7 @@ function TrackerPage() {
 
   const handleAddTrackedItem = async () => {
     if (!newTrackedItem.name) {
-      alert('Please enter a name for the tracked item');
+      setErrorMessage('Please enter a name for the tracked item');
       return;
     }
 
@@ -57,7 +66,7 @@ function TrackerPage() {
       await loadData();
     } catch (error) {
       console.error('Error adding tracked item:', error);
-      alert('Failed to add tracked item');
+      setErrorMessage('Failed to add tracked item');
     }
   };
 
@@ -67,19 +76,24 @@ function TrackerPage() {
       await loadData();
     } catch (error) {
       console.error('Error toggling completion status:', error);
+      setErrorMessage('Failed to update completion status');
     }
   };
 
   const handleRemoveTrackedItem = async (trackedItemId) => {
-    if (!confirm('Are you sure you want to remove this tracked item?')) {
-      return;
-    }
+    setShowDeleteConfirm(trackedItemId);
+  };
+
+  const confirmRemoveTrackedItem = async () => {
+    if (!showDeleteConfirm) return;
 
     try {
-      await window.electronAPI.removeTrackedItem(trackedItemId);
+      await window.electronAPI.removeTrackedItem(showDeleteConfirm);
+      setShowDeleteConfirm(null);
       await loadData();
     } catch (error) {
       console.error('Error removing tracked item:', error);
+      setErrorMessage('Failed to remove tracked item');
     }
   };
 
@@ -89,6 +103,7 @@ function TrackerPage() {
       await loadData();
     } catch (error) {
       console.error('Error adding to inventory:', error);
+      setErrorMessage('Failed to add item to inventory');
     }
   };
 
@@ -98,6 +113,7 @@ function TrackerPage() {
       await loadData();
     } catch (error) {
       console.error('Error removing from inventory:', error);
+      setErrorMessage('Failed to remove item from inventory');
     }
   };
 
@@ -107,6 +123,7 @@ function TrackerPage() {
       await loadData();
     } catch (error) {
       console.error('Error updating quantity:', error);
+      setErrorMessage('Failed to update quantity');
     }
   };
 
@@ -345,6 +362,46 @@ function TrackerPage() {
                 Cancel
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowDeleteConfirm(null)}>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6" onClick={(e) => e.stopPropagation()}>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Confirm Deletion</h2>
+            <p className="text-gray-700 mb-6">Are you sure you want to remove this tracked item? This action cannot be undone.</p>
+            
+            <div className="flex space-x-3">
+              <button
+                onClick={confirmRemoveTrackedItem}
+                className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setShowDeleteConfirm(null)}
+                className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Error Message Toast */}
+      {errorMessage && (
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in">
+          <div className="flex items-center space-x-2">
+            <span>{errorMessage}</span>
+            <button
+              onClick={() => setErrorMessage(null)}
+              className="text-white hover:text-gray-200 font-bold"
+            >
+              ×
+            </button>
           </div>
         </div>
       )}

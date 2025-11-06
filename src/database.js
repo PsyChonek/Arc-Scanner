@@ -350,11 +350,17 @@ function removeTrackedItem(trackedItemId) {
 }
 
 function markTrackedItemCompleted(trackedItemId, completed = true) {
-  const completedAt = completed ? 'CURRENT_TIMESTAMP' : 'NULL';
-  db.run(
-    `UPDATE tracked_items SET completed = ?, completed_at = ${completedAt} WHERE id = ?`,
-    [completed ? 1 : 0, trackedItemId]
-  );
+  if (completed) {
+    db.run(
+      'UPDATE tracked_items SET completed = ?, completed_at = CURRENT_TIMESTAMP WHERE id = ?',
+      [1, trackedItemId]
+    );
+  } else {
+    db.run(
+      'UPDATE tracked_items SET completed = ?, completed_at = NULL WHERE id = ?',
+      [0, trackedItemId]
+    );
+  }
   saveDatabase();
   return { changes: 1 };
 }

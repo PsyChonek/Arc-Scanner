@@ -2,17 +2,30 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 const fs = require('fs');
 const https = require('https');
-const { 
-  initDatabase, 
-  closeDatabase, 
-  addItem, 
-  getItem, 
-  getAllItems, 
-  addRelation, 
-  getRelationsForItem, 
+const {
+  initDatabase,
+  closeDatabase,
+  addItem,
+  getItem,
+  getAllItems,
+  addRelation,
+  getRelationsForItem,
   getAllRelations,
   setUserData,
-  getUserData 
+  getUserData,
+  clearItemsAndRelations,
+  addToInventory,
+  removeFromInventory,
+  getInventory,
+  updateInventoryQuantity,
+  addTrackedItem,
+  removeTrackedItem,
+  markTrackedItemCompleted,
+  getAllTrackedItems,
+  addTrackedItemRequirement,
+  getTrackedItemRequirements,
+  removeTrackedItemRequirement,
+  autoTrackGameProgressionItems
 } = require('./database');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -29,6 +42,7 @@ const createWindow = () => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       contextIsolation: true,
       nodeIntegration: false,
+      webSecurity: false, // Disable to allow loading local file:// images
     },
   });
 
@@ -72,6 +86,88 @@ ipcMain.handle('db:getUserData', async (event, key) => {
   return getUserData(key);
 });
 
+ipcMain.handle('db:clearItemsAndRelations', async () => {
+  return clearItemsAndRelations();
+});
+
+// Inventory IPC handlers
+ipcMain.handle('db:addToInventory', async (event, itemId, quantity) => {
+  return addToInventory(itemId, quantity);
+});
+
+ipcMain.handle('db:removeFromInventory', async (event, itemId) => {
+  return removeFromInventory(itemId);
+});
+
+ipcMain.handle('db:getInventory', async () => {
+  return getInventory();
+});
+
+ipcMain.handle('db:updateInventoryQuantity', async (event, itemId, quantity) => {
+  return updateInventoryQuantity(itemId, quantity);
+});
+
+// Tracked items IPC handlers
+ipcMain.handle('db:addTrackedItem', async (event, itemId, name, type, notes) => {
+  return addTrackedItem(itemId, name, type, notes);
+});
+
+ipcMain.handle('db:removeTrackedItem', async (event, trackedItemId) => {
+  return removeTrackedItem(trackedItemId);
+});
+
+ipcMain.handle('db:markTrackedItemCompleted', async (event, trackedItemId, completed) => {
+  return markTrackedItemCompleted(trackedItemId, completed);
+});
+
+ipcMain.handle('db:getAllTrackedItems', async () => {
+  return getAllTrackedItems();
+});
+
+ipcMain.handle('db:addTrackedItemRequirement', async (event, trackedItemId, requiredItemId, quantityNeeded) => {
+  return addTrackedItemRequirement(trackedItemId, requiredItemId, quantityNeeded);
+});
+
+ipcMain.handle('db:getTrackedItemRequirements', async (event, trackedItemId) => {
+  return getTrackedItemRequirements(trackedItemId);
+});
+
+ipcMain.handle('db:removeTrackedItemRequirement', async (event, requirementId) => {
+  return removeTrackedItemRequirement(requirementId);
+});
+
+ipcMain.handle('db:autoTrackGameProgressionItems', async (event, items) => {
+  return autoTrackGameProgressionItems(items);
+});
+
+// IPC handler for loading images as base64 data URLs
+ipcMain.handle('loadImage', async (event, imagePath) => {
+  try {
+    // Remove file:// prefix if present
+    const cleanPath = imagePath.replace('file://', '');
+
+    if (!fs.existsSync(cleanPath)) {
+      return null;
+    }
+
+    const imageData = fs.readFileSync(cleanPath);
+    const ext = path.extname(cleanPath).toLowerCase();
+
+    // Determine MIME type
+    let mimeType = 'image/png';
+    if (ext === '.jpg' || ext === '.jpeg') mimeType = 'image/jpeg';
+    else if (ext === '.gif') mimeType = 'image/gif';
+    else if (ext === '.webp') mimeType = 'image/webp';
+    else if (ext === '.svg') mimeType = 'image/svg+xml';
+
+    // Convert to base64 data URL
+    const base64 = imageData.toString('base64');
+    return `data:${mimeType};base64,${base64}`;
+  } catch (error) {
+    return null;
+  }
+});
+
 // Helper function to make HTTPS requests
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
@@ -97,59 +193,120 @@ function httpsGet(url) {
   });
 }
 
+// IPC handler for loading Arc Raiders JSON files
+ipcMain.handle('arc:loadFile', async (event, filename) => {
+  try {
+    // In webpack builds, __dirname points to .webpack/main
+    // Assets are copied to .webpack/assets (sibling directory)
+    const dataPath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/${filename}`);
+
+    console.log('Loading Arc Raiders file:', dataPath);
+
+    if (!fs.existsSync(dataPath)) {
+      console.error('Arc Raiders file not found at:', dataPath);
+      return {
+        success: false,
+        error: `File not found: ${filename}`
+      };
+    }
+
+    // Read and parse the JSON file
+    const fileContent = fs.readFileSync(dataPath, 'utf8');
+    let data = JSON.parse(fileContent);
+
+    // Transform image paths for items.json
+    if (filename === 'items.json' && Array.isArray(data)) {
+      data = data.map(item => {
+        const transformed = { ...item };
+
+        // Handle image paths - convert to absolute file:// URLs
+        if (transformed.imageFilename) {
+          let imagePath;
+
+          // If it's a CDN URL, extract filename
+          if (transformed.imageFilename.includes('cdn.arctracker.io')) {
+            const imageFilename = transformed.imageFilename.split('/').pop();
+            imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/images/items/${imageFilename}`);
+          }
+          // If it's a relative path like "images/items/rattler.png"
+          else if (transformed.imageFilename.startsWith('images/')) {
+            imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/${transformed.imageFilename}`);
+          }
+
+          // Convert to file:// URL
+          if (imagePath) {
+            transformed.imageFilename = `file://${imagePath}`;
+          }
+        }
+
+        return transformed;
+      });
+    }
+
+    return {
+      success: true,
+      data: data
+    };
+  } catch (error) {
+    console.error('Error loading Arc Raiders file:', error);
+    return { success: false, error: error.message };
+  }
+});
+
 // IPC handler for fetching Arc Raiders data
 ipcMain.handle('arc:fetchData', async () => {
   try {
-    // Load Arc Raiders data from bundled assets
-    // In development: assets/ is in the project root
-    // In production: assets/ is copied to app.getAppPath()/assets or process.resourcesPath/assets
-    let dataPath;
-    
-    if (app.isPackaged) {
-      // Production: assets are in the resources directory
-      dataPath = path.join(process.resourcesPath, 'assets/arcraiders-data-main/items.json');
-    } else {
-      // Development: assets are in the project root
-      dataPath = path.join(__dirname, '../assets/arcraiders-data-main/items.json');
-    }
-    
+    // In webpack builds, __dirname points to .webpack/main
+    // Assets are copied to .webpack/assets (sibling directory)
+    const dataPath = path.join(__dirname, '..', 'assets', 'arcraiders-data-main/items.json');
+
     console.log('Looking for Arc Raiders data at:', dataPath);
-    
+
     if (!fs.existsSync(dataPath)) {
       console.error('Arc Raiders data file not found at:', dataPath);
-      return { 
-        success: false, 
-        error: `Arc Raiders data file not found at: ${dataPath}. Please ensure assets/arcraiders-data-main/items.json exists.` 
+      return {
+        success: false,
+        error: `Arc Raiders data file not found at: ${dataPath}. Please ensure assets/arcraiders-data-main/items.json exists.`
       };
     }
-    
+
     // Read and parse the items.json file
     const fileContent = fs.readFileSync(dataPath, 'utf8');
     const itemsData = JSON.parse(fileContent);
-    
+
     // Transform imageFilename from URL to local path
+    let itemCount = 0;
     const transformedData = itemsData.map(item => {
       const transformed = { ...item };
-      
-      // Replace image URL with local path to assets
-      if (transformed.imageFilename && transformed.imageFilename.includes('cdn.arctracker.io')) {
-        // Extract filename from URL (e.g., "fabric.png")
-        const filename = transformed.imageFilename.split('/').pop();
-        // Point to local images/items directory
-        if (app.isPackaged) {
-          transformed.imageFilename = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
-        } else {
-          transformed.imageFilename = `assets/arcraiders-data-main/images/items/${filename}`;
+
+      // Handle image paths - convert to absolute file:// URLs
+      if (transformed.imageFilename) {
+        let imagePath;
+
+        // If it's a CDN URL, extract filename
+        if (transformed.imageFilename.includes('cdn.arctracker.io')) {
+          const filename = transformed.imageFilename.split('/').pop();
+          imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/images/items/${filename}`);
+        }
+        // If it's a relative path like "images/items/rattler.png"
+        else if (transformed.imageFilename.startsWith('images/')) {
+          imagePath = path.join(__dirname, '..', 'assets', `arcraiders-data-main/${transformed.imageFilename}`);
+        }
+
+        // Convert to file:// URL
+        if (imagePath) {
+          transformed.imageFilename = `file://${imagePath}`;
         }
       }
-      
+
+      itemCount++;
       return transformed;
     });
-    
+
     console.log(`Loaded ${transformedData.length} items from Arc Raiders data`);
-    
-    return { 
-      success: true, 
+
+    return {
+      success: true,
       data: transformedData,
       note: `Loaded ${transformedData.length} items from Arc Raiders community data`
     };
@@ -165,7 +322,7 @@ ipcMain.handle('arc:fetchData', async () => {
 app.whenReady().then(async () => {
   // Initialize database (now async)
   await initDatabase();
-  
+
   createWindow();
 
   // On OS X it's common to re-create a window in the app when the

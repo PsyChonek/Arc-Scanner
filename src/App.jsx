@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ItemGraph from './components/ItemGraph';
 import ItemDetails from './components/ItemDetails';
+import TrackerPage from './components/TrackerPage';
 import { importArcRaidersData } from './utils/arcRaidersImporter';
+import { suppressResizeObserverError } from './utils/suppressResizeObserverError';
 
 function App() {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -9,6 +11,13 @@ function App() {
   const [importing, setImporting] = useState(false);
   const [importStatus, setImportStatus] = useState(null);
   const [graphKey, setGraphKey] = useState(0); // Used to force graph refresh
+  const [currentView, setCurrentView] = useState('graph'); // 'graph' or 'tracker'
+
+  useEffect(() => {
+    // Suppress ResizeObserver errors
+    const cleanup = suppressResizeObserverError();
+    return cleanup;
+  }, []);
 
   useEffect(() => {
     // Initialize with some sample data if database is empty
@@ -125,11 +134,15 @@ function App() {
   const handleImportArcRaidersData = async () => {
     setImporting(true);
     setImportStatus(null);
-    
+
     try {
+      // Clear existing items and relations first to ensure fresh import with correct paths
+      console.log('Clearing existing items and relations...');
+      await window.electronAPI.clearItemsAndRelations();
+
       const result = await importArcRaidersData();
       setImportStatus(result);
-      
+
       if (result.success) {
         // Refresh the graph
         setGraphKey(prev => prev + 1);
@@ -154,28 +167,54 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
-      {/* Header */}
+      {/* Header with Navigation */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
-        <div className="px-6 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">Arc Scanner</h1>
-            <p className="text-blue-100 text-sm mt-1">
-              Interactive Item Relationship Graph for Arc Raiders
-            </p>
+        <div className="px-6 py-0">
+          <div className="flex justify-between items-center mb-3">
+            <div>
+              <h1 className="text-3xl font-bold">Arc Scanner</h1>
+              <p className="text-blue-100 text-sm mt-1">
+                Interactive Item Relationship Graph for Arc Raiders
+              </p>
+            </div>
+            <div>
+              <button
+                onClick={handleImportArcRaidersData}
+                disabled={importing}
+                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                  importing
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-green-500 hover:bg-green-600'
+                } text-white`}
+              >
+                {importing ? 'Importing...' : 'Import Arc Raiders Data'}
+              </button>
+            </div>
           </div>
-          <div>
+          
+          {/* Navigation Tabs */}
+          <nav className="flex space-x-1 border-t border-blue-500 pt-3 -mb-px">
             <button
-              onClick={handleImportArcRaidersData}
-              disabled={importing}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                importing
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-green-500 hover:bg-green-600'
-              } text-white`}
+              onClick={() => setCurrentView('graph')}
+              className={`px-6 py-2 rounded-t-lg font-semibold transition-colors ${
+                currentView === 'graph'
+                  ? 'bg-white text-blue-800'
+                  : 'bg-blue-500 text-white hover:bg-blue-400'
+              }`}
             >
-              {importing ? 'Importing...' : 'Import Arc Raiders Data'}
+              Graph View
             </button>
-          </div>
+            <button
+              onClick={() => setCurrentView('tracker')}
+              className={`px-6 py-2 rounded-t-lg font-semibold transition-colors ${
+                currentView === 'tracker'
+                  ? 'bg-white text-blue-800'
+                  : 'bg-blue-500 text-white hover:bg-blue-400'
+              }`}
+            >
+              Item Tracker
+            </button>
+          </nav>
         </div>
         
         {/* Import Status */}
@@ -196,8 +235,12 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 relative">
-        <ItemGraph key={graphKey} onNodeClick={handleNodeClick} />
+      <main className="flex-1 relative overflow-hidden">
+        {currentView === 'graph' ? (
+          <ItemGraph key={graphKey} onNodeClick={handleNodeClick} />
+        ) : (
+          <TrackerPage />
+        )}
       </main>
 
       {/* Item Details Modal */}
@@ -208,7 +251,12 @@ function App() {
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-400 px-6 py-3 text-sm">
         <div className="flex justify-between items-center">
-          <span>Drag to move • Scroll to zoom • Click nodes for details</span>
+          <span>
+            {currentView === 'graph' 
+              ? 'Drag to move • Scroll to zoom • Click nodes for details'
+              : 'Track your progress on upgrades and quests'
+            }
+          </span>
           <span>Data stored in SQLite</span>
         </div>
       </footer>

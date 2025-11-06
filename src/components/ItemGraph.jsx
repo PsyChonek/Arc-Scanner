@@ -10,10 +10,53 @@ import ReactFlow, {
   Panel,
   useReactFlow,
   ReactFlowProvider,
+  Handle,
+  Position,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-const nodeTypes = {};
+// Custom node component with icon
+function CustomNode({ data }) {
+  const [imageSrc, setImageSrc] = useState(null);
+
+  useEffect(() => {
+    if (data.item?.image_url) {
+      window.electronAPI.loadImage(data.item.image_url).then(dataUrl => {
+        if (dataUrl) {
+          setImageSrc(dataUrl);
+        }
+      });
+    }
+  }, [data.item?.image_url]);
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Handle type="target" position={Position.Top} />
+      {imageSrc && (
+        <img
+          src={imageSrc}
+          alt={data.label}
+          style={{
+            width: '24px',
+            height: '24px',
+            objectFit: 'contain',
+            borderRadius: '4px',
+            flexShrink: 0,
+          }}
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
+      )}
+      <span>{data.label}</span>
+      <Handle type="source" position={Position.Bottom} />
+    </div>
+  );
+}
+
+const nodeTypes = {
+  custom: CustomNode,
+};
 
 function ItemGraphInner({ onNodeClick }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -37,14 +80,14 @@ function ItemGraphInner({ onNodeClick }) {
         // Convert items to nodes
         const graphNodes = items.map((item, index) => ({
           id: item.id,
-          type: 'default',
-          data: { 
+          type: 'custom',
+          data: {
             label: item.name,
             item: item,
           },
-          position: { 
-            x: Math.random() * 500, 
-            y: Math.random() * 500 
+          position: {
+            x: Math.random() * 500,
+            y: Math.random() * 500
           },
           style: {
             background: getRarityColor(item.rarity),
@@ -56,22 +99,34 @@ function ItemGraphInner({ onNodeClick }) {
           },
         }));
 
-        // Convert relations to edges
-        const graphEdges = relations.map((relation) => ({
-          id: `e${relation.source_id}-${relation.target_id}`,
-          source: relation.source_id,
-          target: relation.target_id,
-          type: 'smoothstep',
-          animated: relation.relation_type === 'crafts_to',
-          label: relation.relation_type,
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-          },
-          style: {
-            stroke: getRelationColor(relation.relation_type),
-            strokeWidth: 2,
-          },
-        }));
+        // Create a set of valid node IDs for validation
+        const validNodeIds = new Set(graphNodes.map(node => node.id));
+
+        // Convert relations to edges, filtering out invalid ones
+        const graphEdges = relations
+          .filter((relation) => {
+            // Only create edges if both source and target nodes exist
+            const isValid = validNodeIds.has(relation.source_id) && validNodeIds.has(relation.target_id);
+            if (!isValid) {
+              console.warn(`Skipping invalid relation: ${relation.source_id} -> ${relation.target_id} (one or both items don't exist)`);
+            }
+            return isValid;
+          })
+          .map((relation) => ({
+            id: `e${relation.source_id}-${relation.target_id}`,
+            source: relation.source_id,
+            target: relation.target_id,
+            type: 'smoothstep',
+            animated: relation.relation_type === 'crafts_to',
+            label: relation.relation_type,
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+            },
+            style: {
+              stroke: getRelationColor(relation.relation_type),
+              strokeWidth: 2,
+            },
+          }));
 
         setNodes(graphNodes);
         setAllNodes(graphNodes); // Store all nodes
@@ -96,7 +151,7 @@ function ItemGraphInner({ onNodeClick }) {
     if (selectedItemId) {
       // Find all nodes connected via recycles_into (in either direction)
       const recycleRelatedIds = new Set([selectedItemId]);
-      
+
       filteredEdges = allEdges.filter(edge => {
         if (edge.label === 'recycles_into') {
           if (edge.source === selectedItemId) {
@@ -112,15 +167,21 @@ function ItemGraphInner({ onNodeClick }) {
       });
 
       filteredNodes = allNodes.filter(node => recycleRelatedIds.has(node.id));
-      
+
+      // Validate edges to ensure both source and target nodes exist
+      const nodeIds = new Set(filteredNodes.map(n => n.id));
+      filteredEdges = filteredEdges.filter(edge =>
+        nodeIds.has(edge.source) && nodeIds.has(edge.target)
+      );
+
       setNodes(filteredNodes);
       setEdges(filteredEdges);
-      
+
       // Auto-arrange after filtering
       setTimeout(() => {
         autoArrangeWithNodes(filteredNodes, filteredEdges);
       }, 50);
-      
+
       return;
     }
 
@@ -132,6 +193,12 @@ function ItemGraphInner({ onNodeClick }) {
         connectedNodeIds.add(edge.target);
       });
       filteredNodes = allNodes.filter(node => connectedNodeIds.has(node.id));
+
+      // Validate edges to ensure both source and target nodes exist
+      const nodeIds = new Set(filteredNodes.map(n => n.id));
+      filteredEdges = allEdges.filter(edge =>
+        nodeIds.has(edge.source) && nodeIds.has(edge.target)
+      );
     }
 
     setNodes(filteredNodes);

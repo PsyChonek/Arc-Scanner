@@ -19,5 +19,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // User data operations
   setUserData: (key, value) => ipcRenderer.invoke('db:setUserData', key, value),
   getUserData: (key) => ipcRenderer.invoke('db:getUserData', key),
+  
+  // Arc Raiders data operations
+  fetchArcRaidersData: () => ipcRenderer.invoke('arc:fetchData'),
 });
 

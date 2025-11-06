@@ -1,49 +1,23 @@
 /**
  * Arc Raiders Data Importer
  * Fetches data from the RaidTheory/arcraiders-data GitHub repository
+ * Uses Electron IPC to fetch data from main process (avoids CSP issues)
  */
-
-const GITHUB_API_BASE = 'https://api.github.com';
-const REPO_OWNER = 'RaidTheory';
-const REPO_NAME = 'arcraiders-data';
-const DATA_PATH = 'data';
 
 /**
  * Fetch items data from the Arc Raiders data repository
+ * This now uses IPC to fetch from the main process
  */
 async function fetchArcRaidersItems() {
   try {
-    // First, get the list of files in the data directory
-    const response = await fetch(
-      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_PATH}`
-    );
+    const result = await window.electronAPI.fetchArcRaidersData();
     
-    if (!response.ok) {
-      console.error('Failed to fetch data directory:', response.statusText);
+    if (!result.success) {
+      console.error('Failed to fetch Arc Raiders data:', result.error);
       return null;
     }
     
-    const files = await response.json();
-    
-    // Look for items.json or similar files
-    const itemsFile = files.find(file => 
-      file.name.toLowerCase().includes('item') && file.name.endsWith('.json')
-    );
-    
-    if (!itemsFile) {
-      console.warn('No items file found in repository');
-      return null;
-    }
-    
-    // Fetch the items file content
-    const itemsResponse = await fetch(itemsFile.download_url);
-    if (!itemsResponse.ok) {
-      console.error('Failed to fetch items data:', itemsResponse.statusText);
-      return null;
-    }
-    
-    const itemsData = await itemsResponse.json();
-    return itemsData;
+    return result.data;
   } catch (error) {
     console.error('Error fetching Arc Raiders data:', error);
     return null;

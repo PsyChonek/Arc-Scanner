@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const https = require('https');
 const { 
   initDatabase, 
   closeDatabase, 
@@ -68,6 +69,62 @@ ipcMain.handle('db:setUserData', async (event, key, value) => {
 
 ipcMain.handle('db:getUserData', async (event, key) => {
   return getUserData(key);
+});
+
+// Helper function to make HTTPS requests
+function httpsGet(url) {
+  return new Promise((resolve, reject) => {
+    https.get(url, {
+      headers: {
+        'User-Agent': 'Arc-Scanner-App'
+      }
+    }, (res) => {
+      let data = '';
+      res.on('data', (chunk) => data += chunk);
+      res.on('end', () => {
+        if (res.statusCode === 200) {
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(new Error('Failed to parse JSON response'));
+          }
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`));
+        }
+      });
+    }).on('error', reject);
+  });
+}
+
+// IPC handler for fetching Arc Raiders data
+ipcMain.handle('arc:fetchData', async () => {
+  try {
+    const GITHUB_API_BASE = 'https://api.github.com';
+    const REPO_OWNER = 'RaidTheory';
+    const REPO_NAME = 'arcraiders-data';
+    const DATA_PATH = 'data';
+    
+    // Get the list of files in the data directory
+    const filesUrl = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_PATH}`;
+    const files = await httpsGet(filesUrl);
+    
+    // Look for items.json or similar files
+    const itemsFile = files.find(file => 
+      file.name.toLowerCase().includes('item') && file.name.endsWith('.json')
+    );
+    
+    if (!itemsFile) {
+      return { success: false, error: 'No items file found in repository' };
+    }
+    
+    // Fetch the items file content
+    const itemsData = await httpsGet(itemsFile.download_url);
+    
+    return { success: true, data: itemsData };
+  } catch (error) {
+    console.error('Error fetching Arc Raiders data:', error);
+    return { success: false, error: error.message };
+  }
 });
 
 // This method will be called when Electron has finished

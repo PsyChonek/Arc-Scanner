@@ -179,7 +179,44 @@ ipcMain.handle('arc:loadFile', async (event, filename) => {
     
     // Read and parse the JSON file
     const fileContent = fs.readFileSync(dataPath, 'utf8');
-    const data = JSON.parse(fileContent);
+    let data = JSON.parse(fileContent);
+    
+    // Transform image paths for items.json
+    if (filename === 'items.json' && Array.isArray(data)) {
+      data = data.map(item => {
+        const transformed = { ...item };
+        
+        // Handle image paths - convert to absolute file:// URLs
+        if (transformed.imageFilename) {
+          let imagePath;
+          
+          // If it's a CDN URL, extract filename
+          if (transformed.imageFilename.includes('cdn.arctracker.io')) {
+            const filename = transformed.imageFilename.split('/').pop();
+            if (app.isPackaged) {
+              imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/images/items/${filename}`);
+            } else {
+              imagePath = path.join(__dirname, `../assets/arcraiders-data-main/images/items/${filename}`);
+            }
+          } 
+          // If it's a relative path like "images/items/rattler.png"
+          else if (transformed.imageFilename.startsWith('images/')) {
+            if (app.isPackaged) {
+              imagePath = path.join(process.resourcesPath, `assets/arcraiders-data-main/${transformed.imageFilename}`);
+            } else {
+              imagePath = path.join(__dirname, `../assets/arcraiders-data-main/${transformed.imageFilename}`);
+            }
+          }
+          
+          // Convert to file:// URL for Electron
+          if (imagePath) {
+            transformed.imageFilename = `file://${imagePath}`;
+          }
+        }
+        
+        return transformed;
+      });
+    }
     
     return { 
       success: true, 

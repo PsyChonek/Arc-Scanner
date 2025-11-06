@@ -480,6 +480,8 @@ function TrackerPage() {
           onClose={() => setShowBrowseModal(false)}
           onSelect={async (trackableItem) => {
             try {
+              console.log('Adding tracked item:', trackableItem);
+              
               // Add the tracked item
               const trackedId = await window.electronAPI.addTrackedItem(
                 trackableItem.itemId,
@@ -488,13 +490,21 @@ function TrackerPage() {
                 trackableItem.notes
               );
               
+              console.log('Tracked ID:', trackedId);
+              console.log('Requirements to add:', trackableItem.requirements);
+              
               // Add all requirements automatically
-              for (const req of trackableItem.requirements) {
-                await window.electronAPI.addTrackedItemRequirement(
-                  trackedId,
-                  req.itemId,
-                  req.quantity
-                );
+              if (trackableItem.requirements && trackableItem.requirements.length > 0) {
+                for (const req of trackableItem.requirements) {
+                  console.log('Adding requirement:', req);
+                  await window.electronAPI.addTrackedItemRequirement(
+                    trackedId,
+                    req.itemId,
+                    req.quantity
+                  );
+                }
+              } else {
+                console.warn('No requirements found for tracked item');
               }
               
               setShowBrowseModal(false);

@@ -14,7 +14,7 @@ export const DEFAULT_LAYOUT_PARAMS = {
 	INITIAL_SPREAD: 500, // Initial random spread radius
 	CONVERGENCE_THRESHOLD: 0.01, // Minimum average velocity to consider converged
 	REPULSION_RADIUS: 350, // Only calculate repulsion within this distance
-	FRAME_SKIP: 4, // Skip frames (4 = run every 4 frames = ~15fps simulation)
+	FRAME_SKIP: 2, // Skip frames (2 = run every 2 frames = ~30fps simulation for smoother animation)
 };
 
 /**

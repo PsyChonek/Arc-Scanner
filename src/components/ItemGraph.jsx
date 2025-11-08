@@ -18,8 +18,8 @@ import { autoArrangeNodes, DEFAULT_LAYOUT_PARAMS, ForceSimulation } from '../uti
 import FloatingEdge from './FloatingEdge';
 import FloatingConnectionLine from './FloatingConnectionLine';
 
-// Custom node component with icon
-function CustomNode({ data }) {
+// Custom node component with icon - Memoized for performance
+const CustomNode = React.memo(({ data }) => {
   const [imageSrc, setImageSrc] = useState(null);
 
   useEffect(() => {
@@ -78,14 +78,21 @@ function CustomNode({ data }) {
       </div>
     </>
   );
-}
+});
 
+// Define node and edge types outside component to prevent re-creation on every render
 const nodeTypes = {
   custom: CustomNode,
 };
 
 const edgeTypes = {
   floating: FloatingEdge,
+};
+
+// Memoize default edge options to prevent re-creation
+const defaultEdgeOptions = {
+  type: 'floating',
+  style: { strokeWidth: 2 }
 };
 
 function ItemGraphInner({ onNodeClick }) {
@@ -100,6 +107,7 @@ function ItemGraphInner({ onNodeClick }) {
   const [showLayoutParams, setShowLayoutParams] = useState(false);
   const [layoutParams, setLayoutParams] = useState(DEFAULT_LAYOUT_PARAMS);
   const [liveUpdates, setLiveUpdates] = useState(false);
+  const [isSimulating, setIsSimulating] = useState(false);
   const simulationRef = useRef(null);
   const animationFrameRef = useRef(null);
   const { fitView } = useReactFlow();
@@ -200,6 +208,9 @@ function ItemGraphInner({ onNodeClick }) {
             style: {
               stroke: getRelationColor(relation.relation_type),
               strokeWidth: 2,
+            },
+            data: {
+              originalAnimated: relation.relation_type === 'crafts_to', // Store original state
             },
           }));
 
@@ -348,82 +359,114 @@ function ItemGraphInner({ onNodeClick }) {
 
     if (!liveUpdates || nodes.length === 0) {
       simulationRef.current = null;
+      setIsSimulating(false);
       return;
     }
 
     // Initialize simulation on first run or when nodes change
     if (!simulationRef.current || simulationRef.current.nodes.length !== nodes.length) {
       simulationRef.current = new ForceSimulation(nodes, edges, layoutParams);
-    } else {
-      // Update parameters on existing simulation
-      simulationRef.current.params = { ...simulationRef.current.params, ...layoutParams };
+      setIsSimulating(true);
     }
 
-    // Store last positions to detect significant changes
-    const lastPositions = new Map(nodes.map(n => [n.id, { ...n.position }]));
-    const POSITION_THRESHOLD = 0.5; // Only update if position changes by more than 0.5px
-
-    // Animation loop for continuous updates with frame skipping
     let frameCounter = 0;
-    const frameSkip = layoutParams.FRAME_SKIP || 4; // Run simulation every N frames
+    let lastUpdateFrame = 0;
+    const REACT_UPDATE_INTERVAL = 10; // Update React state every 10 frames (~6 updates/sec at 60fps)
+    const POSITION_CHANGE_THRESHOLD = 5; // Only update if node moved >5px
+
+    // Track last known positions for change detection
+    const lastPositions = new Map(nodes.map(n => [n.id, { ...n.position }]));
 
     const animateSimulation = () => {
-      if (simulationRef.current && liveUpdates) {
-        frameCounter++;
-        
-        // Run simulation only every N frames
-        if (frameCounter % frameSkip === 0) {
-          const converged = simulationRef.current.step(layoutParams);
-          
-          // Get raw positions (faster, no bounds calculation)
-          const rawPositions = simulationRef.current.getRawPositions();
-          
-          // Check which nodes have moved significantly
+      if (!simulationRef.current || !liveUpdates) return;
+
+      frameCounter++;
+      const frameSkip = Math.max(1, simulationRef.current.params.FRAME_SKIP || 2);
+
+      // Run simulation every N frames based on current speed setting
+      if (frameCounter % frameSkip === 0) {
+        const converged = simulationRef.current.step();
+
+        // Get raw positions from simulation
+        const rawPositions = simulationRef.current.getRawPositions();
+
+        // Only update React state every REACT_UPDATE_INTERVAL frames to reduce lag
+        const shouldUpdateReact = (frameCounter - lastUpdateFrame) >= REACT_UPDATE_INTERVAL || converged;
+
+        if (shouldUpdateReact) {
+          lastUpdateFrame = frameCounter;
+
+          // Filter nodes that actually moved significantly
           const nodesToUpdate = [];
-          
           rawPositions.forEach((pos, nodeId) => {
             const lastPos = lastPositions.get(nodeId);
             if (lastPos) {
               const dx = Math.abs(pos.x - lastPos.x);
               const dy = Math.abs(pos.y - lastPos.y);
-              
-              if (dx > POSITION_THRESHOLD || dy > POSITION_THRESHOLD) {
+
+              // Update if moved significantly or if converged (final update)
+              if (dx > POSITION_CHANGE_THRESHOLD || dy > POSITION_CHANGE_THRESHOLD || converged) {
+                nodesToUpdate.push({ id: nodeId, position: { x: pos.x, y: pos.y } });
                 lastPositions.set(nodeId, { x: pos.x, y: pos.y });
-                nodesToUpdate.push({ id: nodeId, position: pos });
               }
             }
           });
-          
-          // Only update ReactFlow if positions changed significantly
+
+          // Only trigger React update if we have nodes to update
           if (nodesToUpdate.length > 0) {
+            const updateMap = new Map(nodesToUpdate.map(n => [n.id, n.position]));
+
+            // Calculate transition duration based on update interval and frame skip
+            // This creates smooth interpolation between discrete updates
+            // At 60fps with interval=10, frameSkip=2: ~133ms transition
+            const transitionDuration = converged ? 0 : ((REACT_UPDATE_INTERVAL * frameSkip) / 60) * 1000 * 0.8;
+
             setNodes((nds) => {
-              const updateMap = new Map(nodesToUpdate.map(u => [u.id, u.position]));
               return nds.map((node) => {
                 const newPos = updateMap.get(node.id);
                 if (newPos) {
                   return {
                     ...node,
                     position: newPos,
+                    style: {
+                      ...node.style,
+                      transition: converged ? undefined : `transform ${transitionDuration}ms linear`,
+                    },
                   };
                 }
                 return node;
               });
             });
           }
-
-          // Continue animating unless converged
-          if (!converged) {
-            animationFrameRef.current = requestAnimationFrame(animateSimulation);
-          } else {
-            // Fit view when converged
-            setTimeout(() => {
-              fitView({ padding: 0.2, duration: 300 });
-            }, 50);
-          }
-        } else {
-          // Still request frame but skip simulation
-          animationFrameRef.current = requestAnimationFrame(animateSimulation);
         }
+
+        // Continue animating unless converged
+        if (!converged) {
+          animationFrameRef.current = requestAnimationFrame(animateSimulation);
+        } else {
+          setIsSimulating(false);
+
+          // Remove transitions after convergence
+          setTimeout(() => {
+            setNodes((nds) =>
+              nds.map((node) => ({
+                ...node,
+                style: {
+                  ...node.style,
+                  transition: undefined,
+                },
+              }))
+            );
+          }, 0);
+
+          // Fit view when converged
+          setTimeout(() => {
+            fitView({ padding: 0.2, duration: 300 });
+          }, 50);
+        }
+      } else {
+        // Continue animation loop even when skipping simulation
+        animationFrameRef.current = requestAnimationFrame(animateSimulation);
       }
     };
 
@@ -437,7 +480,7 @@ function ItemGraphInner({ onNodeClick }) {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [liveUpdates, nodes, edges]);
+  }, [liveUpdates, nodes.length, edges.length]);
 
   // Update simulation parameters when they change during live updates
   useEffect(() => {
@@ -445,6 +488,16 @@ function ItemGraphInner({ onNodeClick }) {
       simulationRef.current.params = { ...simulationRef.current.params, ...layoutParams };
     }
   }, [layoutParams, liveUpdates]);
+
+  // Disable edge animations during live updates to improve performance
+  useEffect(() => {
+    setEdges((eds) =>
+      eds.map((edge) => ({
+        ...edge,
+        animated: liveUpdates ? false : (edge.data?.originalAnimated || false),
+      }))
+    );
+  }, [liveUpdates, setEdges]);
 
   // Filtered items for search dropdown
   const filteredItems = allNodes.filter(node =>
@@ -474,14 +527,14 @@ function ItemGraphInner({ onNodeClick }) {
         connectionLineComponent={FloatingConnectionLine}
         connectionMode="loose"
         connectOnClick={false}
-        defaultEdgeOptions={{
-          type: 'floating',
-          style: { strokeWidth: 2 }
-        }}
+        defaultEdgeOptions={defaultEdgeOptions}
         minZoom={0}
         maxZoom={4}
         defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
         elevateEdgesOnSelect={false}
+        elementsSelectable={!liveUpdates}
+        nodesDraggable={!liveUpdates}
+        nodesConnectable={!liveUpdates}
       >
         <Controls />
         <MiniMap 
@@ -489,6 +542,17 @@ function ItemGraphInner({ onNodeClick }) {
           nodeStrokeWidth={3}
         />
         <Background variant="dots" gap={12} size={1} />
+
+        {/* Simulation Status Indicator */}
+        {isSimulating && (
+          <Panel position="top-left" className="bg-blue-500 text-white rounded-lg shadow-lg px-4 py-2 m-2">
+            <div className="flex items-center space-x-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <span className="text-sm font-medium">Simulating...</span>
+            </div>
+          </Panel>
+        )}
+
         <Panel position="top-right" className="bg-white rounded-lg shadow-lg p-3 m-2 space-y-2 max-h-[90vh] overflow-y-auto">
           <button
             onClick={autoArrange}
@@ -516,6 +580,26 @@ function ItemGraphInner({ onNodeClick }) {
                 />
                 <span className="text-sm font-medium text-blue-900">Live Updates</span>
               </label>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">
+                  Simulation Speed: {layoutParams.FRAME_SKIP === 1 ? 'Very Fast (60fps)' : layoutParams.FRAME_SKIP === 2 ? 'Fast (30fps)' : layoutParams.FRAME_SKIP === 4 ? 'Medium (15fps)' : `Slow (${Math.round(60/layoutParams.FRAME_SKIP)}fps)`}
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="8"
+                  step="1"
+                  value={layoutParams.FRAME_SKIP}
+                  onChange={(e) => setLayoutParams({...layoutParams, FRAME_SKIP: Number(e.target.value)})}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-0.5">
+                  <span>Fastest</span>
+                  <span>Slowest</span>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-gray-700 font-medium mb-1">
                   Repulsion: {layoutParams.REPULSION_STRENGTH}

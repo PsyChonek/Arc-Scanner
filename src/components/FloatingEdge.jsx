@@ -42,4 +42,4 @@ function FloatingEdge({ id, source, target, markerEnd, style }) {
   );
 }
 
-export default FloatingEdge;
+export default React.memo(FloatingEdge);

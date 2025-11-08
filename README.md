@@ -17,6 +17,9 @@ An Electron application built with React and Webpack for visualizing Arc Raiders
   - Mini-map for overview navigation
   - Color-coded nodes by rarity (common, uncommon, rare, epic, legendary)
   - Color-coded edges by relationship type (crafts_to, requires, combines_with, upgrades_to)
+  - **Smooth 60fps Live Simulation**: Real-time force-directed layout with spatial hashing optimization
+  - Performance monitoring with FPS counter
+  - Auto-arrange with force-directed algorithm
 
 ### Item Tracker (New!)
 - **Track Upgrades & Quests**: Manage your progression through the game

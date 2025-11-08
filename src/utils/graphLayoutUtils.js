@@ -1,20 +1,27 @@
 /**
  * Graph layout utilities for auto-arranging nodes using force-directed layout
  * Optimized for flat, highly-interconnected graphs (mesh networks)
+ * 
+ * PERFORMANCE OPTIMIZATIONS:
+ * - Spatial hashing for O(n) repulsion instead of O(n²)
+ * - Adaptive frame rate with configurable frame skipping
+ * - Change detection to minimize React re-renders
+ * - Smooth CSS transitions for natural movement
+ * - Tuned parameters for smooth real-time simulation
  */
 
-// Default layout constants
+// Default layout constants - OPTIMIZED FOR SMOOTH REAL-TIME SIMULATION
 export const DEFAULT_LAYOUT_PARAMS = {
-	REPULSION_STRENGTH: 30000, // How strongly nodes push away from each other
-	ATTRACTION_STRENGTH: 0.01, // How strongly connected nodes pull together
-	CENTER_GRAVITY: 0.005, // Pull toward center to keep graph compact
-	DAMPING: 0.9, // Friction to slow down movement (higher = faster settling)
-	ITERATIONS: 400, // Number of simulation steps (used for non-live mode only)
+	REPULSION_STRENGTH: 25000, // Slightly reduced for smoother convergence
+	ATTRACTION_STRENGTH: 0.008, // Slightly reduced for stability
+	CENTER_GRAVITY: 0.003, // Gentler pull toward center
+	DAMPING: 0.92, // Slightly higher for faster settling without jitter
+	ITERATIONS: 500, // More iterations for batch mode (not used in live mode)
 	MIN_DISTANCE: 150, // Minimum distance between nodes
 	INITIAL_SPREAD: 500, // Initial random spread radius
-	CONVERGENCE_THRESHOLD: 0.01, // Minimum average velocity to consider converged
-	REPULSION_RADIUS: 350, // Only calculate repulsion within this distance
-	FRAME_SKIP: 2, // Skip frames (2 = run every 2 frames = ~30fps simulation for smoother animation)
+	CONVERGENCE_THRESHOLD: 0.05, // Lower threshold = stops sooner when stable
+	REPULSION_RADIUS: 400, // Slightly larger for better force distribution
+	FRAME_SKIP: 1, // No frame skip by default = full 60fps simulation (was 2)
 };
 
 /**
@@ -438,35 +445,66 @@ export class ForceSimulation {
 			forces.set(node.id, { fx: 0, fy: 0 });
 		});
 
-		// Optimized repulsion: only calculate within repulsion radius
-		const repulsionRadius = this.params.REPULSION_RADIUS || 300;
-		for (let i = 0; i < nodes.length; i++) {
-			const node1 = nodes[i];
+		// OPTIMIZED: Use spatial hashing for repulsion calculation
+		// This reduces complexity from O(n²) to approximately O(n)
+		const repulsionRadius = this.params.REPULSION_RADIUS || 400;
+		const cellSize = repulsionRadius; // Grid cell size equals repulsion radius
+		const grid = new Map(); // Spatial hash grid
+
+		// Build spatial hash grid
+		nodes.forEach(node => {
+			const pos = positions.get(node.id);
+			const cellX = Math.floor(pos.x / cellSize);
+			const cellY = Math.floor(pos.y / cellSize);
+			const key = `${cellX},${cellY}`;
+			
+			if (!grid.has(key)) {
+				grid.set(key, []);
+			}
+			grid.get(key).push({ node, pos });
+		});
+
+		// Calculate repulsion using spatial hash
+		// Only check nodes in same cell and adjacent cells (3x3 grid)
+		nodes.forEach(node1 => {
 			const pos1 = positions.get(node1.id);
 			const force1 = forces.get(node1.id);
+			const cellX = Math.floor(pos1.x / cellSize);
+			const cellY = Math.floor(pos1.y / cellSize);
 
-			for (let j = i + 1; j < nodes.length; j++) {
-				const node2 = nodes[j];
-				const pos2 = positions.get(node2.id);
+			// Check current cell and 8 neighbors
+			for (let dx = -1; dx <= 1; dx++) {
+				for (let dy = -1; dy <= 1; dy++) {
+					const key = `${cellX + dx},${cellY + dy}`;
+					const cellNodes = grid.get(key);
+					
+					if (!cellNodes) continue;
 
-				const dx = pos2.x - pos1.x;
-				const dy = pos2.y - pos1.y;
-				const distSquared = dx * dx + dy * dy;
-				const radiusSquared = repulsionRadius * repulsionRadius;
+					cellNodes.forEach(({ node: node2, pos: pos2 }) => {
+						// Skip self
+						if (node1.id === node2.id) return;
 
-				// Skip if nodes are too far apart
-				if (distSquared > radiusSquared) continue;
+						const dx = pos2.x - pos1.x;
+						const dy = pos2.y - pos1.y;
+						const distSquared = dx * dx + dy * dy;
+						const radiusSquared = repulsionRadius * repulsionRadius;
 
-				const repulsion = calculateRepulsion(pos1, pos2, this.params.REPULSION_STRENGTH, this.params.MIN_DISTANCE);
+						// Skip if nodes are too far apart
+						if (distSquared > radiusSquared) return;
 
-				force1.fx += repulsion.fx;
-				force1.fy += repulsion.fy;
+						const repulsion = calculateRepulsion(pos1, pos2, this.params.REPULSION_STRENGTH, this.params.MIN_DISTANCE);
 
-				const force2 = forces.get(node2.id);
-				force2.fx -= repulsion.fx;
-				force2.fy -= repulsion.fy;
+						force1.fx += repulsion.fx;
+						force1.fy += repulsion.fy;
+
+						// Also apply to node2 (Newton's third law)
+						const force2 = forces.get(node2.id);
+						force2.fx -= repulsion.fx;
+						force2.fy -= repulsion.fy;
+					});
+				}
 			}
-		}
+		});
 
 		// Calculate attraction forces (connected pairs only)
 		edges.forEach(edge => {

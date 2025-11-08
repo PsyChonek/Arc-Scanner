@@ -349,6 +349,10 @@ function ItemGraphInner({ onNodeClick }) {
     autoArrangeWithNodes(nodes, edges);
   }, [nodes, edges, autoArrangeWithNodes]);
 
+  // Performance monitoring state
+  const [fps, setFps] = useState(0);
+  const fpsFrameTimesRef = useRef([]);
+
   // Live continuous simulation when liveUpdates is enabled
   useEffect(() => {
     // Cancel any existing animation frame
@@ -360,6 +364,7 @@ function ItemGraphInner({ onNodeClick }) {
     if (!liveUpdates || nodes.length === 0) {
       simulationRef.current = null;
       setIsSimulating(false);
+      setFps(0);
       return;
     }
 
@@ -371,8 +376,9 @@ function ItemGraphInner({ onNodeClick }) {
 
     let frameCounter = 0;
     let lastUpdateFrame = 0;
-    const REACT_UPDATE_INTERVAL = 10; // Update React state every 10 frames (~6 updates/sec at 60fps)
-    const POSITION_CHANGE_THRESHOLD = 5; // Only update if node moved >5px
+    let lastTime = performance.now();
+    const REACT_UPDATE_INTERVAL = 5; // Update React state every 5 frames (~12 updates/sec at 60fps) - OPTIMIZED
+    const POSITION_CHANGE_THRESHOLD = 2; // Only update if node moved >2px - MORE SENSITIVE
 
     // Track last known positions for change detection
     const lastPositions = new Map(nodes.map(n => [n.id, { ...n.position }]));
@@ -380,8 +386,22 @@ function ItemGraphInner({ onNodeClick }) {
     const animateSimulation = () => {
       if (!simulationRef.current || !liveUpdates) return;
 
+      const currentTime = performance.now();
+      const deltaTime = currentTime - lastTime;
+      lastTime = currentTime;
+
+      // Calculate FPS
+      fpsFrameTimesRef.current.push(deltaTime);
+      if (fpsFrameTimesRef.current.length > 60) {
+        fpsFrameTimesRef.current.shift();
+      }
+      if (frameCounter % 30 === 0) {
+        const avgFrameTime = fpsFrameTimesRef.current.reduce((a, b) => a + b, 0) / fpsFrameTimesRef.current.length;
+        setFps(Math.round(1000 / avgFrameTime));
+      }
+
       frameCounter++;
-      const frameSkip = Math.max(1, simulationRef.current.params.FRAME_SKIP || 2);
+      const frameSkip = Math.max(1, simulationRef.current.params.FRAME_SKIP || 1);
 
       // Run simulation every N frames based on current speed setting
       if (frameCounter % frameSkip === 0) {
@@ -416,10 +436,9 @@ function ItemGraphInner({ onNodeClick }) {
           if (nodesToUpdate.length > 0) {
             const updateMap = new Map(nodesToUpdate.map(n => [n.id, n.position]));
 
+            // OPTIMIZED: Shorter, smoother transitions
             // Calculate transition duration based on update interval and frame skip
-            // This creates smooth interpolation between discrete updates
-            // At 60fps with interval=10, frameSkip=2: ~133ms transition
-            const transitionDuration = converged ? 0 : ((REACT_UPDATE_INTERVAL * frameSkip) / 60) * 1000 * 0.8;
+            const transitionDuration = converged ? 0 : Math.min(150, ((REACT_UPDATE_INTERVAL * frameSkip) / 60) * 1000);
 
             setNodes((nds) => {
               return nds.map((node) => {
@@ -430,7 +449,8 @@ function ItemGraphInner({ onNodeClick }) {
                     position: newPos,
                     style: {
                       ...node.style,
-                      transition: converged ? undefined : `transform ${transitionDuration}ms linear`,
+                      // Use ease-out for more natural movement
+                      transition: converged ? undefined : `transform ${transitionDuration}ms ease-out`,
                     },
                   };
                 }
@@ -445,6 +465,7 @@ function ItemGraphInner({ onNodeClick }) {
           animationFrameRef.current = requestAnimationFrame(animateSimulation);
         } else {
           setIsSimulating(false);
+          setFps(0);
 
           // Remove transitions after convergence
           setTimeout(() => {
@@ -478,6 +499,7 @@ function ItemGraphInner({ onNodeClick }) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
       }
+      fpsFrameTimesRef.current = [];
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liveUpdates, nodes.length, edges.length]);
@@ -546,9 +568,12 @@ function ItemGraphInner({ onNodeClick }) {
         {/* Simulation Status Indicator */}
         {isSimulating && (
           <Panel position="top-left" className="bg-blue-500 text-white rounded-lg shadow-lg px-4 py-2 m-2">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              <span className="text-sm font-medium">Simulating...</span>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium">Live Simulation</span>
+                <span className="text-xs opacity-90">{fps > 0 ? `${fps} FPS` : 'Starting...'}</span>
+              </div>
             </div>
           </Panel>
         )}
@@ -578,12 +603,15 @@ function ItemGraphInner({ onNodeClick }) {
                   onChange={(e) => setLiveUpdates(e.target.checked)}
                   className="w-4 h-4 text-blue-500 rounded focus:ring-2 focus:ring-blue-500"
                 />
-                <span className="text-sm font-medium text-blue-900">Live Updates</span>
+                <span className="text-sm font-medium text-blue-900">Live Simulation</span>
               </label>
+              <p className="text-xs text-gray-600 px-2 italic">
+                Real-time force-directed layout with spatial hashing for smooth 60fps performance
+              </p>
 
               <div>
                 <label className="block text-gray-700 font-medium mb-1">
-                  Simulation Speed: {layoutParams.FRAME_SKIP === 1 ? 'Very Fast (60fps)' : layoutParams.FRAME_SKIP === 2 ? 'Fast (30fps)' : layoutParams.FRAME_SKIP === 4 ? 'Medium (15fps)' : `Slow (${Math.round(60/layoutParams.FRAME_SKIP)}fps)`}
+                  Simulation Speed: {layoutParams.FRAME_SKIP === 1 ? 'Full Speed (60fps)' : layoutParams.FRAME_SKIP === 2 ? 'Fast (30fps)' : layoutParams.FRAME_SKIP === 4 ? 'Medium (15fps)' : `Slow (${Math.round(60/layoutParams.FRAME_SKIP)}fps)`}
                 </label>
                 <input
                   type="range"
